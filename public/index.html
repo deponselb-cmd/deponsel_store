@@ -26,22 +26,32 @@
       --bg-primary: #ffffff;
       --bg-secondary: #f8fafc;
       --bg-tertiary: #f1f5f9;
+      --bg-hover: #f0f4f8;
       --text-primary: #0f172a;
       --text-secondary: #64748b;
+      --text-tertiary: #94a3b8;
       --border-color: #e2e8f0;
+      --border-light: #cbd5e1;
       --accent: #6366f1;
       --accent-light: rgba(99,102,241,0.1);
+      --accent-hover: #4f46e5;
+      --surface-overlay: rgba(0,0,0,0.02);
     }
     
     html.dark {
       --bg-primary: #0f172a;
       --bg-secondary: #1e293b;
       --bg-tertiary: #334155;
+      --bg-hover: #1e3a5f;
       --text-primary: #f1f5f9;
       --text-secondary: #cbd5e1;
+      --text-tertiary: #94a3b8;
       --border-color: #334155;
+      --border-light: #475569;
       --accent: #818cf8;
       --accent-light: rgba(129,140,248,0.1);
+      --accent-hover: #a78bfa;
+      --surface-overlay: rgba(255,255,255,0.02);
     }
     
     body {
@@ -51,24 +61,32 @@
     }
     
     /* Scrollbar styling */
-    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar { width: 8px; height: 8px; }
     ::-webkit-scrollbar-track { background: var(--bg-secondary); }
-    ::-webkit-scrollbar-thumb { background: var(--text-secondary); border-radius: 3px; opacity: 0.5; }
+    ::-webkit-scrollbar-thumb { background: var(--text-tertiary); border-radius: 4px; opacity: 0.6; transition: opacity 0.2s; }
+    ::-webkit-scrollbar-thumb:hover { opacity: 1; }
     
     /* Sidebar */
     #sidebar {
       background: var(--bg-primary);
       border-color: var(--border-color);
       transition: all 0.3s ease;
+      box-shadow: var(--surface-overlay) 0 4px 12px;
     }
     
     .sidebar-item {
       transition: all 0.2s ease;
       color: var(--text-secondary);
+      border-radius: 8px;
     }
-    .sidebar-item:hover, .sidebar-item.active {
+    .sidebar-item:hover {
+      background: var(--bg-hover);
+      color: var(--text-primary);
+    }
+    .sidebar-item.active {
       background: var(--accent-light);
       color: var(--accent);
+      font-weight: 600;
     }
     
     /* Cards and containers */
@@ -87,12 +105,21 @@
       box-shadow: 0 8px 25px rgba(0,0,0,0.1);
     }
     
-    /* Text colors */
+    /* Text colors with theme support */
     .text-slate-400 { color: var(--text-secondary); }
     .text-slate-500 { color: var(--text-secondary); }
     .text-slate-600 { color: var(--text-primary); }
     .text-slate-700 { color: var(--text-primary); }
     .text-slate-800 { color: var(--text-primary); }
+    
+    /* Buttons and interactive elements */
+    button, input, select, textarea {
+      transition: all 0.2s ease;
+    }
+    
+    button:hover {
+      transform: translateY(-1px);
+    }
     
     /* Animations */
     .fade-in { animation: fadeIn 0.3s ease; }
@@ -107,6 +134,7 @@
       background: var(--bg-primary);
       border-color: var(--border-color);
       transition: all 0.3s ease;
+      box-shadow: var(--surface-overlay) 0 2px 8px;
     }
     
     /* Input and form elements */
@@ -117,18 +145,29 @@
       transition: all 0.2s ease;
     }
     
+    input:hover, textarea:hover, select:hover {
+      border-color: var(--border-light);
+    }
+    
     input:focus, textarea:focus, select:focus {
-      border-color: var(--accent);
+      border-color: var(--accent) !important;
       background: var(--bg-primary);
+      box-shadow: 0 0 0 3px var(--accent-light);
     }
     
     /* Table styling */
     thead {
-      background: var(--bg-secondary);
+      background: var(--bg-tertiary);
+      color: var(--text-primary);
     }
     
     tbody tr {
       border-color: var(--border-color);
+      background: var(--bg-primary);
+    }
+    
+    tbody tr:hover {
+      background: var(--bg-hover);
     }
     
     /* Theme toggle button animation */
@@ -146,6 +185,10 @@
       padding: 0 2px;
     }
     
+    .theme-toggle-btn:hover {
+      border-color: var(--text-secondary);
+    }
+    
     .theme-toggle-btn.active {
       background: var(--accent);
       border-color: var(--accent);
@@ -154,37 +197,111 @@
     .theme-toggle-thumb {
       width: 20px;
       height: 20px;
-      background: white;
+      background: var(--bg-primary);
       border-radius: 50%;
       transition: all 0.3s ease;
       display: flex;
       align-items: center;
       justify-content: center;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
     }
     
     .theme-toggle-btn.active .theme-toggle-thumb {
       transform: translateX(24px);
+      background: white;
+    }
+    
+    /* Gradient backgrounds for light/dark */
+    .gradient-light {
+      background: linear-gradient(135deg, #6366f1 0%, #a855f7 100%);
+    }
+    
+    html.dark .gradient-light {
+      background: linear-gradient(135deg, #818cf8 0%, #c084fc 100%);
+    }
+    
+    /* Modal and overlay */
+    .modal-overlay {
+      background: rgba(0, 0, 0, 0.5);
+      backdrop-filter: blur(4px);
+    }
+
+    /* Modal visibility */
+    #invoice-modal.show {
+      display: flex !important;
+    }
+
+    #invoice-modal:not(.show) {
+      display: none !important;
+    }
+
+    /* Form area visibility */
+    #voucher-generator-area,
+    #voucher-import-area,
+    #customer-form-area,
+    #customer-export-import-area,
+    #package-form-area,
+    #addon-form-area,
+    #inventory-form-area,
+    #olt-form-area,
+    #odc-form-area,
+    #odp-form-area,
+    #ticket-form-area,
+    #map-form-area,
+    #webhook-form-area,
+    #export-import-area,
+    #print-voucher-modal {
+      display: block;
+      z-index: auto;
+    }
+
+    #print-voucher-modal.hidden {
+      display: none !important;
+    }
+
+    /* Ensure form inputs are visible */
+    input[type="text"],
+    input[type="email"],
+    input[type="password"],
+    input[type="number"],
+    input[type="date"],
+    input[type="file"],
+    textarea,
+    select {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    /* Scrolling context */
+    #content {
+      overflow-y: auto;
+      max-height: 100%;
     }
   </style>
   <style>body { box-sizing: border-box; }</style>
  </head>
  <body class="h-full bg-slate-50 text-slate-800">
-  <div id="app" class="h-full w-full flex overflow-hidden"><!-- Sidebar -->
+  <div id="app" class="h-full w-full flex overflow-hidden">
+   <!-- Sidebar -->
    <aside id="sidebar" class="w-64 bg-white border-r border-slate-200 flex flex-col h-full shrink-0">
     <div class="p-5 border-b border-slate-100">
      <h1 id="app-title" class="text-xl font-bold text-indigo-600">NetBill Pro</h1>
      <p id="company-name" class="text-xs text-slate-400 mt-1">ISP Management System</p>
     </div>
-    <nav class="flex-1 overflow-y-auto p-3 space-y-1"><button onclick="navigate('dashboard')" class="sidebar-item active w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium" data-nav="dashboard"> <i data-lucide="layout-dashboard" class="w-4 h-4"></i> Dashboard </button> <button onclick="navigate('pelanggan')" class="sidebar-item w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium" data-nav="pelanggan"> <i data-lucide="users" class="w-4 h-4"></i> Pelanggan </button> <button onclick="navigate('paket')" class="sidebar-item w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium" data-nav="paket"> <i data-lucide="package" class="w-4 h-4"></i> Paket Layanan </button> <button onclick="navigate('addon')" class="sidebar-item w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium" data-nav="addon"> <i data-lucide="plus-circle" class="w-4 h-4"></i> Add-On </button> <button onclick="navigate('billing')" class="sidebar-item w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium" data-nav="billing"> <i data-lucide="file-text" class="w-4 h-4"></i> Billing &amp; Invoice </button> <button onclick="navigate('pembayaran')" class="sidebar-item w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium" data-nav="pembayaran"> <i data-lucide="credit-card" class="w-4 h-4"></i> Pembayaran </button> <button onclick="navigate('voucher')" class="sidebar-item w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium" data-nav="voucher"> <i data-lucide="ticket" class="w-4 h-4"></i> Voucher </button> <button onclick="navigate('inventory')" class="sidebar-item w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium" data-nav="inventory"> <i data-lucide="box" class="w-4 h-4"></i> Inventory </button> <button onclick="navigate('pppoe')" class="sidebar-item w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium" data-nav="pppoe"> <i data-lucide="network" class="w-4 h-4"></i> PPPoE Manager </button> <button onclick="navigate('hotspot')" class="sidebar-item w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium" data-nav="hotspot"> <i data-lucide="wifi" class="w-4 h-4"></i> Hotspot Manager </button> <button onclick="navigate('tools')" class="sidebar-item w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium" data-nav="tools"> <i data-lucide="wrench" class="w-4 h-4"></i> Tools </button> <button onclick="navigate('monitoring')" class="sidebar-item w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium" data-nav="monitoring"> <i data-lucide="activity" class="w-4 h-4"></i> Monitoring </button> <button onclick="navigate('teknisi')" class="sidebar-item w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium" data-nav="teknisi"> <i data-lucide="tool" class="w-4 h-4"></i> Teknisi </button> <button onclick="navigate('laporan')" class="sidebar-item w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium" data-nav="laporan"> <i data-lucide="bar-chart-2" class="w-4 h-4"></i> Laporan </button> <button onclick="navigate('sistem')" class="sidebar-item w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium" data-nav="sistem"> <i data-lucide="settings" class="w-4 h-4"></i> Sistem </button>
+    <nav class="flex-1 overflow-y-auto p-3 space-y-1">
+     <button onclick="navigate('dashboard')" class="sidebar-item active w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium" data-nav="dashboard"> <i data-lucide="layout-dashboard" class="w-4 h-4"></i> Dashboard </button> <button onclick="navigate('pelanggan')" class="sidebar-item w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium" data-nav="pelanggan"> <i data-lucide="users" class="w-4 h-4"></i> Pelanggan </button> <button onclick="navigate('paket')" class="sidebar-item w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium" data-nav="paket"> <i data-lucide="package" class="w-4 h-4"></i> Paket Layanan </button> <button onclick="navigate('addon')" class="sidebar-item w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium" data-nav="addon"> <i data-lucide="plus-circle" class="w-4 h-4"></i> Add-On </button> <button onclick="navigate('billing')" class="sidebar-item w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium" data-nav="billing"> <i data-lucide="file-text" class="w-4 h-4"></i> Billing &amp; Invoice </button> <button onclick="navigate('pembayaran')" class="sidebar-item w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium" data-nav="pembayaran"> <i data-lucide="credit-card" class="w-4 h-4"></i> Pembayaran </button> <button onclick="navigate('voucher')" class="sidebar-item w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium" data-nav="voucher"> <i data-lucide="ticket" class="w-4 h-4"></i> Voucher </button> <button onclick="navigate('inventory')" class="sidebar-item w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium" data-nav="inventory"> <i data-lucide="box" class="w-4 h-4"></i> Inventory </button> <button onclick="navigate('pppoe')" class="sidebar-item w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium" data-nav="pppoe"> <i data-lucide="network" class="w-4 h-4"></i> PPPoE Manager </button> <button onclick="navigate('hotspot')" class="sidebar-item w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium" data-nav="hotspot"> <i data-lucide="wifi" class="w-4 h-4"></i> Hotspot Manager </button> <button onclick="navigate('tools')" class="sidebar-item w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium" data-nav="tools"> <i data-lucide="wrench" class="w-4 h-4"></i> Tools </button> <button onclick="navigate('monitoring')" class="sidebar-item w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium" data-nav="monitoring"> <i data-lucide="activity" class="w-4 h-4"></i> Monitoring </button> <button onclick="navigate('teknisi')" class="sidebar-item w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium" data-nav="teknisi"> <i data-lucide="tool" class="w-4 h-4"></i> Teknisi </button> <button onclick="navigate('laporan')" class="sidebar-item w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium" data-nav="laporan"> <i data-lucide="bar-chart-2" class="w-4 h-4"></i> Laporan </button> <button onclick="navigate('sistem')" class="sidebar-item w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium" data-nav="sistem"> <i data-lucide="settings" class="w-4 h-4"></i> Sistem </button>
     </nav>
    </aside><!-- Main Content -->
    <main class="flex-1 overflow-y-auto h-full">
     <header class="bg-white border-b border-slate-200 px-6 py-4 flex items-center justify-between sticky top-0 z-10">
      <h2 id="page-title" class="text-lg font-semibold">Dashboard</h2>
-     <div class="flex items-center gap-4"><span class="text-xs text-slate-400" id="current-date"></span> <button id="theme-toggle" onclick="toggleTheme()" class="theme-toggle-btn" title="Toggle Dark Mode">
-       <div class="theme-toggle-thumb"><i id="theme-icon" data-lucide="sun" class="w-3.5 h-3.5 text-indigo-600"></i>
+     <div class="flex items-center gap-4">
+      <span class="text-xs text-slate-400" id="current-date"></span> <button id="theme-toggle" onclick="toggleTheme()" class="theme-toggle-btn" title="Toggle Dark Mode">
+       <div class="theme-toggle-thumb">
+        <i id="theme-icon" data-lucide="sun" class="w-3.5 h-3.5 text-indigo-600"></i>
        </div></button>
-      <div class="w-8 h-8 bg-indigo-100 rounded-full flex items-center justify-center"><i data-lucide="user" class="w-4 h-4 text-indigo-600"></i>
+      <div class="w-8 h-8 bg-indigo-100 rounded-full flex items-center justify-center">
+       <i data-lucide="user" class="w-4 h-4 text-indigo-600"></i>
       </div>
      </div>
     </header>
@@ -312,9 +429,12 @@ function renderDashboard() {
   const addons = getByType('addon');
   const payments = getByType('payment');
   const inventory = getByType('inventory');
+  const vouchers = getByType('voucher');
   const active = customers.filter(c => c.status === 'active').length;
   const totalRevenue = payments.reduce((s, p) => s + (p.price || 0), 0);
   const lowStock = inventory.filter(i => i.quantity <= i.min_stock).length;
+  const activeVouchers = vouchers.filter(v => new Date(v.expiry_date) > new Date() && v.is_used !== 'yes').length;
+  const usedVouchers = vouchers.filter(v => v.is_used === 'yes').length;
   const content = document.getElementById('content');
   content.innerHTML = `
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-4 mb-6">
@@ -362,6 +482,14 @@ function renderDashboard() {
         </div>
         <p class="text-2xl font-bold">${active}</p>
         <p class="text-xs text-slate-400 mt-1">terhubung</p>
+      </div>
+      <div class="card-hover bg-white rounded-xl p-5 border border-slate-100">
+        <div class="flex items-center justify-between mb-3">
+          <span class="text-xs font-medium text-slate-400 uppercase tracking-wide">Voucher</span>
+          <div class="w-9 h-9 bg-violet-50 rounded-lg flex items-center justify-center"><i data-lucide="ticket" class="w-4 h-4 text-violet-500"></i></div>
+        </div>
+        <p class="text-2xl font-bold">${activeVouchers}</p>
+        <p class="text-xs text-violet-500 mt-1">${usedVouchers} digunakan</p>
       </div>
     </div>
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-4 mb-6">
@@ -960,11 +1088,655 @@ async function payInvoice(id) {
   else toast('Gagal mencatat pembayaran', 'error');
 }
 
+// Voucher Management - Professional Editor (Mikhmon Inspired)
+function renderVoucher() {
+  const vouchers = getByType('voucher');
+  const content = document.getElementById('content');
+  content.innerHTML = `
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
+      <div class="bg-gradient-to-br from-indigo-500 to-indigo-600 rounded-xl p-4 text-white">
+        <div class="flex items-center justify-between mb-2">
+          <p class="text-xs font-semibold text-indigo-100">Total Voucher</p>
+          <i data-lucide="ticket" class="w-5 h-5 opacity-50"></i>
+        </div>
+        <p class="text-2xl font-bold">${vouchers.length}</p>
+        <p class="text-xs text-indigo-100 mt-1">${vouchers.filter(v=>v.is_used==='yes').length} digunakan</p>
+      </div>
+      <div class="bg-gradient-to-br from-emerald-500 to-emerald-600 rounded-xl p-4 text-white">
+        <div class="flex items-center justify-between mb-2">
+          <p class="text-xs font-semibold text-emerald-100">Aktif</p>
+          <i data-lucide="check-circle" class="w-5 h-5 opacity-50"></i>
+        </div>
+        <p class="text-2xl font-bold">${vouchers.filter(v => new Date(v.expiry_date) > new Date() && v.is_used!=='yes').length}</p>
+        <p class="text-xs text-emerald-100 mt-1">siap digunakan</p>
+      </div>
+      <div class="bg-gradient-to-br from-red-500 to-red-600 rounded-xl p-4 text-white">
+        <div class="flex items-center justify-between mb-2">
+          <p class="text-xs font-semibold text-red-100">Expired</p>
+          <i data-lucide="alert-circle" class="w-5 h-5 opacity-50"></i>
+        </div>
+        <p class="text-2xl font-bold">${vouchers.filter(v => new Date(v.expiry_date) <= new Date()).length}</p>
+        <p class="text-xs text-red-100 mt-1">tidak berlaku</p>
+      </div>
+      <div class="bg-gradient-to-br from-violet-500 to-violet-600 rounded-xl p-4 text-white">
+        <div class="flex items-center justify-between mb-2">
+          <p class="text-xs font-semibold text-violet-100">Digunakan</p>
+          <i data-lucide="zap" class="w-5 h-5 opacity-50"></i>
+        </div>
+        <p class="text-2xl font-bold">${vouchers.filter(v=>v.is_used==='yes').length}</p>
+        <p class="text-xs text-violet-100 mt-1">redemption</p>
+      </div>
+    </div>
+
+    <div class="flex items-center justify-between mb-4 gap-3 flex-wrap">
+      <div></div>
+      <div class="flex gap-2 flex-wrap">
+        <button onclick="showVoucherGenerator()" class="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-lg text-sm font-semibold flex items-center gap-2 transition shadow-lg">
+          <i data-lucide="plus" class="w-4 h-4"></i> Generate Batch
+        </button>
+        <button onclick="showVoucherImport()" class="bg-sky-500 hover:bg-sky-600 text-white px-4 py-2 rounded-lg text-sm font-semibold flex items-center gap-2 transition">
+          <i data-lucide="upload" class="w-4 h-4"></i> Import
+        </button>
+        <button onclick="exportVouchersData()" class="bg-emerald-500 hover:bg-emerald-600 text-white px-4 py-2 rounded-lg text-sm font-semibold flex items-center gap-2 transition">
+          <i data-lucide="download" class="w-4 h-4"></i> Export
+        </button>
+        <button onclick="showPrintVoucherOptions()" class="bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 rounded-lg text-sm font-semibold flex items-center gap-2 transition">
+          <i data-lucide="printer" class="w-4 h-4"></i> Print
+        </button>
+      </div>
+    </div>
+
+    <div id="voucher-generator-area"></div>
+    <div id="voucher-import-area"></div>
+
+    <div class="bg-white rounded-xl border border-slate-100 overflow-hidden">
+      <div class="overflow-x-auto">
+        <table class="w-full text-sm">
+          <thead class="bg-slate-50 sticky top-0">
+            <tr>
+              <th class="text-left px-4 py-3 font-semibold text-slate-600">Kode</th>
+              <th class="text-left px-4 py-3 font-semibold text-slate-600">Jenis</th>
+              <th class="text-right px-4 py-3 font-semibold text-slate-600">Nilai</th>
+              <th class="text-left px-4 py-3 font-semibold text-slate-600">Exp.</th>
+              <th class="text-center px-4 py-3 font-semibold text-slate-600">Status</th>
+              <th class="text-center px-4 py-3 font-semibold text-slate-600">Aksi</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${vouchers.length === 0 ? '<tr><td colspan="6" class="px-4 py-8 text-center text-slate-400">Belum ada voucher</td></tr>' :
+              vouchers.map((v, i) => {
+                const isExpired = new Date(v.expiry_date) <= new Date();
+                const isUsed = v.is_used === 'yes';
+                const statusColor = isUsed ? 'bg-gray-50 text-gray-600' : isExpired ? 'bg-red-50 text-red-600' : 'bg-emerald-50 text-emerald-600';
+                const statusText = isUsed ? 'DIGUNAKAN' : isExpired ? 'EXPIRED' : 'AKTIF';
+                return `<tr class="border-t border-slate-50 hover:bg-slate-25">
+                  <td class="px-4 py-3"><span class="font-mono text-xs font-bold bg-slate-100 px-2 py-1 rounded">${v.voucher_code}</span></td>
+                  <td class="px-4 py-3 text-xs"><span class="px-2 py-1 rounded ${v.discount_type==='percent'?'bg-blue-50 text-blue-600':'bg-purple-50 text-purple-600'}">${v.discount_type==='percent'?'%':'Rp'}</span></td>
+                  <td class="px-4 py-3 text-right font-semibold">${v.discount_type==='percent'?v.discount_value+'%':formatRp(v.discount_value)}</td>
+                  <td class="px-4 py-3 text-xs text-slate-500">${formatDate(v.expiry_date)}</td>
+                  <td class="px-4 py-3 text-center"><span class="text-xs px-2 py-1 rounded-full ${statusColor}">${statusText}</span></td>
+                  <td class="px-4 py-3 text-center space-x-1">
+                    ${!isUsed ? `<button onclick="cloneVoucher('${v.__backendId}')" class="text-xs text-indigo-600 hover:text-indigo-700 hover:bg-indigo-50 px-2 py-1 rounded transition" title="Clone">📋</button>` : ''}
+                    <button onclick="deleteRecord('${v.__backendId}')" class="text-xs text-red-500 hover:text-red-700 hover:bg-red-50 px-2 py-1 rounded transition">🗑️</button>
+                  </td>
+                </tr>`;
+              }).join('')}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  `;
+  lucide.createIcons();
+}
+
+// Print Voucher Functions
+function showPrintVoucherOptions() {
+  const printModal = document.createElement('div');
+  printModal.id = 'print-voucher-modal';
+  printModal.className = 'fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4 overflow-y-auto';
+  printModal.innerHTML = `
+    <div class="bg-white rounded-2xl max-w-2xl w-full shadow-2xl my-4 overflow-hidden">
+      <div class="bg-gradient-to-r from-orange-500 to-red-600 text-white px-6 py-4 flex items-center justify-between">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 bg-white bg-opacity-20 rounded-lg flex items-center justify-center">
+            <i data-lucide="printer" class="w-5 h-5"></i>
+          </div>
+          <h3 class="font-bold text-lg">Print Voucher</h3>
+        </div>
+        <button onclick="document.getElementById('print-voucher-modal').remove()" class="text-white hover:text-orange-100"><i data-lucide="x" class="w-5 h-5"></i></button>
+      </div>
+      <div class="p-6 space-y-4">
+        <div class="bg-orange-50 border border-orange-200 rounded-lg p-4">
+          <p class="text-sm text-orange-800 mb-3"><strong>📋 Pilih Template:</strong></p>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+            <button onclick="printVouchersA4Professional()" class="border-2 border-orange-200 hover:border-orange-500 hover:bg-orange-100 text-orange-700 font-semibold py-3 px-4 rounded-lg transition flex items-center justify-center gap-2">
+              <i data-lucide="square" class="w-4 h-4"></i> Professional A4 (40x)
+            </button>
+            <button onclick="printVouchersA4Modern()" class="border-2 border-orange-200 hover:border-orange-500 hover:bg-orange-100 text-orange-700 font-semibold py-3 px-4 rounded-lg transition flex items-center justify-center gap-2">
+              <i data-lucide="square" class="w-4 h-4"></i> Modern A4 (40x)
+            </button>
+            <button onclick="printVouchersA4Classic()" class="border-2 border-orange-200 hover:border-orange-500 hover:bg-orange-100 text-orange-700 font-semibold py-3 px-4 rounded-lg transition flex items-center justify-center gap-2">
+              <i data-lucide="square" class="w-4 h-4"></i> Classic A4 (40x)
+            </button>
+            <button onclick="printVouchersA4Minimal()" class="border-2 border-orange-200 hover:border-orange-500 hover:bg-orange-100 text-orange-700 font-semibold py-3 px-4 rounded-lg transition flex items-center justify-center gap-2">
+              <i data-lucide="square" class="w-4 h-4"></i> Minimal A4 (40x)
+            </button>
+          </div>
+        </div>
+        <div class="bg-blue-50 border border-blue-200 rounded-lg p-4">
+          <p class="text-xs text-blue-700"><strong>💡 Info:</strong> Semua template dicetak di kertas A4 (210x297mm) dengan 40 voucher per halaman dalam format grid 5x8.</p>
+        </div>
+      </div>
+    </div>
+  `;
+  document.body.appendChild(printModal);
+  lucide.createIcons();
+}
+
+function generateVoucherPrintContent(template = 'professional') {
+  const vouchers = getByType('voucher').slice(0, 40);
+  const templates = {
+    professional: {
+      bgGradient: 'linear-gradient(135deg, #6366f1 0%, #a855f7 100%)',
+      cardStyle: 'border: 2px solid #6366f1; box-shadow: 0 4px 15px rgba(99, 102, 241, 0.2);',
+      titleColor: '#1e293b',
+      codeColor: '#6366f1',
+      codeStyle: 'font-weight: 900; font-size: 18px; font-family: monospace; letter-spacing: 2px;'
+    },
+    modern: {
+      bgGradient: 'linear-gradient(135deg, #ec4899 0%, #f97316 100%)',
+      cardStyle: 'border: 3px dashed #ec4899; box-shadow: 0 8px 20px rgba(236, 72, 153, 0.15); border-radius: 15px;',
+      titleColor: '#831843',
+      codeColor: '#ec4899',
+      codeStyle: 'font-weight: 900; font-size: 20px; font-family: monospace; letter-spacing: 3px; text-transform: uppercase;'
+    },
+    classic: {
+      bgGradient: 'linear-gradient(180deg, #fbbf24 0%, #f97316 100%)',
+      cardStyle: 'border: 3px solid #92400e; box-shadow: 0 2px 8px rgba(0,0,0,0.1); border-radius: 8px; background: linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%);',
+      titleColor: '#78350f',
+      codeColor: '#b45309',
+      codeStyle: 'font-weight: 900; font-size: 16px; font-family: monospace;'
+    },
+    minimal: {
+      bgGradient: 'linear-gradient(135deg, #e5e7eb 0%, #d1d5db 100%)',
+      cardStyle: 'border: 1px solid #9ca3af; box-shadow: 0 1px 3px rgba(0,0,0,0.1); border-radius: 4px;',
+      titleColor: '#374151',
+      codeColor: '#1f2937',
+      codeStyle: 'font-weight: 700; font-size: 14px; font-family: monospace;'
+    }
+  };
+  
+  const style = templates[template];
+  
+  let html = `
+    <html>
+    <head>
+      <meta charset="UTF-8">
+      <title>NetBill Pro Voucher Print</title>
+      <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+          font-family: 'Arial', sans-serif;
+          background: #f5f5f5;
+          padding: 0;
+          margin: 0;
+        }
+        @page {
+          size: A4;
+          margin: 10mm;
+        }
+        .page {
+          width: 210mm;
+          height: 297mm;
+          background: white;
+          page-break-after: always;
+          display: grid;
+          grid-template-columns: repeat(5, 1fr);
+          grid-template-rows: repeat(8, 1fr);
+          gap: 5mm;
+          padding: 10mm;
+          box-sizing: border-box;
+        }
+        .voucher-card {
+          ${style.cardStyle}
+          padding: 12px;
+          display: flex;
+          flex-direction: column;
+          justify-content: space-between;
+          align-items: center;
+          text-align: center;
+          background: white;
+          overflow: hidden;
+        }
+        .voucher-header {
+          width: 100%;
+          background: ${style.bgGradient};
+          color: white;
+          padding: 8px 0;
+          border-radius: 4px;
+          margin-bottom: 8px;
+        }
+        .voucher-header-text {
+          font-size: 10px;
+          font-weight: bold;
+          letter-spacing: 1px;
+        }
+        .voucher-code {
+          color: ${style.codeColor};
+          ${style.codeStyle}
+          margin: 6px 0;
+          word-break: break-all;
+        }
+        .voucher-value {
+          color: ${style.titleColor};
+          font-weight: bold;
+          font-size: 12px;
+          margin: 4px 0;
+        }
+        .voucher-discount {
+          background: ${style.bgGradient};
+          color: white;
+          padding: 4px 8px;
+          border-radius: 3px;
+          font-size: 11px;
+          font-weight: bold;
+          margin: 4px 0;
+          width: 100%;
+        }
+        .voucher-expiry {
+          font-size: 8px;
+          color: #999;
+          margin-top: 4px;
+        }
+        .voucher-logo {
+          font-size: 14px;
+          font-weight: bold;
+          color: ${style.codeColor};
+          margin-bottom: 4px;
+        }
+        @media print {
+          body { margin: 0; padding: 0; }
+          .page { page-break-after: always; }
+        }
+      </style>
+    </head>
+    <body>
+  `;
+  
+  let voucherCount = 0;
+  let pageHtml = '<div class="page">';
+  
+  for (let i = 0; i < 40; i++) {
+    const voucher = vouchers[i];
+    
+    if (voucher) {
+      const discount = voucher.discount_type === 'percent' ? `${voucher.discount_value}%` : `Rp ${Number(voucher.discount_value).toLocaleString('id-ID')}`;
+      const expiry = new Date(voucher.expiry_date).toLocaleDateString('id-ID', { year: '2-digit', month: '2-digit', day: '2-digit' });
+      
+      pageHtml += `
+        <div class="voucher-card">
+          <div class="voucher-logo">🎫</div>
+          <div class="voucher-header">
+            <div class="voucher-header-text">NETBILL PRO</div>
+          </div>
+          <div class="voucher-code">${voucher.voucher_code}</div>
+          <div class="voucher-value">${discount}</div>
+          <div class="voucher-discount">DISKON</div>
+          <div class="voucher-expiry">Exp: ${expiry}</div>
+        </div>
+      `;
+    } else {
+      pageHtml += '<div class="voucher-card" style="opacity: 0.3;"></div>';
+    }
+    
+    voucherCount++;
+    if (voucherCount % 40 === 0 && i < 39) {
+      pageHtml += '</div><div class="page">';
+    }
+  }
+  
+  pageHtml += '</div>';
+  html += pageHtml + '</body></html>';
+  
+  return html;
+}
+
+function printVouchersA4Professional() {
+  const content = generateVoucherPrintContent('professional');
+  const win = window.open('', '', 'height=800,width=600');
+  win.document.write(content);
+  win.document.close();
+  setTimeout(() => {
+    win.print();
+    document.getElementById('print-voucher-modal').remove();
+    toast('✓ Voucher siap dicetak (Template: Professional)');
+  }, 500);
+}
+
+function printVouchersA4Modern() {
+  const content = generateVoucherPrintContent('modern');
+  const win = window.open('', '', 'height=800,width=600');
+  win.document.write(content);
+  win.document.close();
+  setTimeout(() => {
+    win.print();
+    document.getElementById('print-voucher-modal').remove();
+    toast('✓ Voucher siap dicetak (Template: Modern)');
+  }, 500);
+}
+
+function printVouchersA4Classic() {
+  const content = generateVoucherPrintContent('classic');
+  const win = window.open('', '', 'height=800,width=600');
+  win.document.write(content);
+  win.document.close();
+  setTimeout(() => {
+    win.print();
+    document.getElementById('print-voucher-modal').remove();
+    toast('✓ Voucher siap dicetak (Template: Classic)');
+  }, 500);
+}
+
+function printVouchersA4Minimal() {
+  const content = generateVoucherPrintContent('minimal');
+  const win = window.open('', '', 'height=800,width=600');
+  win.document.write(content);
+  win.document.close();
+  setTimeout(() => {
+    win.print();
+    document.getElementById('print-voucher-modal').remove();
+    toast('✓ Voucher siap dicetak (Template: Minimal)');
+  }, 500);
+}
+
+function showVoucherGenerator() {
+  const area = document.getElementById('voucher-generator-area');
+  const today = new Date().toISOString().split('T')[0];
+  const future = new Date(Date.now() + 30*24*60*60*1000).toISOString().split('T')[0];
+  
+  area.innerHTML = `
+    <div class="bg-gradient-to-r from-indigo-600 to-indigo-700 rounded-xl p-6 mb-4 text-white shadow-xl">
+      <div class="flex items-center justify-between mb-4">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 bg-white bg-opacity-20 rounded-lg flex items-center justify-center">
+            <i data-lucide="sparkles" class="w-5 h-5"></i>
+          </div>
+          <h3 class="font-bold text-lg">⚡ Generate Voucher Batch</h3>
+        </div>
+        <button onclick="document.getElementById('voucher-generator-area').innerHTML=''" class="hover:bg-indigo-500 p-2 rounded-lg transition"><i data-lucide="x" class="w-5 h-5"></i></button>
+      </div>
+      <form onsubmit="generateVoucherBatch(event)" class="space-y-4">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div>
+            <label class="block text-xs font-semibold mb-2 text-indigo-100" for="v-qty">Jumlah Voucher</label>
+            <input id="v-qty" type="number" value="10" min="1" max="1000" required class="w-full border border-indigo-300 bg-white bg-opacity-10 backdrop-blur rounded-lg px-3 py-2 text-sm text-white placeholder-indigo-200 focus:outline-none focus:ring-2 focus:ring-white" onchange="updateVoucherPreview()">
+          </div>
+          <div>
+            <label class="block text-xs font-semibold mb-2 text-indigo-100" for="v-type">Tipe Diskon</label>
+            <select id="v-type" class="w-full border border-indigo-300 bg-white bg-opacity-10 backdrop-blur rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:ring-2 focus:ring-white" onchange="updateVoucherPreview()">
+              <option value="percent" class="text-slate-800">Persentase (%)</option>
+              <option value="fixed" class="text-slate-800">Fixed (Rp)</option>
+            </select>
+          </div>
+          <div>
+            <label class="block text-xs font-semibold mb-2 text-indigo-100" for="v-val">Nilai Diskon</label>
+            <input id="v-val" type="number" value="10" min="1" required class="w-full border border-indigo-300 bg-white bg-opacity-10 backdrop-blur rounded-lg px-3 py-2 text-sm text-white placeholder-indigo-200 focus:outline-none focus:ring-2 focus:ring-white" onchange="updateVoucherPreview()">
+          </div>
+          <div>
+            <label class="block text-xs font-semibold mb-2 text-indigo-100" for="v-exp">Tanggal Kadaluarsa</label>
+            <input id="v-exp" type="date" value="${future}" required class="w-full border border-indigo-300 bg-white bg-opacity-10 backdrop-blur rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:ring-2 focus:ring-white" onchange="updateVoucherPreview()">
+          </div>
+          <div>
+            <label class="block text-xs font-semibold mb-2 text-indigo-100" for="v-prefix">Prefix Kode (optional)</label>
+            <input id="v-prefix" type="text" placeholder="PROMO" maxlength="10" class="w-full border border-indigo-300 bg-white bg-opacity-10 backdrop-blur rounded-lg px-3 py-2 text-sm text-white placeholder-indigo-200 focus:outline-none focus:ring-2 focus:ring-white" onchange="updateVoucherPreview()">
+          </div>
+          <div>
+            <label class="block text-xs font-semibold mb-2 text-indigo-100" for="v-pkg">Paket Target (optional)</label>
+            <input id="v-pkg" type="text" placeholder="Semua paket" class="w-full border border-indigo-300 bg-white bg-opacity-10 backdrop-blur rounded-lg px-3 py-2 text-sm text-white placeholder-indigo-200 focus:outline-none focus:ring-2 focus:ring-white">
+          </div>
+        </div>
+        
+        <!-- Preview Section -->
+        <div class="bg-white bg-opacity-10 backdrop-blur rounded-lg p-4 border border-indigo-300 space-y-3">
+          <div class="grid grid-cols-2 md:grid-cols-5 gap-2 text-xs text-indigo-100">
+            <div><strong>Qty:</strong> <span id="preview-qty" class="font-mono">10</span></div>
+            <div><strong>Tipe:</strong> <span id="preview-type" class="font-mono">%</span></div>
+            <div><strong>Nilai:</strong> <span id="preview-val" class="font-mono">10</span></div>
+            <div><strong>Exp:</strong> <span id="preview-exp" class="font-mono">${future}</span></div>
+            <div><strong>Status:</strong> <span id="preview-status" class="text-emerald-300">✓ Siap</span></div>
+          </div>
+          <div class="bg-white bg-opacity-10 rounded-lg p-3 border border-indigo-400">
+            <p class="text-xs text-indigo-200 mb-2"><strong>📋 Contoh Kode Voucher:</strong></p>
+            <p class="font-mono text-sm text-white bg-black bg-opacity-20 px-2 py-1 rounded">PROMO${Math.random().toString(36).substring(2,8).toUpperCase()}</p>
+          </div>
+        </div>
+        
+        <div class="flex gap-2 pt-2">
+          <button type="submit" id="v-submit-btn" class="flex-1 bg-white text-indigo-600 font-bold px-4 py-3 rounded-lg hover:bg-indigo-50 transition flex items-center justify-center gap-2">
+            <i data-lucide="zap" class="w-4 h-4"></i> Generate ${document.getElementById('v-qty')?.value || '10'} Voucher
+          </button>
+          <button type="button" onclick="document.getElementById('voucher-generator-area').innerHTML=''" class="flex-1 bg-white bg-opacity-20 text-white font-bold px-4 py-3 rounded-lg hover:bg-opacity-30 transition">Batal</button>
+        </div>
+      </form>
+    </div>
+  `;
+  
+  // Live preview
+  setTimeout(() => {
+    const qtyInput = document.getElementById('v-qty');
+    const typeInput = document.getElementById('v-type');
+    const valInput = document.getElementById('v-val');
+    const expInput = document.getElementById('v-exp');
+    const prefixInput = document.getElementById('v-prefix');
+    
+    if (qtyInput) qtyInput.addEventListener('input', updateVoucherPreview);
+    if (typeInput) typeInput.addEventListener('change', updateVoucherPreview);
+    if (valInput) valInput.addEventListener('input', updateVoucherPreview);
+    if (expInput) expInput.addEventListener('change', updateVoucherPreview);
+    if (prefixInput) prefixInput.addEventListener('input', updateVoucherPreview);
+  }, 100);
+  
+  lucide.createIcons();
+}
+
+function updateVoucherPreview() {
+  const qty = document.getElementById('v-qty')?.value || '10';
+  const type = document.getElementById('v-type')?.value || 'percent';
+  const val = document.getElementById('v-val')?.value || '10';
+  const exp = document.getElementById('v-exp')?.value || '';
+  const prefix = (document.getElementById('v-prefix')?.value || 'PROMO').toUpperCase();
+  
+  document.getElementById('preview-qty').textContent = qty;
+  document.getElementById('preview-type').textContent = type === 'percent' ? '%' : 'Rp';
+  document.getElementById('preview-val').textContent = val;
+  document.getElementById('preview-exp').textContent = exp;
+  document.getElementById('preview-status').textContent = qty > 0 && val > 0 && exp ? '✓ Siap Generate' : '⚠ Lengkapi Form';
+  
+  const submitBtn = document.getElementById('v-submit-btn');
+  if (submitBtn) {
+    submitBtn.innerHTML = `<i data-lucide="zap" class="w-4 h-4"></i> Generate ${qty} Voucher`;
+  }
+}
+
+async function generateVoucherBatch(e) {
+  e.preventDefault();
+  const qty = parseInt(document.getElementById('v-qty').value);
+  const type = document.getElementById('v-type').value;
+  const val = parseInt(document.getElementById('v-val').value);
+  const exp = document.getElementById('v-exp').value;
+  const prefix = (document.getElementById('v-prefix').value || 'VOC').toUpperCase();
+  const pkg = document.getElementById('v-pkg').value || 'Semua Paket';
+  
+  if (allData.length + qty > 999) { toast(`Max data: ${999-allData.length} voucher`, 'error'); return; }
+  
+  const btn = e.target.querySelector('button[type="submit"]');
+  btn.disabled = true;
+  btn.innerHTML = '<i data-lucide="loader" class="w-4 h-4 animate-spin mr-2"></i> Generating...';
+  
+  let created = 0;
+  for (let i = 0; i < qty; i++) {
+    const code = prefix + Math.random().toString(36).substring(2, 10).toUpperCase();
+    const result = await window.dataSdk.create({
+      type: 'voucher',
+      name: 'Voucher ' + code,
+      voucher_code: code,
+      discount_type: type,
+      discount_value: val,
+      expiry_date: exp,
+      used_by: '',
+      is_used: 'no',
+      status: 'active',
+      created_at: new Date().toISOString(),
+      email:'', phone:'', address:'', package_name:pkg, speed:'', price:0, pppoe_user:'', ip_address:'', due_date:'', location:'', capacity:'', condition:'', technician:'', ticket_type:'', priority:'', description:'', category:'', sku:'', quantity:0, unit:'', min_stock:0, supplier:''
+    });
+    if (result.isOk) created++;
+  }
+  
+  toast(`✓ ${created} voucher generated successfully!`);
+  document.getElementById('voucher-generator-area').innerHTML = '';
+}
+
+function showVoucherImport() {
+  const area = document.getElementById('voucher-import-area');
+  area.innerHTML = `
+    <div class="bg-gradient-to-r from-sky-500 to-cyan-600 rounded-xl p-6 mb-4 text-white shadow-xl">
+      <div class="flex items-center justify-between mb-4">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 bg-white bg-opacity-20 rounded-lg flex items-center justify-center">
+            <i data-lucide="upload-cloud" class="w-5 h-5"></i>
+          </div>
+          <h3 class="font-bold text-lg">Import Voucher</h3>
+        </div>
+        <button onclick="document.getElementById('voucher-import-area').innerHTML=''" class="hover:bg-cyan-500 p-2 rounded-lg transition"><i data-lucide="x" class="w-5 h-5"></i></button>
+      </div>
+      <div class="space-y-3">
+        <div class="bg-white bg-opacity-10 backdrop-blur rounded-lg p-4 border-2 border-dashed border-white border-opacity-30">
+          <p class="text-sm mb-3 font-medium">Pilih file CSV atau JSON</p>
+          <input id="v-import-file" type="file" accept=".csv,.json" class="w-full bg-white bg-opacity-10 text-white px-3 py-2 rounded-lg text-sm file:bg-white file:text-cyan-600 file:px-3 file:py-1 file:rounded file:border-0 file:cursor-pointer file:font-medium hover:bg-opacity-20 transition">
+        </div>
+        <div class="flex gap-2">
+          <button onclick="handleVoucherImport()" class="flex-1 bg-white text-cyan-600 font-bold px-4 py-3 rounded-lg hover:bg-cyan-50 transition flex items-center justify-center gap-2">
+            <i data-lucide="upload" class="w-4 h-4"></i> Import
+          </button>
+          <button onclick="document.getElementById('voucher-import-area').innerHTML=''" class="flex-1 bg-white bg-opacity-20 text-white font-bold px-4 py-3 rounded-lg hover:bg-opacity-30 transition">Batal</button>
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+async function handleVoucherImport() {
+  const file = document.getElementById('v-import-file').files[0];
+  if (!file) { toast('Pilih file terlebih dahulu', 'error'); return; }
+  
+  const reader = new FileReader();
+  reader.onload = async (e) => {
+    try {
+      const content = e.target.result;
+      let importData = [];
+      
+      if (file.name.endsWith('.json')) {
+        const parsed = JSON.parse(content);
+        importData = Array.isArray(parsed) ? parsed : [];
+      } else if (file.name.endsWith('.csv')) {
+        const lines = content.split('\n');
+        const headers = lines[0].split(',').map(h => h.replace(/"/g, '').trim().toLowerCase());
+        for (let i = 1; i < lines.length; i++) {
+          if (!lines[i].trim()) continue;
+          const values = lines[i].split(',').map(v => v.replace(/"/g, '').trim());
+          const obj = {};
+          headers.forEach((h, idx) => obj[h] = values[idx]);
+          importData.push(obj);
+        }
+      }
+      
+      if (importData.length === 0) { toast('File kosong', 'error'); return; }
+      if (allData.length + importData.length > 999) { toast('Max voucher exceeded', 'error'); return; }
+      
+      let imported = 0;
+      for (const item of importData) {
+        const result = await window.dataSdk.create({
+          type: 'voucher',
+          name: 'Voucher ' + item.voucher_code,
+          voucher_code: item.voucher_code || '',
+          discount_type: item.discount_type || 'percent',
+          discount_value: parseInt(item.discount_value) || 0,
+          expiry_date: item.expiry_date || '',
+          used_by: item.used_by || '',
+          is_used: item.is_used || 'no',
+          status: 'active',
+          created_at: new Date().toISOString(),
+          email:'', phone:'', address:'', package_name:'', speed:'', price:0, pppoe_user:'', ip_address:'', due_date:'', location:'', capacity:'', condition:'', technician:'', ticket_type:'', priority:'', description:'', category:'', sku:'', quantity:0, unit:'', min_stock:0, supplier:''
+        });
+        if (result.isOk) imported++;
+      }
+      
+      toast(`✓ ${imported} voucher imported!`);
+      document.getElementById('voucher-import-area').innerHTML = '';
+    } catch (err) {
+      toast('Error: ' + err.message, 'error');
+    }
+  };
+  reader.readAsText(file);
+}
+
+function exportVouchersData() {
+  const vouchers = getByType('voucher');
+  if (vouchers.length === 0) { toast('Tidak ada voucher', 'error'); return; }
+  
+  const exportData = vouchers.map(v => ({
+    voucher_code: v.voucher_code,
+    discount_type: v.discount_type,
+    discount_value: v.discount_value,
+    expiry_date: v.expiry_date,
+    used_by: v.used_by,
+    is_used: v.is_used,
+    created_at: v.created_at
+  }));
+  
+  const json = JSON.stringify(exportData, null, 2);
+  const blob = new Blob([json], { type: 'application/json' });
+  const link = document.createElement('a');
+  link.href = URL.createObjectURL(blob);
+  link.download = `vouchers_${new Date().toISOString().split('T')[0]}.json`;
+  link.click();
+  toast(`${vouchers.length} vouchers exported!`);
+}
+
+async function cloneVoucher(id) {
+  const voucher = allData.find(d => d.__backendId === id);
+  if (!voucher || allData.length >= 999) return;
+  
+  const code = voucher.voucher_code.substring(0, 5) + Math.random().toString(36).substring(2, 8).toUpperCase();
+  const result = await window.dataSdk.create({
+    type: 'voucher',
+    name: 'Voucher ' + code,
+    voucher_code: code,
+    discount_type: voucher.discount_type,
+    discount_value: voucher.discount_value,
+    expiry_date: voucher.expiry_date,
+    used_by: '',
+    is_used: 'no',
+    status: 'active',
+    created_at: new Date().toISOString(),
+    email:'', phone:'', address:'', package_name:'', speed:'', price:0, pppoe_user:'', ip_address:'', due_date:'', location:'', capacity:'', condition:'', technician:'', ticket_type:'', priority:'', description:'', category:'', sku:'', quantity:0, unit:'', min_stock:0, supplier:''
+  });
+  if (result.isOk) toast('✓ Voucher cloned: ' + code);
+  else toast('Gagal clone', 'error');
+}
+
 function viewInvoiceTemplate(id) {
   const invoice = allData.find(d => d.__backendId === id);
   if (!invoice) return;
   const customer = getByType('customer').find(c => c.name === invoice.name);
   const modal = document.getElementById('invoice-modal');
+  if (!modal) {
+    const newModal = document.createElement('div');
+    newModal.id = 'invoice-modal';
+    newModal.className = 'hidden fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4 overflow-y-auto';
+    newModal.innerHTML = '<div id="invoice-modal-content" class="bg-white rounded-xl w-full max-w-2xl my-4"></div>';
+    document.body.appendChild(newModal);
+  }
   const content = document.getElementById('invoice-modal-content');
   
   const invoiceNum = 'INV-' + new Date().getFullYear() + '-' + String(id).slice(0, 6).toUpperCase();
@@ -1026,255 +1798,7 @@ function downloadInvoicePDF() {
   toast('Invoice siap untuk diunduh/cetak');
 }
 
-// Voucher
-function renderVoucher() {
-  const vouchers = getByType('voucher');
-  const usedVouchers = vouchers.filter(v => v.is_used === 'yes');
-  const activeVouchers = vouchers.filter(v => v.is_used !== 'yes');
-  const content = document.getElementById('content');
-  content.innerHTML = `
-    <div class="flex items-center justify-between mb-4">
-      <div><h3 class="font-semibold">Total Voucher: ${vouchers.length}</h3><p class="text-xs text-slate-400">Aktif: ${activeVouchers.length} | Terpakai: ${usedVouchers.length}</p></div>
-      <button onclick="showVoucherGenerator()" class="bg-indigo-500 hover:bg-indigo-600 text-white px-4 py-2 rounded-lg text-sm font-medium flex items-center gap-2 transition">
-        <i data-lucide="plus" class="w-4 h-4"></i> Generate Voucher
-      </button>
-    </div>
-    <div id="voucher-form-area"></div>
-    <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
-      <div class="bg-white rounded-xl border border-slate-100 p-5">
-        <h3 class="font-semibold mb-4 text-sm">Voucher Aktif</h3>
-        ${activeVouchers.length === 0 ? '<p class="text-slate-400 text-sm">Tidak ada voucher aktif</p>' :
-          activeVouchers.map(v => `<div class="bg-gradient-to-r from-indigo-50 to-violet-50 rounded-lg p-4 mb-3 border border-indigo-100 last:mb-0">
-            <div class="flex items-center justify-between mb-2">
-              <code class="text-sm font-bold text-indigo-600">${v.voucher_code}</code>
-              <div class="flex gap-1">
-                <button onclick="copyCode('${v.voucher_code}')" class="text-xs text-indigo-500 hover:text-indigo-700"><i data-lucide="copy" class="w-3 h-3 inline"></i></button>
-              </div>
-            </div>
-            <div class="grid grid-cols-2 gap-2 text-xs mb-2"><div><span class="text-slate-400">Diskon</span><p class="font-medium text-lg text-indigo-600">${v.discount_type === 'percent' ? v.discount_value + '%' : formatRp(v.discount_value)}</p></div>
-            <div><span class="text-slate-400">Exp</span><p class="font-medium">${formatDate(v.expiry_date)}</p></div></div>
-            <div class="flex gap-2">
-              <button onclick="viewVoucherTemplate('${v.__backendId}')" class="flex-1 text-xs bg-indigo-50 text-indigo-600 hover:bg-indigo-100 py-1 rounded transition font-medium">Lihat Cetak</button>
-              <button onclick="deleteRecord('${v.__backendId}')" class="flex-1 text-xs bg-red-50 text-red-500 hover:bg-red-100 py-1 rounded transition">Hapus</button>
-            </div>
-          </div>`).join('')}
-      </div>
-      <div class="bg-white rounded-xl border border-slate-100 p-5">
-        <h3 class="font-semibold mb-4 text-sm">Voucher Terpakai</h3>
-        ${usedVouchers.length === 0 ? '<p class="text-slate-400 text-sm">Belum ada voucher yang digunakan</p>' :
-          usedVouchers.map(v => `<div class="bg-slate-50 rounded-lg p-3 mb-2 last:mb-0 opacity-70">
-            <div class="flex items-center justify-between mb-1">
-              <code class="text-xs font-bold text-slate-500">${v.voucher_code}</code>
-              <span class="text-xs bg-emerald-50 text-emerald-600 px-2 py-0.5 rounded">Terpakai</span>
-            </div>
-            <p class="text-xs text-slate-400">Pengguna: ${v.used_by || '-'} | ${formatDate(v.created_at)}</p>
-          </div>`).join('')}
-      </div>
-    </div>
-    <div id="voucher-modal" class="hidden fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4 overflow-y-auto">
-      <div id="voucher-modal-content" class="bg-white rounded-xl w-full max-w-4xl my-4"></div>
-    </div>
-  `;
-  lucide.createIcons();
-}
 
-function showVoucherGenerator() {
-  const area = document.getElementById('voucher-form-area');
-  area.innerHTML = `
-    <div class="bg-gradient-to-r from-indigo-500 to-violet-600 rounded-xl p-6 mb-4 text-white">
-      <h3 class="font-bold text-lg mb-4">⚡ Generate Voucher Baru</h3>
-      <form onsubmit="generateVoucher(event)" class="space-y-4">
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div>
-            <label class="block text-xs font-medium mb-2 text-indigo-100" for="v-quantity">Jumlah Voucher</label>
-            <input id="v-quantity" type="number" value="10" min="1" max="100" required class="w-full border border-indigo-300 bg-white bg-opacity-10 backdrop-blur rounded-lg px-3 py-2 text-sm text-white placeholder-indigo-200 focus:outline-none focus:ring-2 focus:ring-white" placeholder="Berapa banyak?">
-          </div>
-          <div>
-            <label class="block text-xs font-medium mb-2 text-indigo-100" for="v-type">Tipe Diskon</label>
-            <select id="v-type" class="w-full border border-indigo-300 bg-white bg-opacity-10 backdrop-blur rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:ring-2 focus:ring-white">
-              <option value="percent" class="text-slate-800">Persentase (%)</option>
-              <option value="fixed" class="text-slate-800">Nominal (Rp)</option>
-            </select>
-          </div>
-        </div>
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div>
-            <label class="block text-xs font-medium mb-2 text-indigo-100" for="v-value">Nilai Diskon</label>
-            <input id="v-value" type="number" value="10" min="1" required class="w-full border border-indigo-300 bg-white bg-opacity-10 backdrop-blur rounded-lg px-3 py-2 text-sm text-white placeholder-indigo-200 focus:outline-none focus:ring-2 focus:ring-white" placeholder="Berapa besar?">
-          </div>
-          <div>
-            <label class="block text-xs font-medium mb-2 text-indigo-100" for="v-exp">Berlaku Sampai</label>
-            <input id="v-exp" type="date" required class="w-full border border-indigo-300 bg-white bg-opacity-10 backdrop-blur rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:ring-2 focus:ring-white">
-          </div>
-        </div>
-        <div class="flex gap-2 pt-2">
-          <button type="submit" class="flex-1 bg-white text-indigo-600 font-semibold px-4 py-2.5 rounded-lg hover:bg-indigo-50 transition">Generate</button>
-          <button type="button" onclick="document.getElementById('voucher-form-area').innerHTML=''" class="flex-1 bg-white bg-opacity-20 text-white font-semibold px-4 py-2.5 rounded-lg hover:bg-opacity-30 transition">Batal</button>
-        </div>
-      </form>
-    </div>
-  `;
-}
-
-function generateRandomCode(length = 8) {
-  const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-  let code = '';
-  for (let i = 0; i < length; i++) code += chars.charAt(Math.floor(Math.random() * chars.length));
-  return code;
-}
-
-async function generateVoucher(e) {
-  e.preventDefault();
-  const qty = parseInt(document.getElementById('v-quantity').value);
-  const type = document.getElementById('v-type').value;
-  const value = Number(document.getElementById('v-value').value);
-  const expDate = document.getElementById('v-exp').value;
-  
-  if (allData.length + qty > 999) { toast('Akan melebihi batas data (999)', 'error'); return; }
-  
-  const btn = e.target.querySelector('button[type="submit"]');
-  btn.disabled = true;
-  btn.textContent = 'Generating...';
-  
-  let created = 0;
-  for (let i = 0; i < qty; i++) {
-    const code = generateRandomCode();
-    const result = await window.dataSdk.create({
-      type: 'voucher',
-      voucher_code: code,
-      discount_type: type,
-      discount_value: value,
-      expiry_date: expDate,
-      is_used: 'no',
-      used_by: '',
-      name: 'Voucher ' + code,
-      price: 0,
-      email: '', phone: '', address: '', package_name: '', speed: '', status: '', pppoe_user: '', ip_address: '', due_date: '',
-      created_at: new Date().toISOString()
-    });
-    if (result.isOk) created++;
-  }
-  
-  toast(`${created} dari ${qty} voucher berhasil dibuat`);
-  document.getElementById('voucher-form-area').innerHTML = '';
-  btn.disabled = false;
-  btn.textContent = 'Generate';
-}
-
-function copyCode(code) {
-  navigator.clipboard.writeText(code);
-  toast('Kode disalin ke clipboard!');
-}
-
-function viewVoucherTemplate(id) {
-  const voucher = allData.find(d => d.__backendId === id);
-  if (!voucher) return;
-  const modal = document.getElementById('voucher-modal');
-  if (!modal) {
-    const m = document.createElement('div');
-    m.id = 'voucher-modal';
-    m.className = 'hidden fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4 overflow-y-auto';
-    m.innerHTML = '<div id="voucher-modal-content" class="bg-white rounded-xl w-full max-w-4xl my-4"></div>';
-    document.body.appendChild(m);
-  }
-  
-  const content = document.getElementById('voucher-modal-content');
-  const barcodeValue = voucher.voucher_code;
-  
-  content.innerHTML = `
-    <div class="p-8 max-h-[80vh] overflow-y-auto" id="voucher-print">
-      <div class="text-center mb-8 pb-6 border-b-2 border-indigo-600">
-        <div class="inline-block w-12 h-12 bg-gradient-to-br from-indigo-500 to-violet-600 rounded-lg flex items-center justify-center mb-3 shadow-lg">
-          <i data-lucide="gift" class="w-6 h-6 text-white"></i>
-        </div>
-        <h1 class="text-4xl font-black text-indigo-600 tracking-tight">VOUCHER DISKON</h1>
-        <p class="text-slate-400 text-sm mt-2">NetBill Pro - Layanan Internet Berkualitas</p>
-      </div>
-      <div class="bg-gradient-to-br from-indigo-50 via-white to-violet-50 rounded-2xl border-2 border-indigo-200 p-8 mb-8 shadow-2xl">
-        <div class="grid grid-cols-3 gap-8">
-          <div class="border-r-2 border-dashed border-indigo-300 pr-8">
-            <p class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-2">Kode Voucher</p>
-            <p class="text-4xl font-black text-indigo-600 mb-6 font-mono tracking-wider">${voucher.voucher_code}</p>
-            <div class="bg-white rounded-xl p-4 border-2 border-indigo-200"><svg id="barcode-${id}" style="width: 100%; height: auto;"></svg></div>
-            <p class="text-xs text-center text-slate-400 mt-2 font-mono">${voucher.voucher_code}</p>
-          </div>
-          <div class="flex flex-col justify-between text-center border-r-2 border-dashed border-indigo-300 pr-8">
-            <div>
-              <p class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-4">Besar Diskon</p>
-              <div class="bg-gradient-to-r from-emerald-400 to-emerald-500 rounded-2xl p-8 text-white shadow-lg mb-4">
-                <p class="text-5xl font-black">${voucher.discount_type === 'percent' ? voucher.discount_value + '%' : formatRp(voucher.discount_value)}</p>
-                <p class="text-sm font-semibold mt-2">${voucher.discount_type === 'percent' ? 'Potongan Harga' : 'Nilai Nominal'}</p>
-              </div>
-            </div>
-            <div class="bg-amber-50 rounded-xl p-4 border-2 border-amber-200">
-              <p class="text-xs text-amber-600 font-bold uppercase mb-1">Berlaku Sampai</p>
-              <p class="text-2xl font-black text-amber-600">${formatDate(voucher.expiry_date)}</p>
-            </div>
-          </div>
-          <div class="pl-4">
-            <p class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-4">Ketentuan & Syarat</p>
-            <div class="space-y-3 text-xs text-slate-600">
-              <div class="flex gap-2"><span class="text-indigo-600 font-bold">✓</span><span>Berlaku untuk semua paket</span></div>
-              <div class="flex gap-2"><span class="text-indigo-600 font-bold">✓</span><span>Satu kali per pelanggan</span></div>
-              <div class="flex gap-2"><span class="text-indigo-600 font-bold">✓</span><span>Tidak digabung promo lain</span></div>
-              <div class="flex gap-2"><span class="text-indigo-600 font-bold">✓</span><span>Berlaku untuk bulan tertentu</span></div>
-              <div class="flex gap-2"><span class="text-indigo-600 font-bold">✓</span><span>Hubungi admin untuk klaim</span></div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
-        <div class="bg-white rounded-xl border-2 border-indigo-100 p-4 text-center"><div class="w-10 h-10 bg-indigo-100 rounded-lg flex items-center justify-center mx-auto mb-3"><span class="text-lg font-bold text-indigo-600">1</span></div><p class="text-sm font-semibold mb-1">Salin Kode</p><p class="text-xs text-slate-500">Copy kode voucher</p></div>
-        <div class="bg-white rounded-xl border-2 border-indigo-100 p-4 text-center"><div class="w-10 h-10 bg-indigo-100 rounded-lg flex items-center justify-center mx-auto mb-3"><span class="text-lg font-bold text-indigo-600">2</span></div><p class="text-sm font-semibold mb-1">Hubungi Admin</p><p class="text-xs text-slate-500">Hubungi kami untuk klaim</p></div>
-        <div class="bg-white rounded-xl border-2 border-indigo-100 p-4 text-center"><div class="w-10 h-10 bg-indigo-100 rounded-lg flex items-center justify-center mx-auto mb-3"><span class="text-lg font-bold text-indigo-600">3</span></div><p class="text-sm font-semibold mb-1">Verifikasi Kode</p><p class="text-xs text-slate-500">Admin verifikasi kode</p></div>
-        <div class="bg-white rounded-xl border-2 border-indigo-100 p-4 text-center"><div class="w-10 h-10 bg-indigo-100 rounded-lg flex items-center justify-center mx-auto mb-3"><span class="text-lg font-bold text-indigo-600">4</span></div><p class="text-sm font-semibold mb-1">Nikmati Diskon</p><p class="text-xs text-slate-500">Diskon diterapkan</p></div>
-      </div>
-      <div class="bg-gradient-to-r from-indigo-600 to-violet-600 rounded-xl p-6 text-white text-center mb-8">
-        <p class="text-sm font-semibold mb-3">Pertanyaan? Hubungi Kami!</p>
-        <div class="flex items-center justify-center gap-8 text-sm"><div class="flex items-center gap-2"><i data-lucide="phone" class="w-4 h-4"></i><span>+62 8XX XXXX XXXX</span></div><div class="flex items-center gap-2"><i data-lucide="mail" class="w-4 h-4"></i><span>support@netbillpro.id</span></div><div class="flex items-center gap-2"><i data-lucide="clock" class="w-4 h-4"></i><span>24/7 CS</span></div></div>
-      </div>
-      <div class="text-center text-xs text-slate-400 border-t border-slate-200 pt-6"><p class="font-semibold text-slate-500 mb-2">NetBill Pro © 2024</p><p>Sistem Manajemen ISP Terintegrasi</p><p class="mt-2">Cetak: ${new Date().toLocaleDateString('id-ID')}</p></div>
-    </div>
-    <div class="flex gap-2 p-6 border-t border-slate-200 bg-slate-50 justify-end flex-wrap">
-      <button onclick="printVoucher()" class="flex items-center gap-2 bg-indigo-500 hover:bg-indigo-600 text-white px-4 py-2 rounded-lg text-sm font-medium transition"><i data-lucide="printer" class="w-4 h-4"></i> Cetak</button>
-      <button onclick="downloadVoucherPDF()" class="flex items-center gap-2 bg-emerald-500 hover:bg-emerald-600 text-white px-4 py-2 rounded-lg text-sm font-medium transition"><i data-lucide="download" class="w-4 h-4"></i> Download PDF</button>
-      <button onclick="shareVoucher('${voucher.voucher_code}')" class="flex items-center gap-2 bg-sky-500 hover:bg-sky-600 text-white px-4 py-2 rounded-lg text-sm font-medium transition"><i data-lucide="share-2" class="w-4 h-4"></i> Bagikan</button>
-      <button onclick="document.getElementById('voucher-modal').classList.add('hidden')" class="flex items-center gap-2 bg-slate-200 hover:bg-slate-300 text-slate-700 px-4 py-2 rounded-lg text-sm font-medium transition"><i data-lucide="x" class="w-4 h-4"></i> Tutup</button>
-    </div>
-  `;
-  
-  document.getElementById('voucher-modal').classList.remove('hidden');
-  lucide.createIcons();
-}
-
-function printVoucher() {
-  const printContent = document.getElementById('voucher-print').innerHTML;
-  const originalContent = document.body.innerHTML;
-  document.body.innerHTML = printContent;
-  window.print();
-  document.body.innerHTML = originalContent;
-  location.reload();
-}
-
-function downloadVoucherPDF() {
-  const printContent = document.getElementById('voucher-print');
-  const win = window.open('', '', 'height=600,width=900');
-  win.document.write('<html><head><title>Voucher</title>');
-  win.document.write('<link rel="stylesheet" href="https://cdn.tailwindcss.com/3.4.17">');
-  win.document.write('<style>@media print { body { margin: 0; padding: 0; } } body { font-family: "Plus Jakarta Sans", sans-serif; }</style>');
-  win.document.write('</head><body>');
-  win.document.write(printContent.innerHTML);
-  win.document.write('</body></html>');
-  win.document.close();
-  win.print();
-  toast('Voucher siap untuk diunduh/cetak');
-}
-
-function shareVoucher(code) {
-  const text = `🎁 Voucher diskon NetBill Pro!\n\nKode: ${code}\n\nDapatkan diskon menarik! Hubungi kami sekarang! 🚀`;
-  navigator.clipboard.writeText(text);
-  toast('Voucher siap dibagikan!');
-}
 
 // Inventory Management
 function renderInventory() {
@@ -1416,201 +1940,79 @@ async function updateInventory(e, id) {
 
 
 function showVoucherGenerator() {
-  const area = document.getElementById('voucher-form-area');
+  const area = document.getElementById('voucher-generator-area');
+  const today = new Date().toISOString().split('T')[0];
+  const future = new Date(Date.now() + 30*24*60*60*1000).toISOString().split('T')[0];
+  
   area.innerHTML = `
-    <div class="bg-gradient-to-r from-indigo-500 to-violet-600 rounded-xl p-6 mb-4 text-white">
-      <h3 class="font-bold text-lg mb-4">⚡ Generate Voucher Baru</h3>
-      <form onsubmit="generateVoucher(event)" class="space-y-4">
+    <div class="bg-gradient-to-r from-indigo-600 to-indigo-700 rounded-xl p-6 mb-4 text-white shadow-xl">
+      <div class="flex items-center justify-between mb-4">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 bg-white bg-opacity-20 rounded-lg flex items-center justify-center">
+            <i data-lucide="sparkles" class="w-5 h-5"></i>
+          </div>
+          <h3 class="font-bold text-lg">⚡ Generate Voucher Batch</h3>
+        </div>
+        <button onclick="document.getElementById('voucher-generator-area').innerHTML=''" class="hover:bg-indigo-500 p-2 rounded-lg transition"><i data-lucide="x" class="w-5 h-5"></i></button>
+      </div>
+      <form onsubmit="generateVoucherBatch(event)" class="space-y-4">
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
-            <label class="block text-xs font-medium mb-2 text-indigo-100" for="v-quantity">Jumlah Voucher</label>
-            <input id="v-quantity" type="number" value="10" min="1" max="100" required class="w-full border border-indigo-300 bg-white bg-opacity-10 backdrop-blur rounded-lg px-3 py-2 text-sm text-white placeholder-indigo-200 focus:outline-none focus:ring-2 focus:ring-white" placeholder="Berapa banyak?">
+            <label class="block text-xs font-semibold mb-2 text-indigo-100" for="v-qty">Jumlah Voucher</label>
+            <input id="v-qty" type="number" value="10" min="1" max="1000" required class="w-full border border-indigo-300 bg-white bg-opacity-10 backdrop-blur rounded-lg px-3 py-2 text-sm text-white placeholder-indigo-200 focus:outline-none focus:ring-2 focus:ring-white" oninput="updateVoucherPreview()">
           </div>
           <div>
-            <label class="block text-xs font-medium mb-2 text-indigo-100" for="v-type">Tipe Diskon</label>
-            <select id="v-type" class="w-full border border-indigo-300 bg-white bg-opacity-10 backdrop-blur rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:ring-2 focus:ring-white">
+            <label class="block text-xs font-semibold mb-2 text-indigo-100" for="v-type">Tipe Diskon</label>
+            <select id="v-type" class="w-full border border-indigo-300 bg-white bg-opacity-10 backdrop-blur rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:ring-2 focus:ring-white" oninput="updateVoucherPreview()">
               <option value="percent" class="text-slate-800">Persentase (%)</option>
-              <option value="fixed" class="text-slate-800">Nominal (Rp)</option>
+              <option value="fixed" class="text-slate-800">Fixed (Rp)</option>
             </select>
           </div>
-        </div>
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
-            <label class="block text-xs font-medium mb-2 text-indigo-100" for="v-value">Nilai Diskon</label>
-            <input id="v-value" type="number" value="10" min="1" required class="w-full border border-indigo-300 bg-white bg-opacity-10 backdrop-blur rounded-lg px-3 py-2 text-sm text-white placeholder-indigo-200 focus:outline-none focus:ring-2 focus:ring-white" placeholder="Berapa besar?">
+            <label class="block text-xs font-semibold mb-2 text-indigo-100" for="v-val">Nilai Diskon</label>
+            <input id="v-val" type="number" value="10" min="1" required class="w-full border border-indigo-300 bg-white bg-opacity-10 backdrop-blur rounded-lg px-3 py-2 text-sm text-white placeholder-indigo-200 focus:outline-none focus:ring-2 focus:ring-white" oninput="updateVoucherPreview()">
           </div>
           <div>
-            <label class="block text-xs font-medium mb-2 text-indigo-100" for="v-exp">Berlaku Sampai</label>
-            <input id="v-exp" type="date" required class="w-full border border-indigo-300 bg-white bg-opacity-10 backdrop-blur rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:ring-2 focus:ring-white">
+            <label class="block text-xs font-semibold mb-2 text-indigo-100" for="v-exp">Tanggal Kadaluarsa</label>
+            <input id="v-exp" type="date" value="${future}" required class="w-full border border-indigo-300 bg-white bg-opacity-10 backdrop-blur rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:ring-2 focus:ring-white" oninput="updateVoucherPreview()">
+          </div>
+          <div>
+            <label class="block text-xs font-semibold mb-2 text-indigo-100" for="v-prefix">Prefix Kode (optional)</label>
+            <input id="v-prefix" type="text" placeholder="PROMO" maxlength="10" class="w-full border border-indigo-300 bg-white bg-opacity-10 backdrop-blur rounded-lg px-3 py-2 text-sm text-white placeholder-indigo-200 focus:outline-none focus:ring-2 focus:ring-white" oninput="updateVoucherPreview()">
+          </div>
+          <div>
+            <label class="block text-xs font-semibold mb-2 text-indigo-100" for="v-pkg">Paket Target (optional)</label>
+            <input id="v-pkg" type="text" placeholder="Semua paket" class="w-full border border-indigo-300 bg-white bg-opacity-10 backdrop-blur rounded-lg px-3 py-2 text-sm text-white placeholder-indigo-200 focus:outline-none focus:ring-2 focus:ring-white">
           </div>
         </div>
+        
+        <!-- Preview Section -->
+        <div class="bg-white bg-opacity-10 backdrop-blur rounded-lg p-4 border border-indigo-300 space-y-3">
+          <div class="grid grid-cols-2 md:grid-cols-5 gap-2 text-xs text-indigo-100">
+            <div><strong>Qty:</strong> <span id="preview-qty" class="font-mono">10</span></div>
+            <div><strong>Tipe:</strong> <span id="preview-type" class="font-mono">%</span></div>
+            <div><strong>Nilai:</strong> <span id="preview-val" class="font-mono">10</span></div>
+            <div><strong>Exp:</strong> <span id="preview-exp" class="font-mono">${future}</span></div>
+            <div><strong>Status:</strong> <span id="preview-status" class="text-emerald-300">✓ Siap</span></div>
+          </div>
+          <div class="bg-white bg-opacity-10 rounded-lg p-3 border border-indigo-400">
+            <p class="text-xs text-indigo-200 mb-2"><strong>📋 Contoh Kode Voucher:</strong></p>
+            <p class="font-mono text-sm text-white bg-black bg-opacity-20 px-2 py-1 rounded">PROMO${Math.random().toString(36).substring(2,8).toUpperCase()}</p>
+          </div>
+        </div>
+        
         <div class="flex gap-2 pt-2">
-          <button type="submit" class="flex-1 bg-white text-indigo-600 font-semibold px-4 py-2.5 rounded-lg hover:bg-indigo-50 transition">Generate</button>
-          <button type="button" onclick="document.getElementById('voucher-form-area').innerHTML=''" class="flex-1 bg-white bg-opacity-20 text-white font-semibold px-4 py-2.5 rounded-lg hover:bg-opacity-30 transition">Batal</button>
+          <button type="submit" id="v-submit-btn" class="flex-1 bg-white text-indigo-600 font-bold px-4 py-3 rounded-lg hover:bg-indigo-50 transition flex items-center justify-center gap-2">
+            <i data-lucide="zap" class="w-4 h-4"></i> Generate 10 Voucher
+          </button>
+          <button type="button" onclick="document.getElementById('voucher-generator-area').innerHTML=''" class="flex-1 bg-white bg-opacity-20 text-white font-bold px-4 py-3 rounded-lg hover:bg-opacity-30 transition">Batal</button>
         </div>
       </form>
     </div>
   `;
-}
-
-function generateRandomCode(length = 8) {
-  const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-  let code = '';
-  for (let i = 0; i < length; i++) code += chars.charAt(Math.floor(Math.random() * chars.length));
-  return code;
-}
-
-async function generateVoucher(e) {
-  e.preventDefault();
-  const qty = parseInt(document.getElementById('v-quantity').value);
-  const type = document.getElementById('v-type').value;
-  const value = Number(document.getElementById('v-value').value);
-  const expDate = document.getElementById('v-exp').value;
   
-  if (allData.length + qty > 999) { toast('Akan melebihi batas data (999)', 'error'); return; }
-  
-  const btn = e.target.querySelector('button[type="submit"]');
-  btn.disabled = true;
-  btn.textContent = 'Generating...';
-  
-  let created = 0;
-  for (let i = 0; i < qty; i++) {
-    const code = generateRandomCode();
-    const result = await window.dataSdk.create({
-      type: 'voucher',
-      voucher_code: code,
-      discount_type: type,
-      discount_value: value,
-      expiry_date: expDate,
-      is_used: 'no',
-      used_by: '',
-      name: 'Voucher ' + code,
-      price: 0,
-      email: '', phone: '', address: '', package_name: '', speed: '', status: '', pppoe_user: '', ip_address: '', due_date: '',
-      created_at: new Date().toISOString()
-    });
-    if (result.isOk) created++;
-  }
-  
-  toast(`${created} dari ${qty} voucher berhasil dibuat`);
-  document.getElementById('voucher-form-area').innerHTML = '';
-  btn.disabled = false;
-  btn.textContent = 'Generate';
-}
-
-function copyCode(code) {
-  navigator.clipboard.writeText(code);
-  toast('Kode disalin ke clipboard!');
-}
-
-function viewVoucherTemplate(id) {
-  const voucher = allData.find(d => d.__backendId === id);
-  if (!voucher) return;
-  const modal = document.getElementById('voucher-modal');
-  if (!modal) {
-    const m = document.createElement('div');
-    m.id = 'voucher-modal';
-    m.className = 'hidden fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4 overflow-y-auto';
-    m.innerHTML = '<div id="voucher-modal-content" class="bg-white rounded-xl w-full max-w-4xl my-4"></div>';
-    document.body.appendChild(m);
-  }
-  
-  const content = document.getElementById('voucher-modal-content');
-  const barcodeValue = voucher.voucher_code;
-  
-  content.innerHTML = `
-    <div class="p-8 max-h-[80vh] overflow-y-auto" id="voucher-print">
-      <div class="text-center mb-8 pb-6 border-b-2 border-indigo-600">
-        <div class="inline-block w-12 h-12 bg-gradient-to-br from-indigo-500 to-violet-600 rounded-lg flex items-center justify-center mb-3 shadow-lg">
-          <i data-lucide="gift" class="w-6 h-6 text-white"></i>
-        </div>
-        <h1 class="text-4xl font-black text-indigo-600 tracking-tight">VOUCHER DISKON</h1>
-        <p class="text-slate-400 text-sm mt-2">NetBill Pro - Layanan Internet Berkualitas</p>
-      </div>
-      <div class="bg-gradient-to-br from-indigo-50 via-white to-violet-50 rounded-2xl border-2 border-indigo-200 p-8 mb-8 shadow-2xl">
-        <div class="grid grid-cols-3 gap-8">
-          <div class="border-r-2 border-dashed border-indigo-300 pr-8">
-            <p class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-2">Kode Voucher</p>
-            <p class="text-4xl font-black text-indigo-600 mb-6 font-mono tracking-wider">${voucher.voucher_code}</p>
-            <div class="bg-white rounded-xl p-4 border-2 border-indigo-200"><svg id="barcode-${id}" style="width: 100%; height: auto;"></svg></div>
-            <p class="text-xs text-center text-slate-400 mt-2 font-mono">${voucher.voucher_code}</p>
-          </div>
-          <div class="flex flex-col justify-between text-center border-r-2 border-dashed border-indigo-300 pr-8">
-            <div>
-              <p class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-4">Besar Diskon</p>
-              <div class="bg-gradient-to-r from-emerald-400 to-emerald-500 rounded-2xl p-8 text-white shadow-lg mb-4">
-                <p class="text-5xl font-black">${voucher.discount_type === 'percent' ? voucher.discount_value + '%' : formatRp(voucher.discount_value)}</p>
-                <p class="text-sm font-semibold mt-2">${voucher.discount_type === 'percent' ? 'Potongan Harga' : 'Nilai Nominal'}</p>
-              </div>
-            </div>
-            <div class="bg-amber-50 rounded-xl p-4 border-2 border-amber-200">
-              <p class="text-xs text-amber-600 font-bold uppercase mb-1">Berlaku Sampai</p>
-              <p class="text-2xl font-black text-amber-600">${formatDate(voucher.expiry_date)}</p>
-            </div>
-          </div>
-          <div class="pl-4">
-            <p class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-4">Ketentuan & Syarat</p>
-            <div class="space-y-3 text-xs text-slate-600">
-              <div class="flex gap-2"><span class="text-indigo-600 font-bold">✓</span><span>Berlaku untuk semua paket</span></div>
-              <div class="flex gap-2"><span class="text-indigo-600 font-bold">✓</span><span>Satu kali per pelanggan</span></div>
-              <div class="flex gap-2"><span class="text-indigo-600 font-bold">✓</span><span>Tidak digabung promo lain</span></div>
-              <div class="flex gap-2"><span class="text-indigo-600 font-bold">✓</span><span>Berlaku untuk bulan tertentu</span></div>
-              <div class="flex gap-2"><span class="text-indigo-600 font-bold">✓</span><span>Hubungi admin untuk klaim</span></div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
-        <div class="bg-white rounded-xl border-2 border-indigo-100 p-4 text-center"><div class="w-10 h-10 bg-indigo-100 rounded-lg flex items-center justify-center mx-auto mb-3"><span class="text-lg font-bold text-indigo-600">1</span></div><p class="text-sm font-semibold mb-1">Salin Kode</p><p class="text-xs text-slate-500">Copy kode voucher</p></div>
-        <div class="bg-white rounded-xl border-2 border-indigo-100 p-4 text-center"><div class="w-10 h-10 bg-indigo-100 rounded-lg flex items-center justify-center mx-auto mb-3"><span class="text-lg font-bold text-indigo-600">2</span></div><p class="text-sm font-semibold mb-1">Hubungi Admin</p><p class="text-xs text-slate-500">Hubungi kami untuk klaim</p></div>
-        <div class="bg-white rounded-xl border-2 border-indigo-100 p-4 text-center"><div class="w-10 h-10 bg-indigo-100 rounded-lg flex items-center justify-center mx-auto mb-3"><span class="text-lg font-bold text-indigo-600">3</span></div><p class="text-sm font-semibold mb-1">Verifikasi Kode</p><p class="text-xs text-slate-500">Admin verifikasi kode</p></div>
-        <div class="bg-white rounded-xl border-2 border-indigo-100 p-4 text-center"><div class="w-10 h-10 bg-indigo-100 rounded-lg flex items-center justify-center mx-auto mb-3"><span class="text-lg font-bold text-indigo-600">4</span></div><p class="text-sm font-semibold mb-1">Nikmati Diskon</p><p class="text-xs text-slate-500">Diskon diterapkan</p></div>
-      </div>
-      <div class="bg-gradient-to-r from-indigo-600 to-violet-600 rounded-xl p-6 text-white text-center mb-8">
-        <p class="text-sm font-semibold mb-3">Pertanyaan? Hubungi Kami!</p>
-        <div class="flex items-center justify-center gap-8 text-sm"><div class="flex items-center gap-2"><i data-lucide="phone" class="w-4 h-4"></i><span>+62 8XX XXXX XXXX</span></div><div class="flex items-center gap-2"><i data-lucide="mail" class="w-4 h-4"></i><span>support@netbillpro.id</span></div><div class="flex items-center gap-2"><i data-lucide="clock" class="w-4 h-4"></i><span>24/7 CS</span></div></div>
-      </div>
-      <div class="text-center text-xs text-slate-400 border-t border-slate-200 pt-6"><p class="font-semibold text-slate-500 mb-2">NetBill Pro © 2024</p><p>Sistem Manajemen ISP Terintegrasi</p><p class="mt-2">Cetak: ${new Date().toLocaleDateString('id-ID')}</p></div>
-    </div>
-    <div class="flex gap-2 p-6 border-t border-slate-200 bg-slate-50 justify-end flex-wrap">
-      <button onclick="printVoucher()" class="flex items-center gap-2 bg-indigo-500 hover:bg-indigo-600 text-white px-4 py-2 rounded-lg text-sm font-medium transition"><i data-lucide="printer" class="w-4 h-4"></i> Cetak</button>
-      <button onclick="downloadVoucherPDF()" class="flex items-center gap-2 bg-emerald-500 hover:bg-emerald-600 text-white px-4 py-2 rounded-lg text-sm font-medium transition"><i data-lucide="download" class="w-4 h-4"></i> Download PDF</button>
-      <button onclick="shareVoucher('${voucher.voucher_code}')" class="flex items-center gap-2 bg-sky-500 hover:bg-sky-600 text-white px-4 py-2 rounded-lg text-sm font-medium transition"><i data-lucide="share-2" class="w-4 h-4"></i> Bagikan</button>
-      <button onclick="document.getElementById('voucher-modal').classList.add('hidden')" class="flex items-center gap-2 bg-slate-200 hover:bg-slate-300 text-slate-700 px-4 py-2 rounded-lg text-sm font-medium transition"><i data-lucide="x" class="w-4 h-4"></i> Tutup</button>
-    </div>
-  `;
-  
-  document.getElementById('voucher-modal').classList.remove('hidden');
   lucide.createIcons();
-}
-
-function printVoucher() {
-  const printContent = document.getElementById('voucher-print').innerHTML;
-  const originalContent = document.body.innerHTML;
-  document.body.innerHTML = printContent;
-  window.print();
-  document.body.innerHTML = originalContent;
-  location.reload();
-}
-
-function downloadVoucherPDF() {
-  const printContent = document.getElementById('voucher-print');
-  const win = window.open('', '', 'height=600,width=900');
-  win.document.write('<html><head><title>Voucher</title>');
-  win.document.write('<link rel="stylesheet" href="https://cdn.tailwindcss.com/3.4.17">');
-  win.document.write('<style>@media print { body { margin: 0; padding: 0; } } body { font-family: "Plus Jakarta Sans", sans-serif; }</style>');
-  win.document.write('</head><body>');
-  win.document.write(printContent.innerHTML);
-  win.document.write('</body></html>');
-  win.document.close();
-  win.print();
-  toast('Voucher siap untuk diunduh/cetak');
-}
-
-function shareVoucher(code) {
-  const text = `🎁 Voucher diskon NetBill Pro!\n\nKode: ${code}\n\nDapatkan diskon menarik! Hubungi kami sekarang! 🚀`;
-  navigator.clipboard.writeText(text);
-  toast('Voucher siap dibagikan!');
+  updateVoucherPreview();
 }
 
 // Tools
@@ -3366,5 +3768,5 @@ window.addEventListener('DOMContentLoaded', () => {
   }
 });
 </script>
- <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9f70a17b7478ff89',t:'MTc3Nzk5MzM5NS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9f710591a6baff89',t:'MTc3Nzk5NzQ5NS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>

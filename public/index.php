@@ -40,40 +40,171 @@ $app->handleRequest(Request::capture());
   </script>
   <style>
     * { font-family: 'Plus Jakarta Sans', sans-serif; }
-    .sidebar-item { transition: all 0.2s ease; }
-    .sidebar-item:hover, .sidebar-item.active { background: rgba(99,102,241,0.1); color: #6366f1; }
-    .card-hover { transition: all 0.3s ease; }
-    .card-hover:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(0,0,0,0.1); }
+    
+    /* Theme variables */
+    :root {
+      --bg-primary: #ffffff;
+      --bg-secondary: #f8fafc;
+      --bg-tertiary: #f1f5f9;
+      --text-primary: #0f172a;
+      --text-secondary: #64748b;
+      --border-color: #e2e8f0;
+      --accent: #6366f1;
+      --accent-light: rgba(99,102,241,0.1);
+    }
+    
+    html.dark {
+      --bg-primary: #0f172a;
+      --bg-secondary: #1e293b;
+      --bg-tertiary: #334155;
+      --text-primary: #f1f5f9;
+      --text-secondary: #cbd5e1;
+      --border-color: #334155;
+      --accent: #818cf8;
+      --accent-light: rgba(129,140,248,0.1);
+    }
+    
+    body {
+      background: var(--bg-secondary);
+      color: var(--text-primary);
+      transition: all 0.3s ease;
+    }
+    
+    /* Scrollbar styling */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: var(--bg-secondary); }
+    ::-webkit-scrollbar-thumb { background: var(--text-secondary); border-radius: 3px; opacity: 0.5; }
+    
+    /* Sidebar */
+    #sidebar {
+      background: var(--bg-primary);
+      border-color: var(--border-color);
+      transition: all 0.3s ease;
+    }
+    
+    .sidebar-item {
+      transition: all 0.2s ease;
+      color: var(--text-secondary);
+    }
+    .sidebar-item:hover, .sidebar-item.active {
+      background: var(--accent-light);
+      color: var(--accent);
+    }
+    
+    /* Cards and containers */
+    .bg-white, .card-hover {
+      background: var(--bg-primary);
+      border-color: var(--border-color);
+      transition: all 0.3s ease;
+    }
+    
+    .bg-slate-50 {
+      background: var(--bg-secondary);
+    }
+    
+    .card-hover:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+    }
+    
+    /* Text colors */
+    .text-slate-400 { color: var(--text-secondary); }
+    .text-slate-500 { color: var(--text-secondary); }
+    .text-slate-600 { color: var(--text-primary); }
+    .text-slate-700 { color: var(--text-primary); }
+    .text-slate-800 { color: var(--text-primary); }
+    
+    /* Animations */
     .fade-in { animation: fadeIn 0.3s ease; }
     @keyframes fadeIn { from { opacity:0; transform:translateY(10px); } to { opacity:1; transform:translateY(0); } }
+    
     .toast { animation: slideIn 0.3s ease, slideOut 0.3s ease 2.7s; }
     @keyframes slideIn { from { transform: translateX(100%); } to { transform: translateX(0); } }
     @keyframes slideOut { from { transform: translateX(0); } to { transform: translateX(100%); } }
-    ::-webkit-scrollbar { width: 6px; }
-    ::-webkit-scrollbar-track { background: #f1f5f9; }
-    ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 3px; }
+    
+    /* Header */
+    header {
+      background: var(--bg-primary);
+      border-color: var(--border-color);
+      transition: all 0.3s ease;
+    }
+    
+    /* Input and form elements */
+    input, textarea, select {
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      border-color: var(--border-color);
+      transition: all 0.2s ease;
+    }
+    
+    input:focus, textarea:focus, select:focus {
+      border-color: var(--accent);
+      background: var(--bg-primary);
+    }
+    
+    /* Table styling */
+    thead {
+      background: var(--bg-secondary);
+    }
+    
+    tbody tr {
+      border-color: var(--border-color);
+    }
+    
+    /* Theme toggle button animation */
+    .theme-toggle-btn {
+      position: relative;
+      width: 50px;
+      height: 26px;
+      background: var(--bg-tertiary);
+      border: 2px solid var(--border-color);
+      border-radius: 13px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      padding: 0 2px;
+    }
+    
+    .theme-toggle-btn.active {
+      background: var(--accent);
+      border-color: var(--accent);
+    }
+    
+    .theme-toggle-thumb {
+      width: 20px;
+      height: 20px;
+      background: white;
+      border-radius: 50%;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    .theme-toggle-btn.active .theme-toggle-thumb {
+      transform: translateX(24px);
+    }
   </style>
   <style>body { box-sizing: border-box; }</style>
  </head>
  <body class="h-full bg-slate-50 text-slate-800">
-  <div id="app" class="h-full w-full flex overflow-hidden">
-   <!-- Sidebar -->
+  <div id="app" class="h-full w-full flex overflow-hidden"><!-- Sidebar -->
    <aside id="sidebar" class="w-64 bg-white border-r border-slate-200 flex flex-col h-full shrink-0">
     <div class="p-5 border-b border-slate-100">
      <h1 id="app-title" class="text-xl font-bold text-indigo-600">NetBill Pro</h1>
      <p id="company-name" class="text-xs text-slate-400 mt-1">ISP Management System</p>
     </div>
-    <nav class="flex-1 overflow-y-auto p-3 space-y-1">
-     <button onclick="navigate('dashboard')" class="sidebar-item active w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium" data-nav="dashboard"> <i data-lucide="layout-dashboard" class="w-4 h-4"></i> Dashboard </button> <button onclick="navigate('pelanggan')" class="sidebar-item w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium" data-nav="pelanggan"> <i data-lucide="users" class="w-4 h-4"></i> Pelanggan </button> <button onclick="navigate('paket')" class="sidebar-item w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium" data-nav="paket"> <i data-lucide="package" class="w-4 h-4"></i> Paket Layanan </button> <button onclick="navigate('addon')" class="sidebar-item w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium" data-nav="addon"> <i data-lucide="plus-circle" class="w-4 h-4"></i> Add-On </button> <button onclick="navigate('billing')" class="sidebar-item w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium" data-nav="billing"> <i data-lucide="file-text" class="w-4 h-4"></i> Billing &amp; Invoice </button> <button onclick="navigate('pembayaran')" class="sidebar-item w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium" data-nav="pembayaran"> <i data-lucide="credit-card" class="w-4 h-4"></i> Pembayaran </button> <button onclick="navigate('voucher')" class="sidebar-item w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium" data-nav="voucher"> <i data-lucide="ticket" class="w-4 h-4"></i> Voucher </button> <button onclick="navigate('inventory')" class="sidebar-item w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium" data-nav="inventory"> <i data-lucide="box" class="w-4 h-4"></i> Inventory </button> <button onclick="navigate('pppoe')" class="sidebar-item w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium" data-nav="pppoe"> <i data-lucide="network" class="w-4 h-4"></i> PPPoE Manager </button> <button onclick="navigate('hotspot')" class="sidebar-item w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium" data-nav="hotspot"> <i data-lucide="wifi" class="w-4 h-4"></i> Hotspot Manager </button> <button onclick="navigate('tools')" class="sidebar-item w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium" data-nav="tools"> <i data-lucide="wrench" class="w-4 h-4"></i> Tools </button> <button onclick="navigate('monitoring')" class="sidebar-item w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium" data-nav="monitoring"> <i data-lucide="activity" class="w-4 h-4"></i> Monitoring </button> <button onclick="navigate('teknisi')" class="sidebar-item w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium" data-nav="teknisi"> <i data-lucide="tool" class="w-4 h-4"></i> Teknisi </button> <button onclick="navigate('laporan')" class="sidebar-item w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium" data-nav="laporan"> <i data-lucide="bar-chart-2" class="w-4 h-4"></i> Laporan </button> <button onclick="navigate('sistem')" class="sidebar-item w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium" data-nav="sistem"> <i data-lucide="settings" class="w-4 h-4"></i> Sistem </button>
+    <nav class="flex-1 overflow-y-auto p-3 space-y-1"><button onclick="navigate('dashboard')" class="sidebar-item active w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium" data-nav="dashboard"> <i data-lucide="layout-dashboard" class="w-4 h-4"></i> Dashboard </button> <button onclick="navigate('pelanggan')" class="sidebar-item w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium" data-nav="pelanggan"> <i data-lucide="users" class="w-4 h-4"></i> Pelanggan </button> <button onclick="navigate('paket')" class="sidebar-item w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium" data-nav="paket"> <i data-lucide="package" class="w-4 h-4"></i> Paket Layanan </button> <button onclick="navigate('addon')" class="sidebar-item w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium" data-nav="addon"> <i data-lucide="plus-circle" class="w-4 h-4"></i> Add-On </button> <button onclick="navigate('billing')" class="sidebar-item w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium" data-nav="billing"> <i data-lucide="file-text" class="w-4 h-4"></i> Billing &amp; Invoice </button> <button onclick="navigate('pembayaran')" class="sidebar-item w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium" data-nav="pembayaran"> <i data-lucide="credit-card" class="w-4 h-4"></i> Pembayaran </button> <button onclick="navigate('voucher')" class="sidebar-item w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium" data-nav="voucher"> <i data-lucide="ticket" class="w-4 h-4"></i> Voucher </button> <button onclick="navigate('inventory')" class="sidebar-item w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium" data-nav="inventory"> <i data-lucide="box" class="w-4 h-4"></i> Inventory </button> <button onclick="navigate('pppoe')" class="sidebar-item w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium" data-nav="pppoe"> <i data-lucide="network" class="w-4 h-4"></i> PPPoE Manager </button> <button onclick="navigate('hotspot')" class="sidebar-item w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium" data-nav="hotspot"> <i data-lucide="wifi" class="w-4 h-4"></i> Hotspot Manager </button> <button onclick="navigate('tools')" class="sidebar-item w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium" data-nav="tools"> <i data-lucide="wrench" class="w-4 h-4"></i> Tools </button> <button onclick="navigate('monitoring')" class="sidebar-item w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium" data-nav="monitoring"> <i data-lucide="activity" class="w-4 h-4"></i> Monitoring </button> <button onclick="navigate('teknisi')" class="sidebar-item w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium" data-nav="teknisi"> <i data-lucide="tool" class="w-4 h-4"></i> Teknisi </button> <button onclick="navigate('laporan')" class="sidebar-item w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium" data-nav="laporan"> <i data-lucide="bar-chart-2" class="w-4 h-4"></i> Laporan </button> <button onclick="navigate('sistem')" class="sidebar-item w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium" data-nav="sistem"> <i data-lucide="settings" class="w-4 h-4"></i> Sistem </button>
     </nav>
    </aside><!-- Main Content -->
    <main class="flex-1 overflow-y-auto h-full">
     <header class="bg-white border-b border-slate-200 px-6 py-4 flex items-center justify-between sticky top-0 z-10">
      <h2 id="page-title" class="text-lg font-semibold">Dashboard</h2>
-     <div class="flex items-center gap-3">
-      <span class="text-xs text-slate-400" id="current-date"></span>
-      <div class="w-8 h-8 bg-indigo-100 rounded-full flex items-center justify-center">
-       <i data-lucide="user" class="w-4 h-4 text-indigo-600"></i>
+     <div class="flex items-center gap-4"><span class="text-xs text-slate-400" id="current-date"></span> <button id="theme-toggle" onclick="toggleTheme()" class="theme-toggle-btn" title="Toggle Dark Mode">
+       <div class="theme-toggle-thumb"><i id="theme-icon" data-lucide="sun" class="w-3.5 h-3.5 text-indigo-600"></i>
+       </div></button>
+      <div class="w-8 h-8 bg-indigo-100 rounded-full flex items-center justify-center"><i data-lucide="user" class="w-4 h-4 text-indigo-600"></i>
       </div>
      </div>
     </header>
@@ -85,6 +216,7 @@ $app->handleRequest(Request::capture());
 // State
 let allData = [];
 let currentPage = 'dashboard';
+let isDarkMode = localStorage.getItem('netbill-theme') === 'dark';
 
 const defaultConfig = {
   app_title: 'NetBill Pro',
@@ -2166,68 +2298,226 @@ async function addTicket(e) {
   else { toast('Gagal membuat tiket', 'error'); btn.disabled = false; btn.textContent = 'Buat'; }
 }
 
-// Sistem
-let isDarkMode = localStorage.getItem('theme') === 'dark';
+// Banner Designer
+let bannerConfig = {
+  width: 1920, height: 1080, bgType: 'solid', bgColor: '#6366f1', bgGradient1: '#6366f1', bgGradient2: '#a855f7',
+  title: 'Promo Internet Terbaik', titleSize: 48, titleColor: '#FFFFFF', subtitle: 'Kecepatan Maksimal, Harga Terjangkau',
+  subtitleSize: 28, subtitleColor: '#FFFFFF', cta: 'HUBUNGI KAMI SEKARANG', ctaColor: '#FFFFFF',
+  buttonBg: '#10B981', buttonText: '#FFFFFF', footer: 'www.netbillpro.id | +62 8XX XXXX XXXX'
+};
 
-function renderSistem() {
-  const content = document.getElementById('content');
-  content.innerHTML = `
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-      <div class="bg-white dark:bg-slate-900 rounded-xl border border-slate-100 dark:border-slate-700 p-5">
-        <h3 class="font-semibold mb-4 dark:text-white">Informasi Sistem</h3>
-        <div class="space-y-3 text-sm">
-          <div class="flex justify-between py-2 border-b border-slate-50 dark:border-slate-700"><span class="text-slate-400 dark:text-slate-500">Aplikasi</span><span class="font-medium dark:text-slate-300">NetBill Pro v1.0</span></div>
-          <div class="flex justify-between py-2 border-b border-slate-50 dark:border-slate-700"><span class="text-slate-400 dark:text-slate-500">Platform</span><span class="font-medium dark:text-slate-300">Web-Based</span></div>
-          <div class="flex justify-between py-2 border-b border-slate-50 dark:border-slate-700"><span class="text-slate-400 dark:text-slate-500">Database</span><span class="font-medium dark:text-slate-300">Canva Sheet</span></div>
-          <div class="flex justify-between py-2 border-b border-slate-50 dark:border-slate-700"><span class="text-slate-400 dark:text-slate-500">RADIUS</span><span class="font-medium text-emerald-600 dark:text-emerald-400">Active</span></div>
-          <div class="flex justify-between py-2"><span class="text-slate-400 dark:text-slate-500">Last Sync</span><span class="font-medium dark:text-slate-300">${new Date().toLocaleTimeString('id-ID')}</span></div>
-        </div>
-      </div>
-      <div class="bg-white dark:bg-slate-900 rounded-xl border border-slate-100 dark:border-slate-700 p-5">
-        <h3 class="font-semibold mb-4 dark:text-white">Pengaturan</h3>
-        <div class="space-y-3">
-          <div class="flex items-center justify-between p-3 bg-slate-50 dark:bg-slate-800 rounded-lg">
-            <div><p class="text-sm font-medium dark:text-white">Auto-Billing</p><p class="text-xs text-slate-400">Generate invoice otomatis setiap bulan</p></div>
-            <div class="w-10 h-5 bg-emerald-400 rounded-full relative cursor-pointer"><div class="w-4 h-4 bg-white rounded-full absolute right-0.5 top-0.5 shadow"></div></div>
-          </div>
-          <div class="flex items-center justify-between p-3 bg-slate-50 dark:bg-slate-800 rounded-lg">
-            <div><p class="text-sm font-medium dark:text-white">Notifikasi Email</p><p class="text-xs text-slate-400">Kirim email reminder pembayaran</p></div>
-            <div class="w-10 h-5 bg-emerald-400 rounded-full relative cursor-pointer"><div class="w-4 h-4 bg-white rounded-full absolute right-0.5 top-0.5 shadow"></div></div>
-          </div>
-          <div class="flex items-center justify-between p-3 bg-slate-50 dark:bg-slate-800 rounded-lg">
-            <div><p class="text-sm font-medium dark:text-white">Auto-Disconnect</p><p class="text-xs text-slate-400">Putus koneksi jika tagihan belum bayar</p></div>
-            <div class="w-10 h-5 bg-slate-300 rounded-full relative cursor-pointer"><div class="w-4 h-4 bg-white rounded-full absolute left-0.5 top-0.5 shadow"></div></div>
-          </div>
-          <div class="flex items-center justify-between p-3 bg-slate-50 dark:bg-slate-800 rounded-lg mt-4 border-t border-slate-200 dark:border-slate-700 pt-3">
-            <div><p class="text-sm font-medium dark:text-white">Dark Mode</p><p class="text-xs text-slate-400">Tema gelap untuk pengalaman malam hari</p></div>
-            <button onclick="toggleDarkMode()" class="w-10 h-5 ${isDarkMode ? 'bg-indigo-500' : 'bg-slate-300'} rounded-full relative cursor-pointer transition-colors">
-              <div class="w-4 h-4 bg-white rounded-full absolute ${isDarkMode ? 'right-0.5' : 'left-0.5'} top-0.5 shadow transition-all"></div>
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
-  `;
-}
+function initBannerDesigner() { updateBannerPreview(); renderBgOptions(); }
+function setBannerSize(w, h, name) { bannerConfig.width=w; bannerConfig.height=h; updateBannerPreview(); toast(`Banner diubah ke ${name}`); }
+function setBannerBg(type) { bannerConfig.bgType=type; renderBgOptions(); updateBannerPreview(); }
 
-function toggleDarkMode() {
-  isDarkMode = !isDarkMode;
-  localStorage.setItem('theme', isDarkMode ? 'dark' : 'light');
-  applyTheme();
-  renderSistem();
-  toast(isDarkMode ? 'Dark Mode Aktif 🌙' : 'Light Mode Aktif ☀️');
-}
-
-function applyTheme() {
-  if (isDarkMode) {
-    document.documentElement.classList.add('dark');
-    document.body.classList.add('bg-slate-950', 'text-slate-100');
-    document.body.classList.remove('bg-slate-50', 'text-slate-800');
-  } else {
-    document.documentElement.classList.remove('dark');
-    document.body.classList.remove('bg-slate-950', 'text-slate-100');
-    document.body.classList.add('bg-slate-50', 'text-slate-800');
+function renderBgOptions() {
+  const container = document.getElementById('bg-options');
+  if (!container) return;
+  container.innerHTML = '';
+  if (bannerConfig.bgType === 'solid') {
+    ['#6366f1', '#EC4899', '#F97316', '#10B981', '#06B6D4', '#000000'].forEach(color => {
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.style.cssText = `width:40px;height:40px;background:${color};border-radius:6px;border:${bannerConfig.bgColor===color?'3px solid #fff':'2px solid #e5e7eb'};cursor:pointer;box-shadow:${bannerConfig.bgColor===color?'0 0 0 2px #4f46e5':'none'}`;
+      btn.onclick = () => { bannerConfig.bgColor=color; updateBannerPreview(); renderBgOptions(); };
+      container.appendChild(btn);
+    });
+  } else if (bannerConfig.bgType === 'gradient') {
+    [['#6366f1','#a855f7'],['#EC4899','#F97316'],['#10B981','#06B6D4'],['#000000','#374151']].forEach(([g1,g2]) => {
+      const btn = document.createElement('div');
+      btn.style.cssText = `width:40px;height:40px;border-radius:6px;background:linear-gradient(135deg,${g1},${g2});border:2px solid #e5e7eb;cursor:pointer`;
+      btn.onclick = () => { bannerConfig.bgGradient1=g1; bannerConfig.bgGradient2=g2; updateBannerPreview(); renderBgOptions(); };
+      container.appendChild(btn);
+    });
   }
+}
+
+function updateBannerPreview() {
+  const titleSize = document.getElementById('banner-title-size')?.value || 48;
+  const subtitleSize = document.getElementById('banner-subtitle-size')?.value || 28;
+  const title = document.getElementById('banner-title')?.value || 'Promo Internet Terbaik';
+  const subtitle = document.getElementById('banner-subtitle')?.value || 'Kecepatan Maksimal, Harga Terjangkau';
+  const cta = document.getElementById('banner-cta')?.value || 'HUBUNGI KAMI SEKARANG';
+  const footer = document.getElementById('banner-footer')?.value || 'www.netbillpro.id | +62 8XX XXXX XXXX';
+  
+  document.getElementById('title-size-display').textContent = titleSize + 'px';
+  document.getElementById('subtitle-size-display').textContent = subtitleSize + 'px';
+  
+  bannerConfig.titleSize = parseInt(titleSize);
+  bannerConfig.subtitleSize = parseInt(subtitleSize);
+  bannerConfig.titleColor = document.getElementById('title-color')?.value || '#FFFFFF';
+  bannerConfig.subtitleColor = document.getElementById('subtitle-color')?.value || '#FFFFFF';
+  bannerConfig.buttonBg = document.getElementById('btn-bg-color')?.value || '#10B981';
+  bannerConfig.buttonText = document.getElementById('btn-text-color')?.value || '#FFFFFF';
+  
+  const preview = document.getElementById('banner-content');
+  if (!preview) return;
+  
+  const bgStyle = bannerConfig.bgType==='gradient' ? `linear-gradient(135deg,${bannerConfig.bgGradient1},${bannerConfig.bgGradient2})` : bannerConfig.bgColor;
+  preview.innerHTML = `<div style="background:${bgStyle};width:100%;height:100%;display:flex;flex-direction:column;justify-content:center;align-items:center;padding:40px;text-align:center;position:relative;border-radius:8px;">
+    <h1 style="font-size:${bannerConfig.titleSize}px;font-weight:900;color:${bannerConfig.titleColor};margin:0 0 20px 0;line-height:1.2">${title}</h1>
+    <p style="font-size:${bannerConfig.subtitleSize}px;color:${bannerConfig.subtitleColor};margin:0 0 30px 0;font-weight:600">${subtitle}</p>
+    <button style="background-color:${bannerConfig.buttonBg};color:${bannerConfig.buttonText};padding:15px 40px;border:none;border-radius:8px;font-size:18px;font-weight:bold;cursor:pointer;box-shadow:0 4px 15px rgba(0,0,0,0.2)">${cta}</button>
+    <div style="position:absolute;bottom:20px;font-size:12px;color:rgba(255,255,255,0.8)">${footer}</div></div>`;
+}
+
+function loadBannerTemplate(template) {
+  const templates = {
+    promo: {bgGradient1:'#EC4899',bgGradient2:'#F97316',bgType:'gradient',title:'🔥 FLASH SALE INTERNET',subtitle:'Diskon Hingga 50% untuk Pelanggan Baru',cta:'DAFTAR SEKARANG'},
+    paket: {bgGradient1:'#6366f1',bgGradient2:'#a855f7',bgType:'gradient',title:'PAKET INTERNET UNLIMITED',subtitle:'Kecepatan Stabil, Harga Kompetitif',cta:'PILIH PAKET'},
+    event: {bgGradient1:'#F97316',bgGradient2:'#FBBF24',bgType:'gradient',title:'HARI JADI NETBILL PRO',subtitle:'Promo Spesial Selama 7 Hari',cta:'AMBIL KESEMPATAN'},
+    upgrade: {bgGradient1:'#06B6D4',bgGradient2:'#0EA5E9',bgType:'gradient',title:'UPGRADE SEKARANG',subtitle:'Rasakan Kecepatan Internet 100 Mbps',cta:'UPGRADE GRATIS'},
+    referral: {bgGradient1:'#10B981',bgGradient2:'#06B6D4',bgType:'gradient',title:'AJAK TEMAN DAPAT BONUS',subtitle:'Setiap Referral = Pulsa Gratis Selamanya',cta:'BAGIKAN SEKARANG'}
+  };
+  Object.assign(bannerConfig, templates[template]);
+  document.getElementById('banner-title').value = bannerConfig.title;
+  document.getElementById('banner-subtitle').value = bannerConfig.subtitle;
+  document.getElementById('banner-cta').value = bannerConfig.cta;
+  updateBannerPreview();
+  renderBgOptions();
+  toast('Template dimuat!');
+}
+
+function saveBannerDesign(e) {
+  e.preventDefault();
+  const designName = prompt('Masukkan nama desain:');
+  if (!designName) return;
+  const savedDesigns = JSON.parse(localStorage.getItem('netbill-banners')||'{}');
+  savedDesigns[designName] = JSON.parse(JSON.stringify(bannerConfig));
+  localStorage.setItem('netbill-banners', JSON.stringify(savedDesigns));
+  const container = document.getElementById('saved-designs');
+  if (container) {
+    container.innerHTML = '';
+    Object.keys(savedDesigns).forEach(name => {
+      const item = document.createElement('div');
+      item.className = 'flex items-center justify-between gap-2 p-2 bg-slate-50 rounded border border-slate-200';
+      item.innerHTML = `<span class="text-xs font-medium truncate">${name}</span><div class="flex gap-1"><button type="button" onclick="loadSavedDesign('${name}')" class="text-xs bg-indigo-50 text-indigo-600 hover:bg-indigo-100 px-2 py-1 rounded transition">Load</button><button type="button" onclick="deleteSavedDesign('${name}')" class="text-xs bg-red-50 text-red-600 hover:bg-red-100 px-2 py-1 rounded transition">Hapus</button></div>`;
+      container.appendChild(item);
+    });
+  }
+  toast('Desain tersimpan!');
+}
+
+function loadSavedDesign(name) {
+  const savedDesigns = JSON.parse(localStorage.getItem('netbill-banners')||'{}');
+  if (savedDesigns[name]) {
+    Object.assign(bannerConfig, savedDesigns[name]);
+    document.getElementById('banner-title').value = bannerConfig.title;
+    document.getElementById('banner-subtitle').value = bannerConfig.subtitle;
+    document.getElementById('banner-cta').value = bannerConfig.cta;
+    document.getElementById('banner-footer').value = bannerConfig.footer;
+    document.getElementById('banner-title-size').value = bannerConfig.titleSize;
+    document.getElementById('banner-subtitle-size').value = bannerConfig.subtitleSize;
+    document.getElementById('title-color').value = bannerConfig.titleColor;
+    document.getElementById('subtitle-color').value = bannerConfig.subtitleColor;
+    document.getElementById('btn-bg-color').value = bannerConfig.buttonBg;
+    document.getElementById('btn-text-color').value = bannerConfig.buttonText;
+    updateBannerPreview();
+    renderBgOptions();
+    toast('Desain dimuat!');
+  }
+}
+
+function deleteSavedDesign(name) {
+  if (!confirm('Hapus desain ini?')) return;
+  const savedDesigns = JSON.parse(localStorage.getItem('netbill-banners')||'{}');
+  delete savedDesigns[name];
+  localStorage.setItem('netbill-banners', JSON.stringify(savedDesigns));
+  toast('Desain dihapus!');
+  saveBannerDesign({preventDefault:()=>{}});
+}
+
+function previewBannerPrint() {
+  const modal = document.getElementById('banner-print-modal');
+  const content = document.getElementById('banner-print-content');
+  const bgStyle = bannerConfig.bgType==='gradient' ? `linear-gradient(135deg,${bannerConfig.bgGradient1},${bannerConfig.bgGradient2})` : bannerConfig.bgColor;
+  content.innerHTML = `<div style="background:${bgStyle};width:100%;aspect-ratio:${bannerConfig.width}/${bannerConfig.height};position:relative;display:flex;flex-direction:column;justify-content:center;align-items:center;padding:40px;text-align:center;border-radius:8px">
+    <h1 style="font-size:${bannerConfig.titleSize}px;font-weight:900;color:${bannerConfig.titleColor};margin:0 0 20px 0">${bannerConfig.title}</h1>
+    <p style="font-size:${bannerConfig.subtitleSize}px;color:${bannerConfig.subtitleColor};margin:0 0 30px 0;font-weight:600">${bannerConfig.subtitle}</p>
+    <button style="background-color:${bannerConfig.buttonBg};color:${bannerConfig.buttonText};padding:15px 40px;border:none;border-radius:8px;font-size:18px;font-weight:bold">${bannerConfig.cta}</button>
+    <div style="position:absolute;bottom:20px;font-size:12px;color:rgba(255,255,255,0.8)">${bannerConfig.footer}</div></div>`;
+  modal.classList.remove('hidden');
+  lucide.createIcons();
+}
+
+function exportBannerAsImage(format) {
+  const canvas = document.createElement('canvas');
+  canvas.width = bannerConfig.width;
+  canvas.height = bannerConfig.height;
+  const ctx = canvas.getContext('2d');
+  if (bannerConfig.bgType==='gradient') {
+    const gradient = ctx.createLinearGradient(0,0,canvas.width,canvas.height);
+    gradient.addColorStop(0, bannerConfig.bgGradient1);
+    gradient.addColorStop(1, bannerConfig.bgGradient2);
+    ctx.fillStyle = gradient;
+  } else {
+    ctx.fillStyle = bannerConfig.bgColor;
+  }
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+  ctx.font = `bold ${bannerConfig.titleSize}px Arial`;
+  ctx.fillStyle = bannerConfig.titleColor;
+  ctx.textAlign = 'center';
+  ctx.fillText(bannerConfig.title, canvas.width/2, canvas.height/3);
+  ctx.font = `${bannerConfig.subtitleSize}px Arial`;
+  ctx.fillStyle = bannerConfig.subtitleColor;
+  ctx.fillText(bannerConfig.subtitle, canvas.width/2, canvas.height/2);
+  const btnWidth=300, btnHeight=60, btnX=(canvas.width-btnWidth)/2, btnY=canvas.height*0.6;
+  ctx.fillStyle = bannerConfig.buttonBg;
+  ctx.fillRect(btnX, btnY, btnWidth, btnHeight);
+  ctx.font = 'bold 20px Arial';
+  ctx.fillStyle = bannerConfig.buttonText;
+  ctx.textAlign = 'center';
+  ctx.fillText(bannerConfig.cta, canvas.width/2, btnY+btnHeight/2+7);
+  ctx.font = '12px Arial';
+  ctx.fillStyle = 'rgba(255,255,255,0.8)';
+  ctx.fillText(bannerConfig.footer, canvas.width/2, canvas.height-20);
+  canvas.toBlob(blob=>{
+    const link = document.createElement('a');
+    const url = URL.createObjectURL(blob);
+    link.href = url;
+    link.download = `banner_${Date.now()}.${format}`;
+    link.click();
+    toast(`Banner diunduh sebagai ${format.toUpperCase()}!`);
+  }, `image/${format==='jpg'?'jpeg':'png'}`);
+}
+
+function printBanner() {
+  previewBannerPrint();
+  setTimeout(() => { window.print(); }, 500);
+}
+
+// Theme management
+function applyTheme() {
+  const root = document.documentElement;
+  const themeToggle = document.getElementById('theme-toggle');
+  const themeIcon = document.getElementById('theme-icon');
+  
+  if (isDarkMode) {
+    root.classList.add('dark');
+    themeToggle?.classList.add('active');
+    if (themeIcon) {
+      themeIcon.setAttribute('data-lucide', 'moon');
+      themeIcon.classList.remove('text-indigo-600');
+      themeIcon.classList.add('text-amber-300');
+    }
+  } else {
+    root.classList.remove('dark');
+    themeToggle?.classList.remove('active');
+    if (themeIcon) {
+      themeIcon.setAttribute('data-lucide', 'sun');
+      themeIcon.classList.add('text-indigo-600');
+      themeIcon.classList.remove('text-amber-300');
+    }
+  }
+  
+  lucide.createIcons();
+}
+
+function toggleTheme() {
+  isDarkMode = !isDarkMode;
+  localStorage.setItem('netbill-theme', isDarkMode ? 'dark' : 'light');
+  applyTheme();
+  toast(isDarkMode ? '🌙 Dark Mode Enabled' : '☀️ Light Mode Enabled');
 }
 
 // Delete record
@@ -2446,5 +2736,5 @@ renderDashboard();
 lucide.createIcons();
 applyTheme();
 </script>
- <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9f62f116824def72',t:'MTc3Nzg0OTg1NC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9f7057c3848fff89',t:'MTc3Nzk5MDM3NS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>

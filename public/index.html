@@ -184,6 +184,39 @@ loadChart();
 
 
 /* === MAP FEATURE ADDED === */
+// (existing map guide tetap)
+
+
+/* ================= PAYMENT AUTO AKTIF (MIDTRANS) ================= */
+
+// Install:
+// composer require midtrans/midtrans-php
+
+// .env
+// MIDTRANS_SERVER_KEY=xxx
+// MIDTRANS_CLIENT_KEY=xxx
+
+// PaymentController (ringkas)
+// public function callback(Request $request, RadiusCoAService $coa) {
+//   if ($request->transaction_status == 'settlement') {
+//      $user = User::where('email',$request->customer_details['email'])->first();
+//
+//      $user->update([
+//          'expired_at' => now()->addMonth()
+//      ]);
+//
+//      DB::table('radreply')
+//        ->where('username',$user->pppoe_username)
+//        ->where('attribute','Auth-Type')
+//        ->delete();
+//
+//      $coa->disconnect($user->pppoe_username);
+//   }
+// }
+
+// Flow:
+// Bayar → Webhook → Update DB → CoA → Internet aktif
+
 // Tambahkan kolom di tabel users:
 // lat (double), lng (double)
 
@@ -212,215 +245,79 @@ loadChart();
 //   });
 // });
 
-<?php
+/* ================= MULTI ROUTER + OLT MANAGEMENT ================= */
 
-// routes/web.php
-use App\Http\Controllers\DashboardController;
+// 1) TABLE NAS (router / OLT)
+// php artisan make:migration create_nas_table
+// Schema::create('nas', function (Blueprint $table) {
+//   $table->id();
+//   $table->string('name');
+//   $table->string('ip');
+//   $table->string('type'); // mikrotik / olt
+//   $table->string('secret')->default('123456');
+//   $table->timestamps();
+// });
 
-Route::middleware(['auth'])->group(function () {
-    Route::get('/dashboard', [DashboardController::class, 'index']);
-    Route::get('/dashboard/traffic', [DashboardController::class, 'traffic']);
-});
+// 2) RELASI USER -> NAS
+// php artisan make:migration add_nas_id_to_users
+// $table->foreignId('nas_id')->nullable()->constrained('nas');
 
-// app/Http/Controllers/DashboardController.php
-namespace App\Http\Controllers;
-
-use Illuminate\Support\Facades\DB;
-
-class DashboardController extends Controller
-{
-    public function index()
-    {
-        $totalUsers = DB::table('users')->count();
-        $onlineUsers = DB::table('radacct')->whereNull('acctstoptime')->count();
-        $expiredUsers = DB::table('users')->where('expired_at', '<', now())->count();
-        $traffic = DB::table('radacct')
-            ->selectRaw('SUM(acctinputoctets + acctoutputoctets) as total')
-            ->value('total');
-
-        $onlineList = DB::table('radacct')
-            ->whereNull('acctstoptime')
-            ->latest('acctstarttime')
-            ->limit(10)
-            ->get();
-
-        return view('dashboard.index', compact(
-            'totalUsers','onlineUsers','expiredUsers','traffic','onlineList'
-        ));
-    }
-
-    public function traffic()
-    {
-        return DB::table('radacct')
-            ->selectRaw('HOUR(acctstarttime) as hour, SUM(acctinputoctets+acctoutputoctets) as total')
-            ->where('acctstarttime', '>=', now()->subDay())
-            ->groupBy('hour')
-            ->orderBy('hour')
-            ->get();
-    }
-}
-
-// resources/views/dashboard/index.blade.php
-<!DOCTYPE html>
-<html>
-<head>
-    <title>NetBill Pro</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <style>
-        .glass {
-            backdrop-filter: blur(16px);
-            background: rgba(255,255,255,0.05);
-            border: 1px solid rgba(255,255,255,0.1);
-        }
-    </style>
-</head>
-<body class="bg-gradient-to-br from-black via-gray-900 to-black text-white">
-
-<div class="flex min-h-screen">
-
-    <!-- Sidebar -->
-    <aside class="w-64 p-6 hidden md:block glass">
-        <h2 class="text-xl font-bold mb-6">⚡ NetBill Pro</h2>
-        <nav class="space-y-3">
-            <a class="block p-2 rounded-lg bg-indigo-500/20">Dashboard</a>
-            <a class="block p-2 rounded-lg hover:bg-white/10">Users</a>
-            <a class="block p-2 rounded-lg hover:bg-white/10">Billing</a>
-            <a class="block p-2 rounded-lg hover:bg-white/10">Routers</a>
-        </nav>
-    </aside>
-
-    <!-- Main -->
-    <main class="flex-1 p-6">
-
-        <!-- Header -->
-        <div class="flex justify-between items-center mb-6">
-            <h1 class="text-3xl font-bold tracking-wide">Dashboard</h1>
-            <span class="text-sm text-gray-400">⚡ Live ISP Monitoring</span>
-        </div>
-
-        <!-- Stats -->
-        <div class="grid md:grid-cols-4 gap-4 mb-6">
-
-            <div class="glass p-5 rounded-2xl hover:scale-105 transition">
-                <p class="text-gray-400">Total User</p>
-                <h2 class="text-3xl font-bold">{{ $totalUsers }}</h2>
-            </div>
-
-            <div class="glass p-5 rounded-2xl hover:scale-105 transition">
-                <p class="text-gray-400">Online</p>
-                <h2 class="text-3xl text-green-400 font-bold">{{ $onlineUsers }}</h2>
-            </div>
-
-            <div class="glass p-5 rounded-2xl hover:scale-105 transition">
-                <p class="text-gray-400">Expired</p>
-                <h2 class="text-3xl text-red-400 font-bold">{{ $expiredUsers }}</h2>
-            </div>
-
-            <div class="glass p-5 rounded-2xl hover:scale-105 transition">
-                <p class="text-gray-400">Traffic</p>
-                <h2 class="text-3xl font-bold">{{ round($traffic/1024/1024,2) }} MB</h2>
-            </div>
-
-        </div>
-
-        <!-- Chart -->
-        <div class="glass p-6 rounded-2xl mb-6">
-            <h2 class="mb-4 font-semibold">📊 Traffic Realtime</h2>
-            <canvas id="trafficChart"></canvas>
-        </div>
-
-        <!-- Table -->
-        <div class="glass p-6 rounded-2xl">
-            <h2 class="font-semibold mb-4">🟢 Active Users</h2>
-            <table class="w-full text-sm">
-                <thead>
-                    <tr class="text-gray-400 border-b border-white/10">
-                        <th class="text-left">User</th>
-                        <th class="text-left">IP</th>
-                        <th class="text-left">Session</th>
-                        <th>Status</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach($onlineList as $user)
-                    <tr class="border-b border-white/5 hover:bg-white/5 transition">
-                        <td>{{ $user->username }}</td>
-                        <td>{{ $user->framedipaddress }}</td>
-                        <td>{{ gmdate('H:i:s', $user->acctsessiontime) }}</td>
-                        <td>
-                            <span class="text-green-400 animate-pulse">● Online</span>
-                        </td>
-                    </tr>
-                    @endforeach
-                </tbody>
-            </table>
-        </div>
-
-    </main>
-</div>
-
-<script>
-let chart;
-
-async function loadChart() {
-    const res = await fetch('/dashboard/traffic');
-    const data = await res.json();
-
-    const labels = data.map(d => d.hour + ':00');
-    const values = data.map(d => d.total / 1024 / 1024);
-
-    if (chart) chart.destroy();
-
-    chart = new Chart(document.getElementById('trafficChart'), {
-        type: 'line',
-        data: {
-            labels,
-            datasets: [{
-                label: 'Traffic MB',
-                data: values,
-                tension: 0.4,
-                borderWidth: 2
-            }]
-        },
-        options: {
-            animation: { duration: 800 }
-        }
-    });
-}
-
-setInterval(loadChart, 5000);
-loadChart();
-</script>
-
-</body>
-</html>
-
-/* === MAP FEATURE ADDED === */
-// Tambahkan kolom di tabel users:
-// lat (double), lng (double)
-
-// Route baru:
-// Route::get('/dashboard/map', [DashboardController::class, 'map']);
-
-// Method controller:
-// public function map() {
-//   return DB::table('users')->whereNotNull('lat')->whereNotNull('lng')->get();
+// 3) CONTROLLER: LIST ROUTERS
+// app/Http/Controllers/RouterController.php
+// class RouterController extends Controller {
+//   public function index(){
+//     $routers = DB::table('nas')->get();
+//     return view('routers.index', compact('routers'));
+//   }
 // }
 
-// Tambahkan di Blade sebelum chart:
-// <div id="map" style="height:300px"></div>
+// 4) DASHBOARD: HITUNG PER ROUTER
+// Tambahkan di DashboardController@index:
+// $perRouter = DB::table('radacct')
+//   ->select('nasipaddress', DB::raw('COUNT(*) as total'))
+//   ->whereNull('acctstoptime')
+//   ->groupBy('nasipaddress')
+//   ->get();
 
-// Tambahkan script Leaflet:
-// <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-// <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+// return view(..., compact(..., 'perRouter'));
 
-// Script JS:
-// const map = L.map('map').setView([-6.2,106.8],11);
-// L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
-// fetch('/dashboard/map').then(res=>res.json()).then(data=>{
-//   data.forEach(u=>{
-//     L.marker([u.lat,u.lng]).addTo(map)
-//       .bindPopup(u.name+' ('+u.pppoe_username+')');
-//   });
-// });
+// 5) TAMPILKAN DI DASHBOARD (ringkas)
+// @foreach($perRouter as $r)
+//   <div class="glass p-3 rounded mb-2">
+//     <b>{{ $r->nasipaddress }}</b> - {{ $r->total }} user
+//   </div>
+// @endforeach
+
+// 6) CoA PER ROUTER (penting)
+// RadiusCoAService update:
+// public function disconnect($username, $nasIp) {
+//   $cmd = "echo 'User-Name=$username' | radclient -x {$nasIp}:3799 disconnect {$this->secret}";
+//   return shell_exec($cmd);
+// }
+
+// 7) PAKAI NAS BERDASARKAN USER
+// $user = User::with('nas')->find($id);
+// $coa->disconnect($user->pppoe_username, $user->nas->ip);
+
+// 8) OLT (GPON) BASIC CONCEPT
+// - simpan SN/ONU di users table
+// - mapping ke OLT (nas_id)
+// - kontrol via API / SSH vendor (Huawei/ZTE)
+
+// contoh kolom tambahan users:
+// $table->string('onu_sn')->nullable();
+// $table->string('onu_port')->nullable();
+
+// 9) USE CASE NYATA
+// - 1 ISP punya banyak Mikrotik + OLT
+// - user tersambung ke NAS tertentu
+// - semua kontrol (CoA, suspend) harus ke NAS yang benar
+
+// 10) HASIL AKHIR
+// Dashboard kamu sekarang bisa:
+// ✔ Monitor per router
+// ✔ Multi NAS support
+// ✔ Siap scale ke ribuan user
+
+/* =============================================================== */
+

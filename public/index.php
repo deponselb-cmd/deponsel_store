@@ -189,27 +189,22 @@ $app->handleRequest(Request::capture());
   <style>body { box-sizing: border-box; }</style>
  </head>
  <body class="h-full bg-slate-50 text-slate-800">
-  <div id="app" class="h-full w-full flex overflow-hidden">
-   <!-- Sidebar -->
+  <div id="app" class="h-full w-full flex overflow-hidden"><!-- Sidebar -->
    <aside id="sidebar" class="w-64 bg-white border-r border-slate-200 flex flex-col h-full shrink-0">
     <div class="p-5 border-b border-slate-100">
      <h1 id="app-title" class="text-xl font-bold text-indigo-600">NetBill Pro</h1>
      <p id="company-name" class="text-xs text-slate-400 mt-1">ISP Management System</p>
     </div>
-    <nav class="flex-1 overflow-y-auto p-3 space-y-1">
-     <button onclick="navigate('dashboard')" class="sidebar-item active w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium" data-nav="dashboard"> <i data-lucide="layout-dashboard" class="w-4 h-4"></i> Dashboard </button> <button onclick="navigate('pelanggan')" class="sidebar-item w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium" data-nav="pelanggan"> <i data-lucide="users" class="w-4 h-4"></i> Pelanggan </button> <button onclick="navigate('paket')" class="sidebar-item w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium" data-nav="paket"> <i data-lucide="package" class="w-4 h-4"></i> Paket Layanan </button> <button onclick="navigate('addon')" class="sidebar-item w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium" data-nav="addon"> <i data-lucide="plus-circle" class="w-4 h-4"></i> Add-On </button> <button onclick="navigate('billing')" class="sidebar-item w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium" data-nav="billing"> <i data-lucide="file-text" class="w-4 h-4"></i> Billing &amp; Invoice </button> <button onclick="navigate('pembayaran')" class="sidebar-item w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium" data-nav="pembayaran"> <i data-lucide="credit-card" class="w-4 h-4"></i> Pembayaran </button> <button onclick="navigate('voucher')" class="sidebar-item w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium" data-nav="voucher"> <i data-lucide="ticket" class="w-4 h-4"></i> Voucher </button> <button onclick="navigate('inventory')" class="sidebar-item w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium" data-nav="inventory"> <i data-lucide="box" class="w-4 h-4"></i> Inventory </button> <button onclick="navigate('pppoe')" class="sidebar-item w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium" data-nav="pppoe"> <i data-lucide="network" class="w-4 h-4"></i> PPPoE Manager </button> <button onclick="navigate('hotspot')" class="sidebar-item w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium" data-nav="hotspot"> <i data-lucide="wifi" class="w-4 h-4"></i> Hotspot Manager </button> <button onclick="navigate('tools')" class="sidebar-item w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium" data-nav="tools"> <i data-lucide="wrench" class="w-4 h-4"></i> Tools </button> <button onclick="navigate('monitoring')" class="sidebar-item w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium" data-nav="monitoring"> <i data-lucide="activity" class="w-4 h-4"></i> Monitoring </button> <button onclick="navigate('teknisi')" class="sidebar-item w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium" data-nav="teknisi"> <i data-lucide="tool" class="w-4 h-4"></i> Teknisi </button> <button onclick="navigate('laporan')" class="sidebar-item w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium" data-nav="laporan"> <i data-lucide="bar-chart-2" class="w-4 h-4"></i> Laporan </button> <button onclick="navigate('sistem')" class="sidebar-item w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium" data-nav="sistem"> <i data-lucide="settings" class="w-4 h-4"></i> Sistem </button>
+    <nav class="flex-1 overflow-y-auto p-3 space-y-1"><button onclick="navigate('dashboard')" class="sidebar-item active w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium" data-nav="dashboard"> <i data-lucide="layout-dashboard" class="w-4 h-4"></i> Dashboard </button> <button onclick="navigate('pelanggan')" class="sidebar-item w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium" data-nav="pelanggan"> <i data-lucide="users" class="w-4 h-4"></i> Pelanggan </button> <button onclick="navigate('paket')" class="sidebar-item w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium" data-nav="paket"> <i data-lucide="package" class="w-4 h-4"></i> Paket Layanan </button> <button onclick="navigate('addon')" class="sidebar-item w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium" data-nav="addon"> <i data-lucide="plus-circle" class="w-4 h-4"></i> Add-On </button> <button onclick="navigate('billing')" class="sidebar-item w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium" data-nav="billing"> <i data-lucide="file-text" class="w-4 h-4"></i> Billing &amp; Invoice </button> <button onclick="navigate('pembayaran')" class="sidebar-item w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium" data-nav="pembayaran"> <i data-lucide="credit-card" class="w-4 h-4"></i> Pembayaran </button> <button onclick="navigate('voucher')" class="sidebar-item w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium" data-nav="voucher"> <i data-lucide="ticket" class="w-4 h-4"></i> Voucher </button> <button onclick="navigate('inventory')" class="sidebar-item w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium" data-nav="inventory"> <i data-lucide="box" class="w-4 h-4"></i> Inventory </button> <button onclick="navigate('pppoe')" class="sidebar-item w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium" data-nav="pppoe"> <i data-lucide="network" class="w-4 h-4"></i> PPPoE Manager </button> <button onclick="navigate('hotspot')" class="sidebar-item w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium" data-nav="hotspot"> <i data-lucide="wifi" class="w-4 h-4"></i> Hotspot Manager </button> <button onclick="navigate('tools')" class="sidebar-item w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium" data-nav="tools"> <i data-lucide="wrench" class="w-4 h-4"></i> Tools </button> <button onclick="navigate('monitoring')" class="sidebar-item w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium" data-nav="monitoring"> <i data-lucide="activity" class="w-4 h-4"></i> Monitoring </button> <button onclick="navigate('teknisi')" class="sidebar-item w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium" data-nav="teknisi"> <i data-lucide="tool" class="w-4 h-4"></i> Teknisi </button> <button onclick="navigate('laporan')" class="sidebar-item w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium" data-nav="laporan"> <i data-lucide="bar-chart-2" class="w-4 h-4"></i> Laporan </button> <button onclick="navigate('sistem')" class="sidebar-item w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium" data-nav="sistem"> <i data-lucide="settings" class="w-4 h-4"></i> Sistem </button>
     </nav>
    </aside><!-- Main Content -->
    <main class="flex-1 overflow-y-auto h-full">
     <header class="bg-white border-b border-slate-200 px-6 py-4 flex items-center justify-between sticky top-0 z-10">
      <h2 id="page-title" class="text-lg font-semibold">Dashboard</h2>
-     <div class="flex items-center gap-4">
-      <span class="text-xs text-slate-400" id="current-date"></span> <button id="theme-toggle" onclick="toggleTheme()" class="theme-toggle-btn" title="Toggle Dark Mode">
-       <div class="theme-toggle-thumb">
-        <i id="theme-icon" data-lucide="sun" class="w-3.5 h-3.5 text-indigo-600"></i>
+     <div class="flex items-center gap-4"><span class="text-xs text-slate-400" id="current-date"></span> <button id="theme-toggle" onclick="toggleTheme()" class="theme-toggle-btn" title="Toggle Dark Mode">
+       <div class="theme-toggle-thumb"><i id="theme-icon" data-lucide="sun" class="w-3.5 h-3.5 text-indigo-600"></i>
        </div></button>
-      <div class="w-8 h-8 bg-indigo-100 rounded-full flex items-center justify-center">
-       <i data-lucide="user" class="w-4 h-4 text-indigo-600"></i>
+      <div class="w-8 h-8 bg-indigo-100 rounded-full flex items-center justify-center"><i data-lucide="user" class="w-4 h-4 text-indigo-600"></i>
       </div>
      </div>
     </header>
@@ -1887,6 +1882,206 @@ function renderMonitoring() {
   `;
 }
 
+// Sistem
+function renderSistem() {
+  const content = document.getElementById('content');
+  content.innerHTML = `
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div class="bg-white rounded-xl border border-slate-100 p-6">
+        <div class="flex items-center gap-2 mb-4">
+          <div class="w-8 h-8 bg-indigo-100 rounded-lg flex items-center justify-center"><i data-lucide="key" class="w-4 h-4 text-indigo-600"></i></div>
+          <h3 class="font-semibold">API Key Management</h3>
+        </div>
+        <div class="space-y-4">
+          <div class="bg-indigo-50 border border-indigo-200 rounded-lg p-4">
+            <p class="text-xs text-indigo-600 font-semibold mb-2">API KEY</p>
+            <div class="flex items-center gap-2">
+              <input id="api-key-display" type="password" readonly value="sk_live_8a9b2c3d4e5f6g7h8i9j0k1l" class="flex-1 bg-white border border-indigo-200 rounded px-3 py-2 text-sm font-mono">
+              <button onclick="toggleApiKeyVisibility()" class="text-indigo-600 hover:text-indigo-700 p-2"><i data-lucide="eye" class="w-4 h-4"></i></button>
+              <button onclick="copyApiKey()" class="text-indigo-600 hover:text-indigo-700 p-2"><i data-lucide="copy" class="w-4 h-4"></i></button>
+            </div>
+          </div>
+          <div class="space-y-2">
+            <p class="text-xs text-slate-500 font-semibold">Status</p>
+            <div class="flex items-center gap-2">
+              <span class="w-2 h-2 bg-emerald-500 rounded-full"></span>
+              <span class="text-sm">Active & Valid</span>
+            </div>
+          </div>
+          <div class="space-y-2">
+            <p class="text-xs text-slate-500 font-semibold">Created</p>
+            <p class="text-sm text-slate-600">${new Date().toLocaleDateString('id-ID')}</p>
+          </div>
+          <button onclick="regenerateApiKey()" class="w-full bg-red-50 hover:bg-red-100 text-red-600 px-4 py-2 rounded-lg text-sm font-medium transition border border-red-200">
+            Regenerate Key
+          </button>
+        </div>
+      </div>
+
+      <div class="bg-white rounded-xl border border-slate-100 p-6">
+        <div class="flex items-center gap-2 mb-4">
+          <div class="w-8 h-8 bg-sky-100 rounded-lg flex items-center justify-center"><i data-lucide="settings" class="w-4 h-4 text-sky-600"></i></div>
+          <h3 class="font-semibold">API Configuration</h3>
+        </div>
+        <div class="space-y-3 text-sm">
+          <div class="bg-slate-50 rounded-lg p-3">
+            <p class="text-xs text-slate-500 font-semibold mb-1">API Endpoint</p>
+            <p class="font-mono text-xs text-slate-600">https://api.netbillpro.id/v1</p>
+          </div>
+          <div class="bg-slate-50 rounded-lg p-3">
+            <p class="text-xs text-slate-500 font-semibold mb-1">Authentication</p>
+            <p class="font-mono text-xs text-slate-600">Bearer Token (Header)</p>
+          </div>
+          <div class="bg-slate-50 rounded-lg p-3">
+            <p class="text-xs text-slate-500 font-semibold mb-1">Rate Limit</p>
+            <p class="text-xs text-slate-600">1000 requests/hour</p>
+          </div>
+          <button onclick="openApiDocs()" class="w-full bg-sky-50 hover:bg-sky-100 text-sky-600 px-3 py-2 rounded-lg text-xs font-medium transition border border-sky-200 flex items-center justify-center gap-2">
+            <i data-lucide="book" class="w-3 h-3"></i> View API Docs
+          </button>
+        </div>
+      </div>
+
+      <div class="bg-white rounded-xl border border-slate-100 p-6 md:col-span-2">
+        <div class="flex items-center gap-2 mb-4">
+          <div class="w-8 h-8 bg-violet-100 rounded-lg flex items-center justify-center"><i data-lucide="lock" class="w-4 h-4 text-violet-600"></i></div>
+          <h3 class="font-semibold">Webhooks</h3>
+        </div>
+        <div class="space-y-3">
+          <div class="flex items-center justify-between p-3 bg-slate-50 rounded-lg border border-slate-200">
+            <div><p class="text-sm font-medium">Invoice Created</p><p class="text-xs text-slate-500">POST /webhooks/invoice</p></div>
+            <span class="text-xs px-2 py-1 bg-emerald-50 text-emerald-600 rounded">Active</span>
+          </div>
+          <div class="flex items-center justify-between p-3 bg-slate-50 rounded-lg border border-slate-200">
+            <div><p class="text-sm font-medium">Payment Received</p><p class="text-xs text-slate-500">POST /webhooks/payment</p></div>
+            <span class="text-xs px-2 py-1 bg-emerald-50 text-emerald-600 rounded">Active</span>
+          </div>
+          <div class="flex items-center justify-between p-3 bg-slate-50 rounded-lg border border-slate-200">
+            <div><p class="text-sm font-medium">Customer Created</p><p class="text-xs text-slate-500">POST /webhooks/customer</p></div>
+            <span class="text-xs px-2 py-1 bg-emerald-50 text-emerald-600 rounded">Active</span>
+          </div>
+          <button onclick="showWebhookForm()" class="w-full bg-indigo-50 hover:bg-indigo-100 text-indigo-600 px-4 py-2 rounded-lg text-sm font-medium transition border border-indigo-200 flex items-center justify-center gap-2">
+            <i data-lucide="plus" class="w-4 h-4"></i> Add Webhook
+          </button>
+        </div>
+      </div>
+
+      <div class="bg-white rounded-xl border border-slate-100 p-6 md:col-span-2">
+        <div class="flex items-center gap-2 mb-4">
+          <div class="w-8 h-8 bg-emerald-100 rounded-lg flex items-center justify-center"><i data-lucide="activity" class="w-4 h-4 text-emerald-600"></i></div>
+          <h3 class="font-semibold">API Usage Statistics</h3>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-3">
+          <div class="bg-indigo-50 rounded-lg p-4 text-center border border-indigo-200">
+            <p class="text-xs text-indigo-600 font-semibold mb-1">Total Requests</p>
+            <p class="text-2xl font-bold text-indigo-600">47,293</p>
+            <p class="text-xs text-indigo-500 mt-1">this month</p>
+          </div>
+          <div class="bg-emerald-50 rounded-lg p-4 text-center border border-emerald-200">
+            <p class="text-xs text-emerald-600 font-semibold mb-1">Success Rate</p>
+            <p class="text-2xl font-bold text-emerald-600">99.7%</p>
+            <p class="text-xs text-emerald-500 mt-1">excellent</p>
+          </div>
+          <div class="bg-sky-50 rounded-lg p-4 text-center border border-sky-200">
+            <p class="text-xs text-sky-600 font-semibold mb-1">Avg Response</p>
+            <p class="text-2xl font-bold text-sky-600">124ms</p>
+            <p class="text-xs text-sky-500 mt-1">very fast</p>
+          </div>
+          <div class="bg-violet-50 rounded-lg p-4 text-center border border-violet-200">
+            <p class="text-xs text-violet-600 font-semibold mb-1">Errors</p>
+            <p class="text-2xl font-bold text-violet-600">143</p>
+            <p class="text-xs text-violet-500 mt-1">this month</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="webhook-form-area"></div>
+  `;
+  lucide.createIcons();
+}
+
+function toggleApiKeyVisibility() {
+  const input = document.getElementById('api-key-display');
+  if (input.type === 'password') {
+    input.type = 'text';
+  } else {
+    input.type = 'password';
+  }
+  lucide.createIcons();
+}
+
+function copyApiKey() {
+  const apiKey = 'sk_live_8a9b2c3d4e5f6g7h8i9j0k1l';
+  navigator.clipboard.writeText(apiKey);
+  toast('API Key copied to clipboard!');
+}
+
+function regenerateApiKey() {
+  if (!confirm('Regenerate API Key? Your current key will be revoked.')) return;
+  const newKey = 'sk_live_' + Math.random().toString(36).substring(2, 15);
+  document.getElementById('api-key-display').value = newKey;
+  toast('API Key regenerated successfully!');
+}
+
+function openApiDocs() {
+  toast('API Documentation opened in new tab');
+  window.open('https://docs.netbillpro.id', '_blank');
+}
+
+function showWebhookForm() {
+  const area = document.getElementById('webhook-form-area');
+  area.innerHTML = `
+    <div class="bg-white rounded-xl border border-slate-200 p-6 mt-6">
+      <h3 class="font-semibold mb-4">Add New Webhook</h3>
+      <form onsubmit="addWebhook(event)" class="space-y-4">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div>
+            <label class="block text-xs font-medium text-slate-500 mb-1">Event Type</label>
+            <select id="webhook-event" required class="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-200">
+              <option value="">Select an event...</option>
+              <option value="invoice_created">Invoice Created</option>
+              <option value="payment_received">Payment Received</option>
+              <option value="customer_created">Customer Created</option>
+              <option value="customer_updated">Customer Updated</option>
+              <option value="service_activated">Service Activated</option>
+              <option value="service_suspended">Service Suspended</option>
+            </select>
+          </div>
+          <div>
+            <label class="block text-xs font-medium text-slate-500 mb-1">Webhook URL</label>
+            <input id="webhook-url" type="url" placeholder="https://your-domain.com/webhook" required class="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-200">
+          </div>
+        </div>
+        <div>
+          <label class="block text-xs font-medium text-slate-500 mb-2">
+            <input type="checkbox" id="webhook-active" checked class="rounded mr-2"> Enable webhook
+          </label>
+        </div>
+        <div class="flex gap-2">
+          <button type="submit" class="bg-indigo-500 hover:bg-indigo-600 text-white px-4 py-2 rounded-lg text-sm font-medium transition">Add Webhook</button>
+          <button type="button" onclick="document.getElementById('webhook-form-area').innerHTML=''" class="bg-slate-100 hover:bg-slate-200 text-slate-600 px-4 py-2 rounded-lg text-sm font-medium transition">Cancel</button>
+        </div>
+      </form>
+    </div>
+  `;
+}
+
+function addWebhook(e) {
+  e.preventDefault();
+  const event = document.getElementById('webhook-event').value;
+  const url = document.getElementById('webhook-url').value;
+  const active = document.getElementById('webhook-active').checked;
+  
+  if (!event || !url) {
+    toast('Please fill all fields', 'error');
+    return;
+  }
+  
+  toast(`Webhook added for ${event}!`);
+  document.getElementById('webhook-form-area').innerHTML = '';
+  renderSistem();
+}
+
 // Laporan
 function renderLaporan() {
   const payments = getByType('payment');
@@ -2741,5 +2936,5 @@ renderDashboard();
 lucide.createIcons();
 applyTheme();
 </script>
- <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9f7078e70396ff89',t:'MTc3Nzk5MTczMi4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9f70878bb614ff89',t:'MTc3Nzk5MjMzMi4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>

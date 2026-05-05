@@ -18,3 +18,1339 @@ require __DIR__.'/../vendor/autoload.php';
 $app = require_once __DIR__.'/../bootstrap/app.php';
 
 $app->handleRequest(Request::capture());
+
+<!doctype html>
+<html lang="en" class="h-full">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NetFlow ISP Pro</title>
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lucide@0.263.0/dist/umd/lucide.min.js"></script>
+  <script src="/_sdk/element_sdk.js"></script>
+  <script src="/_sdk/data_sdk.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&amp;family=Space+Grotesk:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; }
+    body { font-family: 'Space Grotesk', sans-serif; margin: 0; background: linear-gradient(135deg, #0f172a 0%, #1a1f3a 100%); }
+    html, body { height: 100%; }
+    .mono { font-family: 'JetBrains Mono', monospace; }
+    .glass { backdrop-filter: blur(10px); background: rgba(15, 23, 42, 0.8); border: 1px solid rgba(148, 163, 184, 0.1); }
+    .glass-light { backdrop-filter: blur(10px); background: rgba(226, 232, 240, 0.85); border: 1px solid rgba(148, 163, 184, 0.2); }
+    .sidebar-item { transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
+    .sidebar-item:hover { background: rgba(255,255,255,0.1); transform: translateX(4px); }
+    .sidebar-item.active { background: linear-gradient(135deg, #0ea5e9, #06b6d4); color: white; transform: translateX(4px); }
+    .card-glass { backdrop-filter: blur(10px); background: rgba(30, 41, 59, 0.6); border: 1px solid rgba(148, 163, 184, 0.1); }
+    .card-glass-hover { transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
+    .card-glass-hover:hover { transform: translateY(-8px); box-shadow: 0 20px 40px rgba(14, 165, 233, 0.15); }
+    .stat-card { backdrop-filter: blur(12px); background: linear-gradient(135deg, rgba(30, 41, 59, 0.8), rgba(20, 30, 48, 0.6)); border: 1px solid rgba(148, 163, 184, 0.15); }
+    .btn-glass { backdrop-filter: blur(8px); border: 1px solid rgba(148, 163, 184, 0.2); transition: all 0.3s; }
+    .btn-glass:hover { background: rgba(148, 163, 184, 0.1); border-color: rgba(148, 163, 184, 0.4); }
+    .status-online { color: #10b981; font-weight: 600; }
+    .status-offline { color: #ef4444; font-weight: 600; }
+    .status-suspended { color: #f59e0b; font-weight: 600; }
+    .status-pending { color: #8b5cf6; font-weight: 600; }
+    .fade-in { animation: fadeIn 0.4s ease; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+    .toast { position: fixed; bottom: 24px; right: 24px; z-index: 9999; padding: 14px 20px; border-radius: 10px; color: #fff; font-size: 13px; animation: slideUp 0.3s ease; backdrop-filter: blur(8px); border: 1px solid rgba(255,255,255,0.1); }
+    @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+    .toast-success { background: rgba(16, 185, 129, 0.9); }
+    .toast-error { background: rgba(239, 68, 68, 0.9); }
+    .toast-warning { background: rgba(245, 158, 11, 0.9); }
+    .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.7); z-index: 100; display: flex; align-items: center; justify-content: center; backdrop-filter: blur(4px); }
+    .confirm-box { backdrop-filter: blur(10px); background: rgba(30, 41, 59, 0.95); border: 1px solid rgba(148, 163, 184, 0.2); border-radius: 16px; padding: 28px; max-width: 420px; width: 90%; }
+    .input-glass { background: rgba(15, 23, 42, 0.6); border: 1px solid rgba(148, 163, 184, 0.2); border-radius: 8px; padding: 10px 14px; color: #e2e8f0; font-size: 14px; transition: all 0.3s; }
+    .input-glass:focus { outline: none; border-color: #0ea5e9; background: rgba(15, 23, 42, 0.8); box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.1); }
+    .badge { display: inline-block; padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: 600; }
+    .badge-success { background: rgba(16, 185, 129, 0.2); color: #10b981; border: 1px solid rgba(16, 185, 129, 0.3); }
+    .badge-warning { background: rgba(245, 158, 11, 0.2); color: #f59e0b; border: 1px solid rgba(245, 158, 11, 0.3); }
+    .badge-error { background: rgba(239, 68, 68, 0.2); color: #ef4444; border: 1px solid rgba(239, 68, 68, 0.3); }
+    .gradient-text { background: linear-gradient(135deg, #0ea5e9, #06b6d4); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    .section-divider { height: 1px; background: linear-gradient(90deg, transparent, rgba(148, 163, 184, 0.2), transparent); }
+    .payment-badge { display: inline-block; padding: 6px 14px; border-radius: 12px; font-size: 11px; font-weight: 700; }
+    .badge-pending { background: rgba(245, 158, 11, 0.2); color: #fbbf24; border: 1px solid rgba(245, 158, 11, 0.3); }
+    .badge-paid { background: rgba(34, 197, 94, 0.2); color: #22c55e; border: 1px solid rgba(34, 197, 94, 0.3); }
+    .badge-failed { background: rgba(239, 68, 68, 0.2); color: #ef4444; border: 1px solid rgba(239, 68, 68, 0.3); }
+    .print-container { background: white; color: #000; padding: 20mm; font-family: Arial, sans-serif; }
+    .voucher-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+    .voucher-item { break-inside: avoid; page-break-inside: avoid; border: 2px dashed #333; padding: 12px; border-radius: 8px; text-align: center; background: #f8f9fa; }
+    @media print { body { background: white !important; } .print-container { margin: 0; padding: 0; background: white; } .voucher-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 4px; } }
+  </style>
+  <style>body { box-sizing: border-box; }</style>
+ </head>
+ <body class="h-full text-gray-100 overflow-hidden">
+  <div class="flex h-full w-full">
+   <aside class="w-64 glass flex flex-col h-full shrink-0 border-r border-slate-700/50">
+    <div class="p-6 border-b border-slate-700/30">
+     <h1 id="sidebar-title" class="text-xl font-bold gradient-text">NetFlow Pro</h1>
+     <p id="sidebar-company" class="text-xs text-slate-400 mt-2">ISP Manager System</p>
+    </div>
+    <nav class="flex-1 p-4 space-y-1 overflow-y-auto"><button onclick="switchTab('dashboard')" data-tab="dashboard" class="sidebar-item active w-full flex items-center gap-3 px-4 py-3 rounded-lg text-sm text-left font-medium"><i data-lucide="layout-dashboard" class="w-4 h-4"></i><span>Dashboard</span></button> <button onclick="switchTab('customers')" data-tab="customers" class="sidebar-item w-full flex items-center gap-3 px-4 py-3 rounded-lg text-sm text-left font-medium"><i data-lucide="users" class="w-4 h-4"></i><span>Customers</span></button>
+     <div class="px-4 py-2 text-xs text-slate-500 font-semibold uppercase mt-4 mb-1">
+      Billing
+     </div><button onclick="switchTab('billing')" data-tab="billing" class="sidebar-item w-full flex items-center gap-3 px-4 py-3 rounded-lg text-sm text-left"><i data-lucide="credit-card" class="w-4 h-4"></i><span>Billing &amp; Invoice</span></button> <button onclick="switchTab('topup')" data-tab="topup" class="sidebar-item w-full flex items-center gap-3 px-4 py-3 rounded-lg text-sm text-left"><i data-lucide="plus-circle" class="w-4 h-4"></i><span>Top Up &amp; Prepaid</span></button> <button onclick="switchTab('voucher')" data-tab="voucher" class="sidebar-item w-full flex items-center gap-3 px-4 py-3 rounded-lg text-sm text-left"><i data-lucide="gift" class="w-4 h-4"></i><span>Voucher Manager</span></button> <button onclick="switchTab('payment')" data-tab="payment" class="sidebar-item w-full flex items-center gap-3 px-4 py-3 rounded-lg text-sm text-left"><i data-lucide="zap" class="w-4 h-4"></i><span>Payment Gateway</span></button>
+     <div class="px-4 py-2 text-xs text-slate-500 font-semibold uppercase mt-4 mb-1">
+      Network
+     </div><button onclick="switchTab('pppoe')" data-tab="pppoe" class="sidebar-item w-full flex items-center gap-3 px-4 py-3 rounded-lg text-sm text-left"><i data-lucide="shield" class="w-4 h-4"></i><span>PPPoE &amp; RADIUS</span></button> <button onclick="switchTab('hotspot')" data-tab="hotspot" class="sidebar-item w-full flex items-center gap-3 px-4 py-3 rounded-lg text-sm text-left"><i data-lucide="wifi" class="w-4 h-4"></i><span>Hotspot Manager</span></button> <button onclick="switchTab('coa')" data-tab="coa" class="sidebar-item w-full flex items-center gap-3 px-4 py-3 rounded-lg text-sm text-left"><i data-lucide="zap" class="w-4 h-4"></i><span>CoA Control</span></button> <button onclick="switchTab('routers')" data-tab="routers" class="sidebar-item w-full flex items-center gap-3 px-4 py-3 rounded-lg text-sm text-left"><i data-lucide="server" class="w-4 h-4"></i><span>Routers &amp; OLT</span></button>
+     <div class="px-4 py-2 text-xs text-slate-500 font-semibold uppercase mt-4 mb-1">
+      Operations
+     </div><button onclick="switchTab('monitoring')" data-tab="monitoring" class="sidebar-item w-full flex items-center gap-3 px-4 py-3 rounded-lg text-sm text-left"><i data-lucide="activity" class="w-4 h-4"></i><span>Monitoring</span></button> <button onclick="switchTab('technician')" data-tab="technician" class="sidebar-item w-full flex items-center gap-3 px-4 py-3 rounded-lg text-sm text-left"><i data-lucide="wrench" class="w-4 h-4"></i><span>Technician &amp; Tickets</span></button> <button onclick="switchTab('assets')" data-tab="assets" class="sidebar-item w-full flex items-center gap-3 px-4 py-3 rounded-lg text-sm text-left"><i data-lucide="package" class="w-4 h-4"></i><span>Assets &amp; Inventory</span></button> <button onclick="switchTab('reports')" data-tab="reports" class="sidebar-item w-full flex items-center gap-3 px-4 py-3 rounded-lg text-sm text-left"><i data-lucide="bar-chart-3" class="w-4 h-4"></i><span>Reports &amp; Analytics</span></button>
+    </nav>
+    <div class="p-4 border-t border-slate-700/30"><button onclick="switchTab('settings')" data-tab="settings" class="sidebar-item w-full flex items-center gap-3 px-4 py-3 rounded-lg text-sm text-left"><i data-lucide="settings" class="w-4 h-4"></i><span>Settings</span></button>
+    </div>
+   </aside>
+   <main class="flex-1 h-full overflow-auto p-8"><!-- Dashboard Tab -->
+    <div id="tab-dashboard" class="tab-content fade-in max-w-7xl">
+     <div class="mb-8">
+      <h1 class="text-4xl font-bold mb-2">Dashboard</h1>
+      <p class="text-slate-400">Real-time ISP management overview</p>
+     </div>
+     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4 mb-8">
+      <div class="stat-card card-glass-hover rounded-xl p-5">
+       <div class="flex items-center justify-between mb-3">
+        <span class="text-slate-400 text-xs font-semibold uppercase">Total Customers</span><i data-lucide="users" class="w-5 h-5 text-cyan-400"></i>
+       </div>
+       <p id="stat-total" class="text-3xl font-bold mono">0</p>
+       <p class="text-xs text-slate-500 mt-2">Active subscriptions</p>
+      </div>
+      <div class="stat-card card-glass-hover rounded-xl p-5">
+       <div class="flex items-center justify-between mb-3">
+        <span class="text-slate-400 text-xs font-semibold uppercase">Online</span><i data-lucide="wifi" class="w-5 h-5 text-green-400"></i>
+       </div>
+       <p id="stat-online" class="text-3xl font-bold mono status-online">0</p>
+       <p class="text-xs text-slate-500 mt-2">Connected now</p>
+      </div>
+      <div class="stat-card card-glass-hover rounded-xl p-5">
+       <div class="flex items-center justify-between mb-3">
+        <span class="text-slate-400 text-xs font-semibold uppercase">Suspended</span><i data-lucide="alert-triangle" class="w-5 h-5 text-amber-400"></i>
+       </div>
+       <p id="stat-suspended" class="text-3xl font-bold mono status-suspended">0</p>
+       <p class="text-xs text-slate-500 mt-2">Account suspended</p>
+      </div>
+      <div class="stat-card card-glass-hover rounded-xl p-5">
+       <div class="flex items-center justify-between mb-3">
+        <span class="text-slate-400 text-xs font-semibold uppercase">Unpaid</span><i data-lucide="alert-circle" class="w-5 h-5 text-red-400"></i>
+       </div>
+       <p id="stat-unpaid" class="text-3xl font-bold mono text-red-400">0</p>
+       <p class="text-xs text-slate-500 mt-2">Overdue invoices</p>
+      </div>
+      <div class="stat-card card-glass-hover rounded-xl p-5">
+       <div class="flex items-center justify-between mb-3">
+        <span class="text-slate-400 text-xs font-semibold uppercase">Monthly Revenue</span><i data-lucide="trending-up" class="w-5 h-5 text-emerald-400"></i>
+       </div>
+       <p id="stat-revenue" class="text-3xl font-bold mono text-emerald-400">Rp 0</p>
+       <p class="text-xs text-slate-500 mt-2">This month</p>
+      </div>
+     </div>
+     <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
+      <div class="lg:col-span-2 card-glass rounded-xl p-6">
+       <div class="flex items-center justify-between mb-4">
+        <h3 class="font-semibold text-slate-200">Recent Activity</h3><i data-lucide="activity" class="w-4 h-4 text-cyan-400"></i>
+       </div>
+       <div class="section-divider mb-4"></div>
+       <div id="activity-list" class="space-y-3 text-sm"></div>
+      </div>
+      <div class="card-glass rounded-xl p-6">
+       <div class="flex items-center justify-between mb-4">
+        <h3 class="font-semibold text-slate-200">Quick Actions</h3><i data-lucide="zap" class="w-4 h-4 text-cyan-400"></i>
+       </div>
+       <div class="section-divider mb-4"></div>
+       <div class="space-y-2"><button onclick="switchTab('customers');showAddCustomer()" class="w-full px-4 py-2.5 rounded-lg btn-glass text-sm font-medium text-left flex items-center gap-2 hover:bg-cyan-500/10"><i data-lucide="plus" class="w-4 h-4 text-cyan-400"></i> Add Customer</button> <button onclick="switchTab('billing')" class="w-full px-4 py-2.5 rounded-lg btn-glass text-sm font-medium text-left flex items-center gap-2 hover:bg-cyan-500/10"><i data-lucide="credit-card" class="w-4 h-4 text-cyan-400"></i> Create Invoice</button> <button onclick="switchTab('topup')" class="w-full px-4 py-2.5 rounded-lg btn-glass text-sm font-medium text-left flex items-center gap-2 hover:bg-cyan-500/10"><i data-lucide="plus-circle" class="w-4 h-4 text-cyan-400"></i> Top Up Balance</button>
+       </div>
+      </div>
+     </div>
+    </div><!-- Customers Tab -->
+    <div id="tab-customers" class="tab-content hidden fade-in">
+     <div class="flex items-center justify-between mb-6">
+      <div>
+       <h2 class="text-3xl font-bold mb-1">Customers</h2>
+       <p class="text-slate-400 text-sm">Manage your subscriber base</p>
+      </div><button onclick="showAddCustomer()" class="bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-cyan-600 hover:to-blue-600 text-white px-6 py-3 rounded-lg font-medium flex items-center gap-2 transition shadow-lg shadow-cyan-500/25"><i data-lucide="plus" class="w-4 h-4"></i> Add Customer</button>
+     </div>
+     <div id="add-customer-form" class="hidden card-glass rounded-xl p-6 mb-6 fade-in">
+      <h3 class="font-semibold mb-4 text-lg">New Customer Registration</h3>
+      <form onsubmit="addCustomer(event)" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+       <div><label for="c-name" class="block text-xs text-slate-400 mb-2 font-semibold uppercase">Full Name</label> <input id="c-name" type="text" required class="w-full input-glass">
+       </div>
+       <div><label for="c-username" class="block text-xs text-slate-400 mb-2 font-semibold uppercase">PPPoE Username</label> <input id="c-username" type="text" required class="w-full input-glass">
+       </div>
+       <div><label for="c-package" class="block text-xs text-slate-400 mb-2 font-semibold uppercase">Package</label> <select id="c-package" class="w-full input-glass"><option>10 Mbps - Rp 150.000</option><option>20 Mbps - Rp 250.000</option><option>50 Mbps - Rp 500.000</option><option>100 Mbps - Rp 999.000</option></select>
+       </div>
+       <div><label for="c-router" class="block text-xs text-slate-400 mb-2 font-semibold uppercase">Router</label> <select id="c-router" class="w-full input-glass"><option>MikroTik-01</option><option>MikroTik-02</option><option>OLT-Huawei-01</option></select>
+       </div>
+       <div><label for="c-fee" class="block text-xs text-slate-400 mb-2 font-semibold uppercase">Monthly Fee (Rp)</label> <input id="c-fee" type="number" value="150000" required class="w-full input-glass">
+       </div>
+       <div><label for="c-whatsapp" class="block text-xs text-slate-400 mb-2 font-semibold uppercase">WhatsApp Number</label> <input id="c-whatsapp" type="tel" placeholder="+62812345678" class="w-full input-glass">
+       </div>
+       <div><label for="c-payment" class="block text-xs text-slate-400 mb-2 font-semibold uppercase">Payment Method</label> <select id="c-payment" class="w-full input-glass"><option value="cash">Cash</option><option value="bank_transfer">Bank Transfer</option><option value="midtrans">Midtrans</option><option value="xendit">Xendit</option></select>
+       </div>
+       <div><label for="c-billing" class="block text-xs text-slate-400 mb-2 font-semibold uppercase">Billing Address</label> <input id="c-billing" type="text" placeholder="Jl. Teknologi No. 123" class="w-full input-glass">
+       </div>
+       <div class="md:col-span-2 flex gap-3"><button type="submit" id="btn-add-customer" class="bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-cyan-600 hover:to-blue-600 text-white px-6 py-2.5 rounded-lg font-medium transition">Save Customer</button> <button type="button" onclick="hideAddCustomer()" class="px-6 py-2.5 rounded-lg btn-glass font-medium">Cancel</button>
+       </div>
+      </form>
+     </div>
+     <div class="card-glass rounded-xl overflow-hidden">
+      <div class="overflow-x-auto">
+       <table class="w-full text-sm">
+        <thead class="bg-slate-800/30 border-b border-slate-700/50">
+         <tr>
+          <th class="text-left px-6 py-3.5 text-slate-400 font-semibold">Name</th>
+          <th class="text-left px-6 py-3.5 text-slate-400 font-semibold">Username</th>
+          <th class="text-left px-6 py-3.5 text-slate-400 font-semibold">Package</th>
+          <th class="text-left px-6 py-3.5 text-slate-400 font-semibold">Status</th>
+          <th class="text-left px-6 py-3.5 text-slate-400 font-semibold">Payment</th>
+          <th class="text-left px-6 py-3.5 text-slate-400 font-semibold">Balance</th>
+          <th class="text-left px-6 py-3.5 text-slate-400 font-semibold">Actions</th>
+         </tr>
+        </thead>
+        <tbody id="customer-table-body">
+         <tr>
+          <td colspan="7" class="px-6 py-8 text-center text-slate-500">No customers yet</td>
+         </tr>
+        </tbody>
+       </table>
+      </div>
+     </div>
+    </div><!-- Payment Gateway Tab -->
+    <div id="tab-payment" class="tab-content hidden fade-in">
+     <div class="mb-6">
+      <h2 class="text-3xl font-bold mb-1">Payment Gateway Integration</h2>
+      <p class="text-slate-400 text-sm">Midtrans &amp; Xendit automatic payment processing</p>
+     </div>
+     <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+      <div class="card-glass rounded-xl p-6 card-glass-hover">
+       <div class="flex items-center gap-3 mb-4">
+        <div class="w-12 h-12 rounded-lg bg-cyan-500/20 flex items-center justify-center"><i data-lucide="credit-card" class="w-6 h-6 text-cyan-400"></i>
+        </div>
+        <div>
+         <p class="font-semibold">Midtrans</p>
+         <p class="text-xs text-slate-400">All payment methods support</p>
+        </div>
+       </div>
+       <div class="section-divider mb-4"></div>
+       <div class="space-y-2 text-sm">
+        <p class="text-slate-300"><span class="text-slate-500">Status:</span> <span class="badge badge-success">Active</span></p>
+        <p class="text-slate-300"><span class="text-slate-500">Transactions:</span> <span id="midtrans-count" class="font-semibold">0</span></p>
+        <p class="text-slate-300"><span class="text-slate-500">Revenue:</span> <span id="midtrans-revenue" class="font-semibold text-emerald-400">Rp 0</span></p>
+       </div><button onclick="simulatePayment('midtrans')" class="w-full mt-4 px-4 py-2.5 rounded-lg btn-glass text-sm font-medium hover:bg-cyan-500/10">Simulate Payment</button>
+      </div>
+      <div class="card-glass rounded-xl p-6 card-glass-hover">
+       <div class="flex items-center gap-3 mb-4">
+        <div class="w-12 h-12 rounded-lg bg-purple-500/20 flex items-center justify-center"><i data-lucide="zap" class="w-6 h-6 text-purple-400"></i>
+        </div>
+        <div>
+         <p class="font-semibold">Xendit</p>
+         <p class="text-xs text-slate-400">Instant payment notifications</p>
+        </div>
+       </div>
+       <div class="section-divider mb-4"></div>
+       <div class="space-y-2 text-sm">
+        <p class="text-slate-300"><span class="text-slate-500">Status:</span> <span class="badge badge-success">Active</span></p>
+        <p class="text-slate-300"><span class="text-slate-500">Transactions:</span> <span id="xendit-count" class="font-semibold">0</span></p>
+        <p class="text-slate-300"><span class="text-slate-500">Revenue:</span> <span id="xendit-revenue" class="font-semibold text-emerald-400">Rp 0</span></p>
+       </div><button onclick="simulatePayment('xendit')" class="w-full mt-4 px-4 py-2.5 rounded-lg btn-glass text-sm font-medium hover:bg-purple-500/10">Simulate Payment</button>
+      </div>
+     </div>
+     <div class="card-glass rounded-xl overflow-hidden">
+      <div class="overflow-x-auto">
+       <table class="w-full text-sm">
+        <thead class="bg-slate-800/30 border-b border-slate-700/50">
+         <tr>
+          <th class="text-left px-6 py-3.5 text-slate-400 font-semibold">Gateway</th>
+          <th class="text-left px-6 py-3.5 text-slate-400 font-semibold">Customer</th>
+          <th class="text-left px-6 py-3.5 text-slate-400 font-semibold">Amount</th>
+          <th class="text-left px-6 py-3.5 text-slate-400 font-semibold">Status</th>
+          <th class="text-left px-6 py-3.5 text-slate-400 font-semibold">Date</th>
+         </tr>
+        </thead>
+        <tbody id="payment-table-body">
+         <tr>
+          <td colspan="5" class="px-6 py-8 text-center text-slate-500">No transactions yet</td>
+         </tr>
+        </tbody>
+       </table>
+      </div>
+     </div>
+    </div><!-- Billing Tab -->
+    <div id="tab-billing" class="tab-content hidden fade-in">
+     <div class="flex items-center justify-between mb-6">
+      <div>
+       <h2 class="text-3xl font-bold mb-1">Billing &amp; Invoices</h2>
+       <p class="text-slate-400 text-sm">Invoice management and payment tracking</p>
+      </div><button onclick="generateInvoices()" class="bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 text-white px-6 py-3 rounded-lg font-medium flex items-center gap-2 transition shadow-lg shadow-emerald-500/25"><i data-lucide="file-plus" class="w-4 h-4"></i> Generate Invoice</button>
+     </div>
+     <div class="card-glass rounded-xl overflow-hidden">
+      <div class="overflow-x-auto">
+       <table class="w-full text-sm">
+        <thead class="bg-slate-800/30 border-b border-slate-700/50">
+         <tr>
+          <th class="text-left px-6 py-3.5 text-slate-400 font-semibold">Invoice ID</th>
+          <th class="text-left px-6 py-3.5 text-slate-400 font-semibold">Customer</th>
+          <th class="text-left px-6 py-3.5 text-slate-400 font-semibold">Amount</th>
+          <th class="text-left px-6 py-3.5 text-slate-400 font-semibold">Due Date</th>
+          <th class="text-left px-6 py-3.5 text-slate-400 font-semibold">Status</th>
+          <th class="text-left px-6 py-3.5 text-slate-400 font-semibold">Actions</th>
+         </tr>
+        </thead>
+        <tbody id="billing-table-body">
+         <tr>
+          <td colspan="6" class="px-6 py-8 text-center text-slate-500">No invoices</td>
+         </tr>
+        </tbody>
+       </table>
+      </div>
+     </div>
+    </div><!-- Top Up Tab -->
+    <div id="tab-topup" class="tab-content hidden fade-in">
+     <div class="mb-6">
+      <h2 class="text-3xl font-bold mb-1">Top Up &amp; Prepaid</h2>
+      <p class="text-slate-400 text-sm">Prepaid balance management</p>
+     </div>
+     <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+      <div class="stat-card card-glass-hover rounded-xl p-6">
+       <p class="text-slate-400 text-xs font-semibold uppercase mb-2">Total Balance</p>
+       <p id="topup-total-balance" class="text-3xl font-bold mono text-emerald-400">Rp 0</p>
+      </div>
+      <div class="stat-card card-glass-hover rounded-xl p-6">
+       <p class="text-slate-400 text-xs font-semibold uppercase mb-2">Active Prepaid</p>
+       <p id="topup-active-count" class="text-3xl font-bold mono text-cyan-400">0</p>
+      </div>
+      <div class="stat-card card-glass-hover rounded-xl p-6">
+       <p class="text-slate-400 text-xs font-semibold uppercase mb-2">Top Ups Today</p>
+       <p id="topup-today-count" class="text-3xl font-bold mono text-purple-400">0</p>
+      </div>
+     </div>
+     <div class="card-glass rounded-xl p-6 mb-6">
+      <h3 class="font-semibold mb-4 text-lg">Add Top Up</h3>
+      <form onsubmit="addTopUp(event)" class="grid grid-cols-1 md:grid-cols-3 gap-4">
+       <div><label class="block text-xs text-slate-400 mb-2 font-semibold uppercase">Customer</label> <select id="topup-customer" class="w-full input-glass" required><option value="">Select customer...</option></select>
+       </div>
+       <div><label class="block text-xs text-slate-400 mb-2 font-semibold uppercase">Amount (Rp)</label> <input type="number" id="topup-amount" placeholder="100000" class="w-full input-glass" required>
+       </div>
+       <div class="flex items-end"><button type="submit" class="w-full bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white px-4 py-2.5 rounded-lg font-medium transition">Add Top Up</button>
+       </div>
+      </form>
+     </div>
+     <div class="card-glass rounded-xl overflow-hidden">
+      <div class="overflow-x-auto">
+       <table class="w-full text-sm">
+        <thead class="bg-slate-800/30 border-b border-slate-700/50">
+         <tr>
+          <th class="text-left px-6 py-3.5 text-slate-400 font-semibold">Customer</th>
+          <th class="text-left px-6 py-3.5 text-slate-400 font-semibold">Amount</th>
+          <th class="text-left px-6 py-3.5 text-slate-400 font-semibold">Balance</th>
+          <th class="text-left px-6 py-3.5 text-slate-400 font-semibold">Added</th>
+         </tr>
+        </thead>
+        <tbody id="topup-table-body">
+         <tr>
+          <td colspan="4" class="px-6 py-8 text-center text-slate-500">No top-ups yet</td>
+         </tr>
+        </tbody>
+       </table>
+      </div>
+     </div>
+    </div><!-- Voucher Tab -->
+    <div id="tab-voucher" class="tab-content hidden fade-in">
+     <div class="flex items-center justify-between mb-6">
+      <div>
+       <h2 class="text-3xl font-bold mb-1">Voucher Manager</h2>
+       <p class="text-slate-400 text-sm">Create and print customer vouchers (A4 30/sheet)</p>
+      </div><button onclick="printVouchers()" class="bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white px-6 py-3 rounded-lg font-medium flex items-center gap-2 transition shadow-lg shadow-amber-500/25"><i data-lucide="printer" class="w-4 h-4"></i> Print A4 (30/sheet)</button>
+     </div>
+     <div class="card-glass rounded-xl p-6 mb-6">
+      <h3 class="font-semibold mb-4 text-lg">Generate Voucher</h3>
+      <form onsubmit="generateVoucher(event)" class="grid grid-cols-1 md:grid-cols-5 gap-4">
+       <div><label class="block text-xs text-slate-400 mb-2 font-semibold uppercase">Qty</label> <input type="number" id="voucher-qty" placeholder="1" min="1" max="100" value="1" class="w-full input-glass" required>
+       </div>
+       <div><label class="block text-xs text-slate-400 mb-2 font-semibold uppercase">Discount %</label> <input type="number" id="voucher-discount" placeholder="10" min="1" max="100" class="w-full input-glass" required>
+       </div>
+       <div><label class="block text-xs text-slate-400 mb-2 font-semibold uppercase">Expiry (Days)</label> <input type="number" id="voucher-expiry" placeholder="30" min="1" class="w-full input-glass" required>
+       </div>
+       <div><label class="block text-xs text-slate-400 mb-2 font-semibold uppercase">Prefix</label> <input type="text" id="voucher-prefix" placeholder="PROMO" maxlength="6" class="w-full input-glass">
+       </div>
+       <div class="flex items-end"><button type="submit" class="w-full bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white px-4 py-2.5 rounded-lg font-medium transition">Generate</button>
+       </div>
+      </form>
+     </div>
+     <div class="card-glass rounded-xl overflow-hidden">
+      <div class="overflow-x-auto">
+       <table class="w-full text-sm">
+        <thead class="bg-slate-800/30 border-b border-slate-700/50">
+         <tr>
+          <th class="text-left px-6 py-3.5 text-slate-400 font-semibold">Voucher Code</th>
+          <th class="text-left px-6 py-3.5 text-slate-400 font-semibold">Discount</th>
+          <th class="text-left px-6 py-3.5 text-slate-400 font-semibold">Status</th>
+          <th class="text-left px-6 py-3.5 text-slate-400 font-semibold">Expires</th>
+         </tr>
+        </thead>
+        <tbody id="voucher-table-body">
+         <tr>
+          <td colspan="4" class="px-6 py-8 text-center text-slate-500">No vouchers yet</td>
+         </tr>
+        </tbody>
+       </table>
+      </div>
+     </div>
+     <div id="print-area" class="hidden"></div>
+    </div><!-- PPPoE Tab -->
+    <div id="tab-pppoe" class="tab-content hidden fade-in">
+     <div class="mb-6">
+      <h2 class="text-3xl font-bold mb-1">PPPoE &amp; RADIUS</h2>
+      <p class="text-slate-400 text-sm">Authentication sessions and RADIUS control</p>
+     </div>
+     <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      <div class="card-glass rounded-xl p-6">
+       <div class="flex items-center justify-between mb-4">
+        <h3 class="font-semibold text-slate-200">Active RADIUS Sessions</h3><i data-lucide="shield" class="w-4 h-4 text-cyan-400"></i>
+       </div>
+       <div class="section-divider mb-4"></div>
+       <div id="radius-sessions" class="space-y-2 text-sm"></div>
+      </div>
+      <div class="card-glass rounded-xl p-6">
+       <div class="flex items-center justify-between mb-4">
+        <h3 class="font-semibold text-slate-200">PPPoE Connections</h3><i data-lucide="link" class="w-4 h-4 text-purple-400"></i>
+       </div>
+       <div class="section-divider mb-4"></div>
+       <div id="pppoe-sessions" class="space-y-2 text-sm"></div>
+      </div>
+     </div>
+    </div><!-- Hotspot Tab -->
+    <div id="tab-hotspot" class="tab-content hidden fade-in">
+     <h2 class="text-3xl font-bold mb-2">Hotspot Manager</h2>
+     <p class="text-slate-400 text-sm mb-6">Hotspot users and bandwidth control</p>
+     <div class="card-glass rounded-xl p-6 text-center py-12"><i data-lucide="wifi" class="w-12 h-12 text-slate-500 mx-auto mb-4 opacity-50"></i>
+      <p class="text-slate-400">Hotspot management coming soon</p>
+     </div>
+    </div><!-- CoA Tab -->
+    <div id="tab-coa" class="tab-content hidden fade-in">
+     <div class="mb-6">
+      <h2 class="text-3xl font-bold mb-1">CoA Realtime Control</h2>
+      <p class="text-slate-400 text-sm">Change of Authorization — manage customer bandwidth</p>
+     </div>
+     <div class="card-glass rounded-xl overflow-hidden">
+      <div class="overflow-x-auto">
+       <table class="w-full text-sm">
+        <thead class="bg-slate-800/30 border-b border-slate-700/50">
+         <tr>
+          <th class="text-left px-6 py-3.5 text-slate-400 font-semibold">Customer</th>
+          <th class="text-left px-6 py-3.5 text-slate-400 font-semibold">Status</th>
+          <th class="text-left px-6 py-3.5 text-slate-400 font-semibold">IP Address</th>
+          <th class="text-left px-6 py-3.5 text-slate-400 font-semibold">CoA Actions</th>
+         </tr>
+        </thead>
+        <tbody id="coa-table-body">
+         <tr>
+          <td colspan="4" class="px-6 py-8 text-center text-slate-500">No customers to manage</td>
+         </tr>
+        </tbody>
+       </table>
+      </div>
+     </div>
+    </div><!-- Routers Tab -->
+    <div id="tab-routers" class="tab-content hidden fade-in">
+     <h2 class="text-3xl font-bold mb-2">Routers &amp; OLT</h2>
+     <p class="text-slate-400 text-sm mb-6">Multi-router and OLT infrastructure overview</p>
+     <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div class="card-glass rounded-xl p-6 card-glass-hover">
+       <div class="flex items-center gap-3 mb-4">
+        <div class="w-12 h-12 rounded-lg bg-cyan-500/20 flex items-center justify-center"><i data-lucide="server" class="w-6 h-6 text-cyan-400"></i>
+        </div>
+        <div>
+         <p class="font-semibold text-sm">MikroTik-01</p>
+         <p class="text-xs text-slate-400">RouterOS v7.x</p>
+        </div>
+       </div>
+       <div class="flex items-center gap-2 text-xs mb-3"><span class="w-2 h-2 rounded-full bg-green-400"></span><span class="status-online">Online</span>
+       </div>
+       <p class="text-xs text-slate-400 mono mb-2">192.168.1.1</p>
+       <p id="router1-count" class="text-xs text-slate-500 font-semibold">0 customers</p>
+      </div>
+      <div class="card-glass rounded-xl p-6 card-glass-hover">
+       <div class="flex items-center gap-3 mb-4">
+        <div class="w-12 h-12 rounded-lg bg-purple-500/20 flex items-center justify-center"><i data-lucide="server" class="w-6 h-6 text-purple-400"></i>
+        </div>
+        <div>
+         <p class="font-semibold text-sm">MikroTik-02</p>
+         <p class="text-xs text-slate-400">RouterOS v7.x</p>
+        </div>
+       </div>
+       <div class="flex items-center gap-2 text-xs mb-3"><span class="w-2 h-2 rounded-full bg-green-400"></span><span class="status-online">Online</span>
+       </div>
+       <p class="text-xs text-slate-400 mono mb-2">192.168.2.1</p>
+       <p id="router2-count" class="text-xs text-slate-500 font-semibold">0 customers</p>
+      </div>
+      <div class="card-glass rounded-xl p-6 card-glass-hover">
+       <div class="flex items-center gap-3 mb-4">
+        <div class="w-12 h-12 rounded-lg bg-amber-500/20 flex items-center justify-center"><i data-lucide="radio" class="w-6 h-6 text-amber-400"></i>
+        </div>
+        <div>
+         <p class="font-semibold text-sm">OLT-Huawei-01</p>
+         <p class="text-xs text-slate-400">GPON OLT</p>
+        </div>
+       </div>
+       <div class="flex items-center gap-2 text-xs mb-3"><span class="w-2 h-2 rounded-full bg-green-400"></span><span class="status-online">Online</span>
+       </div>
+       <p class="text-xs text-slate-400 mono mb-2">10.0.0.1</p>
+       <p id="router3-count" class="text-xs text-slate-500 font-semibold">0 customers</p>
+      </div>
+     </div>
+    </div><!-- Monitoring Tab -->
+    <div id="tab-monitoring" class="tab-content hidden fade-in">
+     <h2 class="text-3xl font-bold mb-2">Monitoring</h2>
+     <p class="text-slate-400 text-sm mb-6">Real-time network and service monitoring</p>
+     <div class="card-glass rounded-xl p-6 text-center py-12"><i data-lucide="activity" class="w-12 h-12 text-slate-500 mx-auto mb-4 opacity-50"></i>
+      <p class="text-slate-400">Monitoring dashboard coming soon</p>
+     </div>
+    </div><!-- Technician Tab -->
+    <div id="tab-technician" class="tab-content hidden fade-in">
+     <div class="flex items-center justify-between mb-6">
+      <div>
+       <h2 class="text-3xl font-bold mb-1">Technician &amp; Support Tickets</h2>
+       <p class="text-slate-400 text-sm">Field service tracking and ticket management</p>
+      </div><button onclick="showAddTicket()" class="bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white px-6 py-3 rounded-lg font-medium flex items-center gap-2 transition shadow-lg shadow-purple-500/25"><i data-lucide="plus" class="w-4 h-4"></i> New Ticket</button>
+     </div>
+     <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
+      <div class="stat-card card-glass-hover rounded-xl p-5">
+       <div class="flex items-center justify-between mb-3">
+        <span class="text-slate-400 text-xs font-semibold uppercase">Open Tickets</span><i data-lucide="alert-circle" class="w-5 h-5 text-red-400"></i>
+       </div>
+       <p id="stat-open-tickets" class="text-3xl font-bold mono">0</p>
+       <p class="text-xs text-slate-500 mt-2">Waiting to start</p>
+      </div>
+      <div class="stat-card card-glass-hover rounded-xl p-5">
+       <div class="flex items-center justify-between mb-3">
+        <span class="text-slate-400 text-xs font-semibold uppercase">In Progress</span><i data-lucide="zap" class="w-5 h-5 text-amber-400"></i>
+       </div>
+       <p id="stat-progress-tickets" class="text-3xl font-bold mono">0</p>
+       <p class="text-xs text-slate-500 mt-2">Being worked on</p>
+      </div>
+      <div class="stat-card card-glass-hover rounded-xl p-5">
+       <div class="flex items-center justify-between mb-3">
+        <span class="text-slate-400 text-xs font-semibold uppercase">Resolved</span><i data-lucide="check-circle" class="w-5 h-5 text-green-400"></i>
+       </div>
+       <p id="stat-resolved-tickets" class="text-3xl font-bold mono">0</p>
+       <p class="text-xs text-slate-500 mt-2">Completed today</p>
+      </div>
+     </div>
+     <div id="add-ticket-form" class="hidden card-glass rounded-xl p-6 mb-6 fade-in">
+      <h3 class="font-semibold mb-4 text-lg">Create Support Ticket</h3>
+      <form onsubmit="addTicket(event)" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+       <div><label class="block text-xs text-slate-400 mb-2 font-semibold uppercase">Customer</label> <select id="ticket-customer" class="w-full input-glass" required><option value="">Select customer...</option></select>
+       </div>
+       <div><label class="block text-xs text-slate-400 mb-2 font-semibold uppercase">Priority</label> <select id="ticket-priority" class="w-full input-glass"><option>Low</option><option>Medium</option><option>High</option><option>Critical</option></select>
+       </div>
+       <div><label class="block text-xs text-slate-400 mb-2 font-semibold uppercase">Category</label> <select id="ticket-category" class="w-full input-glass"><option>Connection Problem</option><option>Slow Speed</option><option>Equipment Issue</option><option>Billing Question</option><option>Other</option></select>
+       </div>
+       <div><label class="block text-xs text-slate-400 mb-2 font-semibold uppercase">Assign To</label> <select id="ticket-assigned" class="w-full input-glass"><option value="Budi">Budi</option><option value="Ahmad">Ahmad</option><option value="Roni">Roni</option><option value="Unassigned">Unassigned</option></select>
+       </div>
+       <div class="md:col-span-2"><label class="block text-xs text-slate-400 mb-2 font-semibold uppercase">Description</label> <textarea id="ticket-description" class="w-full input-glass" rows="3" placeholder="Describe the issue..."></textarea>
+       </div>
+       <div class="md:col-span-2 flex gap-3"><button type="submit" class="bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white px-6 py-2.5 rounded-lg font-medium transition">Create Ticket</button> <button type="button" onclick="hideAddTicket()" class="px-6 py-2.5 rounded-lg btn-glass font-medium">Cancel</button>
+       </div>
+      </form>
+     </div>
+     <div class="card-glass rounded-xl overflow-hidden">
+      <div class="overflow-x-auto">
+       <table class="w-full text-sm">
+        <thead class="bg-slate-800/30 border-b border-slate-700/50">
+         <tr>
+          <th class="text-left px-6 py-3.5 text-slate-400 font-semibold">Ticket ID</th>
+          <th class="text-left px-6 py-3.5 text-slate-400 font-semibold">Customer</th>
+          <th class="text-left px-6 py-3.5 text-slate-400 font-semibold">Issue</th>
+          <th class="text-left px-6 py-3.5 text-slate-400 font-semibold">Assigned</th>
+          <th class="text-left px-6 py-3.5 text-slate-400 font-semibold">Status</th>
+          <th class="text-left px-6 py-3.5 text-slate-400 font-semibold">Actions</th>
+         </tr>
+        </thead>
+        <tbody id="ticket-table-body">
+         <tr>
+          <td colspan="6" class="px-6 py-8 text-center text-slate-500">No tickets yet</td>
+         </tr>
+        </tbody>
+       </table>
+      </div>
+     </div>
+    </div><!-- Assets Tab -->
+    <div id="tab-assets" class="tab-content hidden fade-in">
+     <div class="flex items-center justify-between mb-6">
+      <div>
+       <h2 class="text-3xl font-bold mb-1">Assets &amp; Inventory</h2>
+       <p class="text-slate-400 text-sm">Network equipment and infrastructure tracking</p>
+      </div><button onclick="showAddAsset()" class="bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 text-white px-6 py-3 rounded-lg font-medium flex items-center gap-2 transition shadow-lg shadow-emerald-500/25"><i data-lucide="plus" class="w-4 h-4"></i> Register Asset</button>
+     </div>
+     <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
+      <div class="stat-card card-glass-hover rounded-xl p-5">
+       <div class="flex items-center justify-between mb-3">
+        <span class="text-slate-400 text-xs font-semibold uppercase">OLT Units</span><i data-lucide="radio" class="w-5 h-5 text-amber-400"></i>
+       </div>
+       <p id="stat-olt-count" class="text-3xl font-bold mono">0</p>
+       <p class="text-xs text-slate-500 mt-2">Optical Line Terminals</p>
+      </div>
+      <div class="stat-card card-glass-hover rounded-xl p-5">
+       <div class="flex items-center justify-between mb-3">
+        <span class="text-slate-400 text-xs font-semibold uppercase">ODC Cabinets</span><i data-lucide="box" class="w-5 h-5 text-cyan-400"></i>
+       </div>
+       <p id="stat-odc-count" class="text-3xl font-bold mono">0</p>
+       <p class="text-xs text-slate-500 mt-2">Distribution Cabinets</p>
+      </div>
+      <div class="stat-card card-glass-hover rounded-xl p-5">
+       <div class="flex items-center justify-between mb-3">
+        <span class="text-slate-400 text-xs font-semibold uppercase">ODP Points</span><i data-lucide="map-pin" class="w-5 h-5 text-purple-400"></i>
+       </div>
+       <p id="stat-odp-count" class="text-3xl font-bold mono">0</p>
+       <p class="text-xs text-slate-500 mt-2">Drop Points</p>
+      </div>
+      <div class="stat-card card-glass-hover rounded-xl p-5">
+       <div class="flex items-center justify-between mb-3">
+        <span class="text-slate-400 text-xs font-semibold uppercase">ONU/Modem</span><i data-lucide="wifi" class="w-5 h-5 text-green-400"></i>
+       </div>
+       <p id="stat-onu-count" class="text-3xl font-bold mono">0</p>
+       <p class="text-xs text-slate-500 mt-2">Customer Equipment</p>
+      </div>
+     </div>
+     <div id="add-asset-form" class="hidden card-glass rounded-xl p-6 mb-6 fade-in">
+      <h3 class="font-semibold mb-4 text-lg">Register New Asset</h3>
+      <form onsubmit="addAsset(event)" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+       <div><label class="block text-xs text-slate-400 mb-2 font-semibold uppercase">Asset Type</label> <select id="asset-type" class="w-full input-glass" required><option>OLT</option><option>ODC</option><option>ODP</option><option>ONU</option><option>MODEM</option><option>Other</option></select>
+       </div>
+       <div><label class="block text-xs text-slate-400 mb-2 font-semibold uppercase">Serial Number</label> <input type="text" id="asset-serial" class="w-full input-glass" required>
+       </div>
+       <div><label class="block text-xs text-slate-400 mb-2 font-semibold uppercase">Model</label> <input type="text" id="asset-model" placeholder="e.g. Huawei MA5800" class="w-full input-glass" required>
+       </div>
+       <div><label class="block text-xs text-slate-400 mb-2 font-semibold uppercase">Location</label> <input type="text" id="asset-location" placeholder="e.g. District 1" class="w-full input-glass" required>
+       </div>
+       <div><label class="block text-xs text-slate-400 mb-2 font-semibold uppercase">IP Address</label> <input type="text" id="asset-ip" placeholder="10.0.0.1" class="w-full input-glass">
+       </div>
+       <div><label class="block text-xs text-slate-400 mb-2 font-semibold uppercase">Status</label> <select id="asset-status" class="w-full input-glass"><option>Active</option><option>Inactive</option><option>Maintenance</option></select>
+       </div>
+       <div class="md:col-span-2"><label class="block text-xs text-slate-400 mb-2 font-semibold uppercase">Notes</label> <textarea id="asset-notes" class="w-full input-glass" rows="2" placeholder="Add any notes..."></textarea>
+       </div>
+       <div class="md:col-span-2 flex gap-3"><button type="submit" class="bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 text-white px-6 py-2.5 rounded-lg font-medium transition">Register Asset</button> <button type="button" onclick="hideAddAsset()" class="px-6 py-2.5 rounded-lg btn-glass font-medium">Cancel</button>
+       </div>
+      </form>
+     </div>
+     <div class="card-glass rounded-xl overflow-hidden">
+      <div class="overflow-x-auto">
+       <table class="w-full text-sm">
+        <thead class="bg-slate-800/30 border-b border-slate-700/50">
+         <tr>
+          <th class="text-left px-6 py-3.5 text-slate-400 font-semibold">Type</th>
+          <th class="text-left px-6 py-3.5 text-slate-400 font-semibold">Serial / Model</th>
+          <th class="text-left px-6 py-3.5 text-slate-400 font-semibold">Location</th>
+          <th class="text-left px-6 py-3.5 text-slate-400 font-semibold">IP Address</th>
+          <th class="text-left px-6 py-3.5 text-slate-400 font-semibold">Status</th>
+          <th class="text-left px-6 py-3.5 text-slate-400 font-semibold">Actions</th>
+         </tr>
+        </thead>
+        <tbody id="asset-table-body">
+         <tr>
+          <td colspan="6" class="px-6 py-8 text-center text-slate-500">No assets registered yet</td>
+         </tr>
+        </tbody>
+       </table>
+      </div>
+     </div>
+    </div><!-- Reports Tab -->
+    <div id="tab-reports" class="tab-content hidden fade-in">
+     <div class="mb-6">
+      <h2 class="text-3xl font-bold mb-1">Reports &amp; Analytics</h2>
+      <p class="text-slate-400 text-sm">Business performance and billing analytics</p>
+     </div>
+     <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+      <div class="card-glass rounded-xl p-6 card-glass-hover">
+       <div class="flex items-center justify-between mb-4">
+        <h3 class="font-semibold text-slate-200">Revenue Summary</h3><i data-lucide="trending-up" class="w-4 h-4 text-emerald-400"></i>
+       </div>
+       <div class="section-divider mb-4"></div>
+       <div id="revenue-stats" class="space-y-3 text-sm"></div>
+      </div>
+      <div class="card-glass rounded-xl p-6 card-glass-hover">
+       <div class="flex items-center justify-between mb-4">
+        <h3 class="font-semibold text-slate-200">Customer Status</h3><i data-lucide="pie-chart" class="w-4 h-4 text-cyan-400"></i>
+       </div>
+       <div class="section-divider mb-4"></div>
+       <div id="customer-status" class="space-y-3 text-sm"></div>
+      </div>
+      <div class="card-glass rounded-xl p-6 card-glass-hover">
+       <div class="flex items-center justify-between mb-4">
+        <h3 class="font-semibold text-slate-200">Payment Methods</h3><i data-lucide="credit-card" class="w-4 h-4 text-purple-400"></i>
+       </div>
+       <div class="section-divider mb-4"></div>
+       <div id="payment-methods" class="space-y-3 text-sm"></div>
+      </div>
+      <div class="card-glass rounded-xl p-6 card-glass-hover">
+       <div class="flex items-center justify-between mb-4">
+        <h3 class="font-semibold text-slate-200">Top Packages</h3><i data-lucide="bar-chart-3" class="w-4 h-4 text-amber-400"></i>
+       </div>
+       <div class="section-divider mb-4"></div>
+       <div id="top-packages" class="space-y-3 text-sm"></div>
+      </div>
+     </div>
+     <div class="card-glass rounded-xl p-6 mb-6">
+      <div class="flex items-center justify-between mb-4">
+       <h3 class="font-semibold text-slate-200">Export Reports</h3><i data-lucide="download" class="w-4 h-4 text-cyan-400"></i>
+      </div>
+      <div class="section-divider mb-4"></div>
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-3"><button onclick="exportPDF('customer-list')" class="px-4 py-2.5 rounded-lg btn-glass text-sm font-medium text-left flex items-center gap-2 hover:bg-red-500/10"><i data-lucide="file-pdf" class="w-4 h-4 text-red-400"></i> Customer List</button> <button onclick="exportPDF('billing-report')" class="px-4 py-2.5 rounded-lg btn-glass text-sm font-medium text-left flex items-center gap-2 hover:bg-red-500/10"><i data-lucide="file-pdf" class="w-4 h-4 text-red-400"></i> Billing Report</button> <button onclick="exportPDF('revenue-report')" class="px-4 py-2.5 rounded-lg btn-glass text-sm font-medium text-left flex items-center gap-2 hover:bg-red-500/10"><i data-lucide="file-pdf" class="w-4 h-4 text-red-400"></i> Revenue Report</button> <button onclick="exportPDF('asset-inventory')" class="px-4 py-2.5 rounded-lg btn-glass text-sm font-medium text-left flex items-center gap-2 hover:bg-red-500/10"><i data-lucide="file-pdf" class="w-4 h-4 text-red-400"></i> Asset Inventory</button>
+      </div>
+     </div>
+    </div><!-- Settings Tab -->
+    <div id="tab-settings" class="tab-content hidden fade-in">
+     <h2 class="text-3xl font-bold mb-2">System Settings</h2>
+     <p class="text-slate-400 text-sm mb-6">Configure billing, payment gateways, and system preferences</p>
+     <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      <div class="card-glass rounded-xl p-6">
+       <h3 class="font-semibold mb-4 text-lg">Company Profile</h3>
+       <div class="section-divider mb-4"></div>
+       <div class="space-y-4">
+        <div><label class="block text-xs text-slate-400 mb-2 font-semibold uppercase">Company Name</label> <input id="settings-company" type="text" class="w-full input-glass">
+        </div>
+        <div><label class="block text-xs text-slate-400 mb-2 font-semibold uppercase">Billing Address</label> <input id="settings-address" type="text" class="w-full input-glass">
+        </div>
+        <div><label class="block text-xs text-slate-400 mb-2 font-semibold uppercase">WhatsApp Number</label> <input id="settings-whatsapp" type="tel" class="w-full input-glass">
+        </div><button onclick="saveSettings()" class="w-full px-4 py-2.5 rounded-lg bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-cyan-600 hover:to-blue-600 text-white font-medium">Save Settings</button>
+       </div>
+      </div>
+      <div class="card-glass rounded-xl p-6">
+       <h3 class="font-semibold mb-4 text-lg">Payment Gateway</h3>
+       <div class="section-divider mb-4"></div>
+       <div class="space-y-4">
+        <div><label class="block text-xs text-slate-400 mb-2 font-semibold uppercase">Gateway Provider</label> <select id="settings-gateway" class="w-full input-glass"> <option value="midtrans">Midtrans</option> <option value="xendit">Xendit</option> <option value="both">Both (Dual)</option> </select>
+        </div>
+        <div><label class="block text-xs text-slate-400 mb-2 font-semibold uppercase">API Key / Server Key</label> <input id="settings-api-key" type="password" placeholder="••••••••••" class="w-full input-glass">
+        </div>
+        <div><label class="block text-xs text-slate-400 mb-2 font-semibold uppercase">Auto-activate Customers</label> <select id="settings-auto-activate" class="w-full input-glass"> <option value="on">On (When payment confirmed)</option> <option value="off">Off (Manual activation)</option> </select>
+        </div><button onclick="saveSettings()" class="w-full px-4 py-2.5 rounded-lg bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white font-medium">Update Gateway</button>
+       </div>
+      </div>
+     </div>
+    </div>
+   </main>
+  </div>
+  <div id="confirm-dialog" class="hidden"></div>
+  <div id="toast-container"></div>
+  <script>
+    let allCustomers = [], allTopUps = [], allVouchers = [], allTickets = [], allAssets = [], allPayments = [];
+    let currentTab = 'dashboard';
+
+    const defaultConfig = {
+      company_name: 'NetFlow Indonesia',
+      whatsapp_number: '+62812345678',
+      billing_address: 'Jl. Teknologi No. 123, Jakarta',
+      payment_gateway: 'midtrans',
+      payment_key: '',
+      font_family: 'Space Grotesk',
+      font_size: 14
+    };
+
+    window.elementSdk.init({
+      defaultConfig,
+      onConfigChange: async (config) => {
+        const font = config.font_family || defaultConfig.font_family;
+        document.body.style.fontFamily = `${font}, sans-serif`;
+        document.getElementById('sidebar-company').textContent = config.company_name || defaultConfig.company_name;
+      },
+      mapToCapabilities: (config) => ({
+        recolorables: [],
+        borderables: [],
+        fontEditable: { get: () => config.font_family || defaultConfig.font_family, set: (v) => { config.font_family = v; window.elementSdk.setConfig({ font_family: v }); } },
+        fontSizeable: { get: () => config.font_size || defaultConfig.font_size, set: (v) => { config.font_size = v; window.elementSdk.setConfig({ font_size: v }); } }
+      }),
+      mapToEditPanelValues: (config) => new Map([
+        ['company_name', config.company_name || defaultConfig.company_name],
+        ['whatsapp_number', config.whatsapp_number || defaultConfig.whatsapp_number],
+        ['billing_address', config.billing_address || defaultConfig.billing_address],
+        ['payment_gateway', config.payment_gateway || defaultConfig.payment_gateway],
+        ['payment_key', config.payment_key || defaultConfig.payment_key]
+      ])
+    });
+
+    const dataHandler = {
+      onDataChanged(data) {
+        allCustomers = data.filter(d => d.type === 'customer');
+        allTopUps = data.filter(d => d.type === 'topup');
+        allVouchers = data.filter(d => d.type === 'voucher');
+        allTickets = data.filter(d => d.type === 'ticket');
+        allAssets = data.filter(d => d.type === 'asset');
+        allPayments = data.filter(d => d.type === 'payment');
+        renderAll();
+      }
+    };
+
+    (async () => {
+      const res = await window.dataSdk.init(dataHandler);
+      if (!res.isOk) console.error('Data SDK init failed');
+      populateTopUpCustomers();
+    })();
+
+    function switchTab(tab) {
+      currentTab = tab;
+      document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+      document.getElementById('tab-' + tab)?.classList.remove('hidden');
+      document.querySelectorAll('.sidebar-item[data-tab]').forEach(el => {
+        el.classList.toggle('active', el.dataset.tab === tab);
+      });
+    }
+
+    function showToast(msg, type = 'success') {
+      const t = document.createElement('div');
+      t.className = `toast toast-${type}`;
+      t.textContent = msg;
+      document.getElementById('toast-container').appendChild(t);
+      setTimeout(() => t.remove(), 3000);
+    }
+
+    function showConfirm(msg, onYes) {
+      const d = document.getElementById('confirm-dialog');
+      d.className = 'modal-overlay';
+      d.innerHTML = `<div class="confirm-box"><p class="mb-4 text-sm">${msg}</p><div class="flex gap-3 justify-end"><button id="confirm-no" class="px-4 py-2 btn-glass rounded-lg text-sm">Cancel</button><button id="confirm-yes" class="px-4 py-2 bg-red-500 rounded-lg text-sm text-white">Confirm</button></div></div>`;
+      d.querySelector('#confirm-no').onclick = () => d.className = 'hidden';
+      d.querySelector('#confirm-yes').onclick = () => { d.className = 'hidden'; onYes(); };
+    }
+
+    function showAddCustomer() { document.getElementById('add-customer-form').classList.remove('hidden'); }
+    function hideAddCustomer() { document.getElementById('add-customer-form').classList.add('hidden'); }
+    function showAddTicket() { document.getElementById('add-ticket-form').classList.remove('hidden'); }
+    function hideAddTicket() { document.getElementById('add-ticket-form').classList.add('hidden'); }
+    function showAddAsset() { document.getElementById('add-asset-form').classList.remove('hidden'); }
+    function hideAddAsset() { document.getElementById('add-asset-form').classList.add('hidden'); }
+
+    async function addCustomer(e) {
+      e.preventDefault();
+      if (allCustomers.length >= 999) { showToast('Max 999 customers', 'error'); return; }
+      const btn = document.getElementById('btn-add-customer');
+      btn.disabled = true; btn.textContent = 'Saving...';
+      const result = await window.dataSdk.create({
+        type: 'customer',
+        name: document.getElementById('c-name').value,
+        username: document.getElementById('c-username').value,
+        package_name: document.getElementById('c-package').value,
+        status: 'online',
+        ip_address: `10.${Math.floor(Math.random()*255)}.${Math.floor(Math.random()*255)}.${Math.floor(Math.random()*254)+1}`,
+        router: document.getElementById('c-router').value,
+        monthly_fee: parseInt(document.getElementById('c-fee').value),
+        balance: 0,
+        due_date: new Date(Date.now() + 30*86400000).toISOString(),
+        paid: true,
+        whatsapp: document.getElementById('c-whatsapp').value,
+        invoice_id: '',
+        created_at: new Date().toISOString(),
+        payment_method: document.getElementById('c-payment').value,
+        payment_status: 'pending'
+      });
+      btn.disabled = false; btn.textContent = 'Save Customer';
+      if (result.isOk) { showToast('Customer added'); hideAddCustomer(); e.target.reset(); populateTopUpCustomers(); }
+      else showToast('Failed to add customer', 'error');
+    }
+
+    async function deleteCustomer(id) {
+      const c = allCustomers.find(x => x.__backendId === id);
+      if (!c) return;
+      showConfirm(`Delete ${c.name}?`, async () => {
+        const r = await window.dataSdk.delete(c);
+        if (r.isOk) showToast('Deleted'); else showToast('Error', 'error');
+      });
+    }
+
+    async function toggleStatus(id, newStatus) {
+      const c = allCustomers.find(x => x.__backendId === id);
+      if (!c) return;
+      const r = await window.dataSdk.update({ ...c, status: newStatus });
+      if (r.isOk) showToast(`Status → ${newStatus}`); else showToast('Error', 'error');
+    }
+
+    async function addTopUp(e) {
+      e.preventDefault();
+      const customerId = document.getElementById('topup-customer').value;
+      const amount = parseInt(document.getElementById('topup-amount').value);
+      if (!customerId || !amount) return;
+      const result = await window.dataSdk.create({
+        type: 'topup',
+        name: allCustomers.find(c => c.__backendId === customerId)?.name || 'Unknown',
+        username: allCustomers.find(c => c.__backendId === customerId)?.username || '',
+        package_name: '',
+        status: 'active',
+        ip_address: '',
+        router: '',
+        monthly_fee: amount,
+        balance: amount,
+        due_date: new Date(Date.now() + 30*86400000).toISOString(),
+        paid: false,
+        whatsapp: '',
+        invoice_id: `TU-${Date.now()}`,
+        created_at: new Date().toISOString()
+      });
+      if (result.isOk) { showToast('Top up added'); e.target.reset(); }
+      else showToast('Error', 'error');
+    }
+
+    async function generateInvoices() {
+      const unpaid = allCustomers.filter(c => !c.paid);
+      if (unpaid.length === 0) { showToast('All customers paid', 'warning'); return; }
+      let count = 0;
+      for (const c of unpaid.slice(0, 10)) {
+        const invoiceId = `INV-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
+        await window.dataSdk.update({ ...c, invoice_id: invoiceId });
+        count++;
+      }
+      showToast(`Generated ${count} invoices`);
+    }
+
+    async function generateVoucher(e) {
+      e.preventDefault();
+      const qty = parseInt(document.getElementById('voucher-qty').value);
+      const discount = parseInt(document.getElementById('voucher-discount').value);
+      const expiry = parseInt(document.getElementById('voucher-expiry').value);
+      const prefix = document.getElementById('voucher-prefix').value || 'VC';
+      
+      for (let i = 0; i < qty; i++) {
+        const code = `${prefix}-${Math.random().toString(36).substr(2, 8).toUpperCase()}`;
+        await window.dataSdk.create({
+          type: 'voucher',
+          name: code,
+          username: code,
+          package_name: `${discount}%`,
+          status: 'active',
+          ip_address: '',
+          router: '',
+          monthly_fee: discount,
+          balance: 0,
+          due_date: new Date(Date.now() + expiry*86400000).toISOString(),
+          paid: false,
+          whatsapp: '',
+          invoice_id: code,
+          created_at: new Date().toISOString()
+        });
+      }
+      showToast(`Generated ${qty} vouchers`);
+      e.target.reset();
+    }
+
+    function printVouchers() {
+      if (allVouchers.length === 0) { showToast('No vouchers to print', 'warning'); return; }
+      const win = window.open('', '_blank');
+      let html = `<html><head><title>Voucher Print</title><style>
+        body { margin: 0; padding: 10mm; background: white; font-family: Arial, sans-serif; }
+        .container { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+        .voucher { border: 2px dashed #333; padding: 12px; border-radius: 8px; text-align: center; page-break-inside: avoid; height: 80mm; width: 63mm; display: flex; flex-direction: column; justify-content: center; }
+        .code { font-weight: bold; font-size: 14px; margin: 8px 0; font-family: monospace; }
+        .discount { font-size: 24px; font-weight: bold; color: #ff6b00; margin: 8px 0; }
+        .expiry { font-size: 10px; color: #666; margin-top: 8px; }
+      </style></head><body><div class="container">`;
+      allVouchers.forEach(v => {
+        html += `<div class="voucher">
+          <div style="font-size: 12px; font-weight: bold;">DISCOUNT VOUCHER</div>
+          <div class="discount">${v.monthly_fee}%</div>
+          <div class="code">${v.name}</div>
+          <div class="expiry">Exp: ${new Date(v.due_date).toLocaleDateString('id-ID')}</div>
+        </div>`;
+      });
+      html += `</div></body></html>`;
+      win.document.write(html);
+      win.document.close();
+      setTimeout(() => win.print(), 100);
+    }
+
+    async function addTicket(e) {
+      e.preventDefault();
+      const customerId = document.getElementById('ticket-customer').value;
+      const priority = document.getElementById('ticket-priority').value;
+      const assigned = document.getElementById('ticket-assigned').value;
+      const category = document.getElementById('ticket-category').value;
+      const description = document.getElementById('ticket-description').value;
+      if (!customerId) return;
+      
+      const ticketId = `TKT-${Date.now().toString().slice(-6)}`;
+      const customerName = allCustomers.find(c => c.__backendId === customerId)?.name || 'Unknown';
+      
+      const result = await window.dataSdk.create({
+        type: 'ticket',
+        name: customerName,
+        username: category,
+        package_name: description,
+        status: 'open',
+        ip_address: '',
+        router: assigned,
+        monthly_fee: 0,
+        balance: 0,
+        due_date: new Date().toISOString(),
+        paid: false,
+        whatsapp: priority,
+        invoice_id: ticketId,
+        created_at: new Date().toISOString(),
+        ticket_id: ticketId,
+        priority: priority,
+        assigned_to: assigned
+      });
+      if (result.isOk) { showToast('Ticket created'); hideAddTicket(); e.target.reset(); }
+      else showToast('Error', 'error');
+    }
+
+    async function updateTicketStatus(id, newStatus) {
+      const t = allTickets.find(x => x.__backendId === id);
+      if (!t) return;
+      const r = await window.dataSdk.update({ ...t, status: newStatus });
+      if (r.isOk) showToast(`Ticket → ${newStatus}`); else showToast('Error', 'error');
+    }
+
+    async function addAsset(e) {
+      e.preventDefault();
+      const assetType = document.getElementById('asset-type').value;
+      const serial = document.getElementById('asset-serial').value;
+      const model = document.getElementById('asset-model').value;
+      const location = document.getElementById('asset-location').value;
+      const ip = document.getElementById('asset-ip').value;
+      const status = document.getElementById('asset-status').value;
+      const notes = document.getElementById('asset-notes').value;
+      
+      const result = await window.dataSdk.create({
+        type: 'asset',
+        name: `${assetType}-${serial}`,
+        username: serial,
+        package_name: model,
+        status: status,
+        ip_address: ip,
+        router: location,
+        monthly_fee: 0,
+        balance: 0,
+        due_date: new Date().toISOString(),
+        paid: true,
+        whatsapp: notes,
+        invoice_id: '',
+        created_at: new Date().toISOString(),
+        asset_type: assetType,
+        location: location
+      });
+      if (result.isOk) { showToast('Asset registered'); hideAddAsset(); e.target.reset(); }
+      else showToast('Error', 'error');
+    }
+
+    async function deleteAsset(id) {
+      const a = allAssets.find(x => x.__backendId === id);
+      if (!a) return;
+      showConfirm(`Delete ${a.name}?`, async () => {
+        const r = await window.dataSdk.delete(a);
+        if (r.isOk) showToast('Asset deleted'); else showToast('Error', 'error');
+      });
+    }
+
+    async function simulatePayment(gateway) {
+      const customer = allCustomers[Math.floor(Math.random() * allCustomers.length)];
+      if (!customer) { showToast('No customers available', 'warning'); return; }
+      
+      const transId = `${gateway.toUpperCase()}-${Date.now()}`;
+      const result = await window.dataSdk.create({
+        type: 'payment',
+        name: customer.name,
+        username: customer.username,
+        package_name: `${gateway} Payment`,
+        status: 'completed',
+        ip_address: '',
+        router: '',
+        monthly_fee: customer.monthly_fee,
+        balance: 0,
+        due_date: new Date().toISOString(),
+        paid: true,
+        whatsapp: '',
+        invoice_id: transId,
+        created_at: new Date().toISOString(),
+        payment_method: gateway,
+        payment_id: transId,
+        transaction_id: transId,
+        payment_status: 'success'
+      });
+      if (result.isOk) { showToast(`Payment from ${gateway} simulated`); }
+    }
+
+    function saveSettings() {
+      const company = document.getElementById('settings-company')?.value || defaultConfig.company_name;
+      const address = document.getElementById('settings-address')?.value || defaultConfig.billing_address;
+      const whatsapp = document.getElementById('settings-whatsapp')?.value || defaultConfig.whatsapp_number;
+      window.elementSdk.setConfig({ company_name: company, billing_address: address, whatsapp_number: whatsapp });
+      showToast('Settings saved');
+    }
+
+    function exportPDF(type) {
+      showToast(`${type} export prepared (save as PDF from browser)`, 'warning');
+    }
+
+    function populateTopUpCustomers() {
+      const sel = document.getElementById('topup-customer');
+      const current = sel.value;
+      sel.innerHTML = '<option value="">Select customer...</option>' + allCustomers.map(c => `<option value="${c.__backendId}">${c.name} (${c.username})</option>`).join('');
+      sel.value = current;
+
+      const ticketSel = document.getElementById('ticket-customer');
+      const ticketCurrent = ticketSel.value;
+      ticketSel.innerHTML = '<option value="">Select customer...</option>' + allCustomers.map(c => `<option value="${c.__backendId}">${c.name}</option>`).join('');
+      ticketSel.value = ticketCurrent;
+
+      loadSettings();
+    }
+
+    function loadSettings() {
+      document.getElementById('settings-company').value = defaultConfig.company_name;
+      document.getElementById('settings-address').value = defaultConfig.billing_address;
+      document.getElementById('settings-whatsapp').value = defaultConfig.whatsapp_number;
+    }
+
+    function renderAll() {
+      const total = allCustomers.length;
+      const online = allCustomers.filter(c => c.status === 'online').length;
+      const suspended = allCustomers.filter(c => c.status === 'suspended').length;
+      const unpaid = allCustomers.filter(c => !c.paid).length;
+      const revenue = allCustomers.filter(c => c.paid).reduce((s, c) => s + (c.monthly_fee || 0), 0);
+
+      document.getElementById('stat-total').textContent = total;
+      document.getElementById('stat-online').textContent = online;
+      document.getElementById('stat-suspended').textContent = suspended;
+      document.getElementById('stat-unpaid').textContent = unpaid;
+      document.getElementById('stat-revenue').textContent = 'Rp ' + revenue.toLocaleString('id-ID');
+
+      // Activity
+      const actList = document.getElementById('activity-list');
+      if (allCustomers.length === 0) {
+        actList.innerHTML = '<p class="text-slate-500">No activity yet.</p>';
+      } else {
+        const recent = [...allCustomers].sort((a, b) => new Date(b.created_at) - new Date(a.created_at)).slice(0, 5);
+        actList.innerHTML = recent.map(c => `<div class="flex items-center gap-2"><span class="w-2 h-2 rounded-full ${c.status === 'online' ? 'bg-green-400' : c.status === 'suspended' ? 'bg-amber-400' : 'bg-red-400'}"></span><span class="text-slate-400">${c.name} — <span class="status-${c.status}">${c.status}</span></span></div>`).join('');
+      }
+
+      // Customer table
+      const tbody = document.getElementById('customer-table-body');
+      if (allCustomers.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="7" class="px-6 py-8 text-center text-slate-500">No customers yet</td></tr>';
+      } else {
+        tbody.innerHTML = allCustomers.map(c => `<tr class="border-t border-slate-700/30 hover:bg-slate-800/20">
+          <td class="px-6 py-3">${c.name}</td>
+          <td class="px-6 py-3 mono text-xs text-slate-400">${c.username}</td>
+          <td class="px-6 py-3 text-sm">${c.package_name}</td>
+          <td class="px-6 py-3"><span class="badge badge-${c.status === 'online' ? 'success' : c.status === 'suspended' ? 'warning' : 'error'}">${c.status}</span></td>
+          <td class="px-6 py-3 text-xs"><span class="payment-badge badge-${c.payment_method === 'midtrans' || c.payment_method === 'xendit' ? 'pending' : 'paid'}">${c.payment_method || 'cash'}</span></td>
+          <td class="px-6 py-3 mono text-xs text-slate-400">Rp ${(c.balance || 0).toLocaleString('id-ID')}</td>
+          <td class="px-6 py-3"><button onclick="deleteCustomer('${c.__backendId}')" class="text-red-400 hover:text-red-300 text-xs font-medium">Delete</button></td>
+        </tr>`).join('');
+      }
+
+      // Billing table
+      const btbody = document.getElementById('billing-table-body');
+      if (allCustomers.filter(c => c.invoice_id).length === 0) {
+        btbody.innerHTML = '<tr><td colspan="6" class="px-6 py-8 text-center text-slate-500">No invoices</td></tr>';
+      } else {
+        btbody.innerHTML = allCustomers.filter(c => c.invoice_id).slice(0, 20).map(c => `<tr class="border-t border-slate-700/30 hover:bg-slate-800/20">
+          <td class="px-6 py-3 mono text-xs text-slate-400">${c.invoice_id}</td>
+          <td class="px-6 py-3">${c.name}</td>
+          <td class="px-6 py-3 mono">Rp ${(c.monthly_fee||0).toLocaleString('id-ID')}</td>
+          <td class="px-6 py-3 text-xs">${new Date(c.due_date).toLocaleDateString('id-ID')}</td>
+          <td class="px-6 py-3"><span class="badge ${c.paid ? 'badge-success' : 'badge-pending'}">${c.paid ? 'Paid' : 'Unpaid'}</span></td>
+          <td class="px-6 py-3"><button onclick="toggleStatus('${c.__backendId}','online')" class="text-cyan-400 hover:text-cyan-300 text-xs font-medium">View</button></td>
+        </tr>`).join('');
+      }
+
+      // Top Up table
+      const topupBody = document.getElementById('topup-table-body');
+      if (allTopUps.length === 0) {
+        topupBody.innerHTML = '<tr><td colspan="4" class="px-6 py-8 text-center text-slate-500">No top-ups yet</td></tr>';
+      } else {
+        topupBody.innerHTML = allTopUps.slice(-10).reverse().map(t => `<tr class="border-t border-slate-700/30 hover:bg-slate-800/20">
+          <td class="px-6 py-3">${t.name}</td>
+          <td class="px-6 py-3 mono">Rp ${t.monthly_fee.toLocaleString('id-ID')}</td>
+          <td class="px-6 py-3 mono">Rp ${t.balance.toLocaleString('id-ID')}</td>
+          <td class="px-6 py-3 text-xs text-slate-400">${new Date(t.created_at).toLocaleDateString('id-ID')}</td>
+        </tr>`).join('');
+      }
+      const totalBalance = allTopUps.reduce((s, t) => s + t.balance, 0);
+      document.getElementById('topup-total-balance').textContent = 'Rp ' + totalBalance.toLocaleString('id-ID');
+      document.getElementById('topup-active-count').textContent = allTopUps.length;
+      document.getElementById('topup-today-count').textContent = allTopUps.filter(t => new Date(t.created_at).toDateString() === new Date().toDateString()).length;
+
+      // Voucher table
+      const voucherBody = document.getElementById('voucher-table-body');
+      if (allVouchers.length === 0) {
+        voucherBody.innerHTML = '<tr><td colspan="4" class="px-6 py-8 text-center text-slate-500">No vouchers yet</td></tr>';
+      } else {
+        voucherBody.innerHTML = allVouchers.map(v => {
+          const isExpired = new Date(v.due_date) < new Date();
+          return `<tr class="border-t border-slate-700/30 hover:bg-slate-800/20">
+            <td class="px-6 py-3 mono font-semibold">${v.name}</td>
+            <td class="px-6 py-3"><span class="badge badge-success">${v.monthly_fee}%</span></td>
+            <td class="px-6 py-3"><span class="badge ${isExpired ? 'badge-error' : 'badge-success'}">${isExpired ? 'Expired' : 'Active'}</span></td>
+            <td class="px-6 py-3 text-xs text-slate-400">${new Date(v.due_date).toLocaleDateString('id-ID')}</td>
+          </tr>`;
+        }).join('');
+      }
+
+      // Payment Gateway
+      const midtransPayments = allPayments.filter(p => p.payment_method === 'midtrans');
+      const xenditPayments = allPayments.filter(p => p.payment_method === 'xendit');
+      document.getElementById('midtrans-count').textContent = midtransPayments.length;
+      document.getElementById('midtrans-revenue').textContent = 'Rp ' + midtransPayments.reduce((s, p) => s + p.monthly_fee, 0).toLocaleString('id-ID');
+      document.getElementById('xendit-count').textContent = xenditPayments.length;
+      document.getElementById('xendit-revenue').textContent = 'Rp ' + xenditPayments.reduce((s, p) => s + p.monthly_fee, 0).toLocaleString('id-ID');
+
+      const paymentBody = document.getElementById('payment-table-body');
+      if (allPayments.length === 0) {
+        paymentBody.innerHTML = '<tr><td colspan="5" class="px-6 py-8 text-center text-slate-500">No transactions yet</td></tr>';
+      } else {
+        paymentBody.innerHTML = allPayments.slice(-15).reverse().map(p => `<tr class="border-t border-slate-700/30 hover:bg-slate-800/20">
+          <td class="px-6 py-3 text-xs font-semibold">${p.payment_method}</td>
+          <td class="px-6 py-3">${p.name}</td>
+          <td class="px-6 py-3 mono">Rp ${p.monthly_fee.toLocaleString('id-ID')}</td>
+          <td class="px-6 py-3"><span class="payment-badge badge-success">Success</span></td>
+          <td class="px-6 py-3 text-xs text-slate-400">${new Date(p.created_at).toLocaleDateString('id-ID')}</td>
+        </tr>`).join('');
+      }
+
+      // RADIUS & PPPoE
+      const onlineCustomers = allCustomers.filter(c => c.status === 'online');
+      document.getElementById('radius-sessions').innerHTML = onlineCustomers.length ? onlineCustomers.map(c => `<div class="flex justify-between items-center bg-slate-800/30 px-3 py-2.5 rounded-lg"><span class="text-sm">${c.username}</span><span class="badge badge-success text-xs">AUTH OK</span></div>`).join('') : '<p class="text-slate-500">No sessions</p>';
+      document.getElementById('pppoe-sessions').innerHTML = onlineCustomers.length ? onlineCustomers.map(c => `<div class="flex justify-between items-center bg-slate-800/30 px-3 py-2.5 rounded-lg"><span class="text-sm">${c.username}</span><span class="mono text-xs text-slate-400">${c.ip_address}</span></div>`).join('') : '<p class="text-slate-500">No sessions</p>';
+
+      // Routers
+      document.getElementById('router1-count').textContent = allCustomers.filter(c => c.router === 'MikroTik-01').length + ' customers';
+      document.getElementById('router2-count').textContent = allCustomers.filter(c => c.router === 'MikroTik-02').length + ' customers';
+      document.getElementById('router3-count').textContent = allCustomers.filter(c => c.router === 'OLT-Huawei-01').length + ' customers';
+
+      // CoA
+      const coaBody = document.getElementById('coa-table-body');
+      if (allCustomers.length === 0) {
+        coaBody.innerHTML = '<tr><td colspan="4" class="px-6 py-8 text-center text-slate-500">No customers</td></tr>';
+      } else {
+        coaBody.innerHTML = allCustomers.map(c => `<tr class="border-t border-slate-700/30 hover:bg-slate-800/20">
+          <td class="px-6 py-3">${c.name}</td>
+          <td class="px-6 py-3"><span class="badge badge-${c.status === 'online' ? 'success' : c.status === 'suspended' ? 'warning' : 'error'}">${c.status}</span></td>
+          <td class="px-6 py-3 mono text-xs text-slate-400">${c.ip_address}</td>
+          <td class="px-6 py-3 flex gap-1">
+            ${c.status !== 'online' ? `<button onclick="toggleStatus('${c.__backendId}','online')" class="px-2.5 py-1.5 rounded text-xs font-medium bg-green-500/20 text-green-400 hover:bg-green-500/30">Activate</button>` : ''}
+            ${c.status !== 'suspended' ? `<button onclick="toggleStatus('${c.__backendId}','suspended')" class="px-2.5 py-1.5 rounded text-xs font-medium bg-amber-500/20 text-amber-400 hover:bg-amber-500/30">Suspend</button>` : ''}
+            ${c.status !== 'offline' ? `<button onclick="toggleStatus('${c.__backendId}','offline')" class="px-2.5 py-1.5 rounded text-xs font-medium bg-red-500/20 text-red-400 hover:bg-red-500/30">Disconnect</button>` : ''}
+          </td>
+        </tr>`).join('');
+      }
+
+      // Tickets
+      const openTickets = allTickets.filter(t => t.status === 'open').length;
+      const progressTickets = allTickets.filter(t => t.status === 'progress').length;
+      const resolvedTickets = allTickets.filter(t => t.status === 'resolved').length;
+      document.getElementById('stat-open-tickets').textContent = openTickets;
+      document.getElementById('stat-progress-tickets').textContent = progressTickets;
+      document.getElementById('stat-resolved-tickets').textContent = resolvedTickets;
+
+      const ticketBody = document.getElementById('ticket-table-body');
+      if (allTickets.length === 0) {
+        ticketBody.innerHTML = '<tr><td colspan="6" class="px-6 py-8 text-center text-slate-500">No tickets</td></tr>';
+      } else {
+        ticketBody.innerHTML = allTickets.slice(-20).reverse().map(t => `<tr class="border-t border-slate-700/30 hover:bg-slate-800/20">
+          <td class="px-6 py-3 mono text-xs font-semibold">${t.invoice_id}</td>
+          <td class="px-6 py-3">${t.name}</td>
+          <td class="px-6 py-3 text-sm">${t.username} <span class="text-xs text-slate-500">(${t.package_name.substring(0, 40)})</span></td>
+          <td class="px-6 py-3 text-xs">${t.router}</td>
+          <td class="px-6 py-3"><span class="badge badge-${t.status === 'resolved' ? 'success' : t.status === 'progress' ? 'warning' : 'error'}">${t.status}</span></td>
+          <td class="px-6 py-3 flex gap-1 text-xs">
+            ${t.status !== 'progress' ? `<button onclick="updateTicketStatus('${t.__backendId}','progress')" class="px-2 py-1 rounded bg-amber-500/20 text-amber-400 hover:bg-amber-500/30">Progress</button>` : ''}
+            ${t.status !== 'resolved' ? `<button onclick="updateTicketStatus('${t.__backendId}','resolved')" class="px-2 py-1 rounded bg-green-500/20 text-green-400 hover:bg-green-500/30">Resolve</button>` : ''}
+          </td>
+        </tr>`).join('');
+      }
+
+      // Assets
+      const oltCount = allAssets.filter(a => a.asset_type === 'OLT').length;
+      const odcCount = allAssets.filter(a => a.asset_type === 'ODC').length;
+      const odpCount = allAssets.filter(a => a.asset_type === 'ODP').length;
+      const onuCount = allAssets.filter(a => a.asset_type === 'ONU' || a.asset_type === 'MODEM').length;
+      
+      document.getElementById('stat-olt-count').textContent = oltCount;
+      document.getElementById('stat-odc-count').textContent = odcCount;
+      document.getElementById('stat-odp-count').textContent = odpCount;
+      document.getElementById('stat-onu-count').textContent = onuCount;
+
+      const assetBody = document.getElementById('asset-table-body');
+      if (allAssets.length === 0) {
+        assetBody.innerHTML = '<tr><td colspan="6" class="px-6 py-8 text-center text-slate-500">No assets registered</td></tr>';
+      } else {
+        assetBody.innerHTML = allAssets.map(a => `<tr class="border-t border-slate-700/30 hover:bg-slate-800/20">
+          <td class="px-6 py-3"><span class="badge badge-success">${a.asset_type}</span></td>
+          <td class="px-6 py-3 mono text-xs"><span class="font-semibold">${a.username}</span><br/><span class="text-slate-500">${a.package_name}</span></td>
+          <td class="px-6 py-3">${a.router}</td>
+          <td class="px-6 py-3 mono text-xs text-slate-400">${a.ip_address || '-'}</td>
+          <td class="px-6 py-3"><span class="badge badge-${a.status === 'active' ? 'success' : a.status === 'maintenance' ? 'warning' : 'error'}">${a.status}</span></td>
+          <td class="px-6 py-3"><button onclick="deleteAsset('${a.__backendId}')" class="text-red-400 hover:text-red-300 text-xs font-medium">Delete</button></td>
+        </tr>`).join('');
+      }
+
+      // Reports
+      const totalRevenue = allCustomers.reduce((s, c) => s + (c.monthly_fee || 0), 0);
+      const paidRevenue = allCustomers.filter(c => c.paid).reduce((s, c) => s + (c.monthly_fee || 0), 0);
+      document.getElementById('revenue-stats').innerHTML = `
+        <div class="flex justify-between items-center bg-slate-800/30 px-3 py-2.5 rounded-lg">
+          <span>Total Revenue</span>
+          <span class="font-semibold text-emerald-400">Rp ${totalRevenue.toLocaleString('id-ID')}</span>
+        </div>
+        <div class="flex justify-between items-center bg-slate-800/30 px-3 py-2.5 rounded-lg">
+          <span>Paid Revenue</span>
+          <span class="font-semibold text-green-400">Rp ${paidRevenue.toLocaleString('id-ID')}</span>
+        </div>
+        <div class="flex justify-between items-center bg-slate-800/30 px-3 py-2.5 rounded-lg">
+          <span>Unpaid</span>
+          <span class="font-semibold text-red-400">Rp ${(totalRevenue - paidRevenue).toLocaleString('id-ID')}</span>
+        </div>
+      `;
+
+      const onlineCount = allCustomers.filter(c => c.status === 'online').length;
+      const suspendedCount = allCustomers.filter(c => c.status === 'suspended').length;
+      document.getElementById('customer-status').innerHTML = `
+        <div class="flex justify-between items-center bg-slate-800/30 px-3 py-2.5 rounded-lg">
+          <span>Online</span>
+          <span class="font-semibold text-green-400">${onlineCount} (${total > 0 ? Math.round(onlineCount/total*100) : 0}%)</span>
+        </div>
+        <div class="flex justify-between items-center bg-slate-800/30 px-3 py-2.5 rounded-lg">
+          <span>Suspended</span>
+          <span class="font-semibold text-amber-400">${suspendedCount} (${total > 0 ? Math.round(suspendedCount/total*100) : 0}%)</span>
+        </div>
+        <div class="flex justify-between items-center bg-slate-800/30 px-3 py-2.5 rounded-lg">
+          <span>Total</span>
+          <span class="font-semibold text-slate-300">${total}</span>
+        </div>
+      `;
+
+      const cashCount = allCustomers.filter(c => c.payment_method === 'cash').length;
+      const bankCount = allCustomers.filter(c => c.payment_method === 'bank_transfer').length;
+      const midCount = allCustomers.filter(c => c.payment_method === 'midtrans').length;
+      const xenCount = allCustomers.filter(c => c.payment_method === 'xendit').length;
+      document.getElementById('payment-methods').innerHTML = `
+        <div class="flex justify-between items-center bg-slate-800/30 px-3 py-2.5 rounded-lg">
+          <span>Cash</span>
+          <span class="font-semibold">${cashCount}</span>
+        </div>
+        <div class="flex justify-between items-center bg-slate-800/30 px-3 py-2.5 rounded-lg">
+          <span>Bank Transfer</span>
+          <span class="font-semibold">${bankCount}</span>
+        </div>
+        <div class="flex justify-between items-center bg-slate-800/30 px-3 py-2.5 rounded-lg">
+          <span>Midtrans</span>
+          <span class="font-semibold text-cyan-400">${midCount}</span>
+        </div>
+        <div class="flex justify-between items-center bg-slate-800/30 px-3 py-2.5 rounded-lg">
+          <span>Xendit</span>
+          <span class="font-semibold text-purple-400">${xenCount}</span>
+        </div>
+      `;
+
+      const pkgCount = {};
+      allCustomers.forEach(c => {
+        const pkg = c.package_name.split(' - ')[0];
+        pkgCount[pkg] = (pkgCount[pkg] || 0) + 1;
+      });
+      document.getElementById('top-packages').innerHTML = Object.entries(pkgCount)
+        .sort((a, b) => b[1] - a[1])
+        .slice(0, 4)
+        .map(([pkg, count]) => `<div class="flex justify-between items-center bg-slate-800/30 px-3 py-2.5 rounded-lg"><span>${pkg}</span><span class="font-semibold">${count} subscribers</span></div>`)
+        .join('');
+    }
+
+    lucide.createIcons();
+  </script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9f721d34946640fe',t:'MTc3ODAwODk0OC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>

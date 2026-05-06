@@ -3,743 +3,2034 @@
  <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>NetBill Pro - ISP Billing SaaS</title>
+  <title>NetBill Pro - ISP SaaS</title>
   <script src="https://cdn.tailwindcss.com/3.4.17"></script>
   <script src="https://cdn.jsdelivr.net/npm/lucide@0.263.0/dist/umd/lucide.min.js"></script>
   <script src="/_sdk/element_sdk.js"></script>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet">
   <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    fontFamily: { jakarta: ['Plus Jakarta Sans', 'sans-serif'] }
-                }
-            }
-        }
-    </script>
+tailwind.config = {
+  theme: {
+    extend: {
+      fontFamily: { jakarta: ['Plus Jakarta Sans', 'sans-serif'] }
+    }
+  }
+}
+</script>
   <style>
-        * { font-family: 'Plus Jakarta Sans', sans-serif; }
-        
-        /* Dark Theme */
-        body.dark-theme { background: #020617; }
-        .dark-theme .glass { background: rgba(15, 23, 42, 0.6); border-color: rgba(255,255,255,0.05); }
-        .dark-theme .card-hover { transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
-        .dark-theme .card-hover:hover { transform: translateY(-4px) scale(1.02); box-shadow: 0 20px 60px -15px rgba(59, 130, 246, 0.3); }
-        
-        /* Light Theme */
-        body.light-theme { background: #f8fafc; }
-        .light-theme .glass { background: rgba(255, 255, 255, 0.7); backdrop-filter: blur(20px); border: 1px solid rgba(0,0,0,0.08); }
-        .light-theme .glass { box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); }
-        .light-theme .card-hover { transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
-        .light-theme .card-hover:hover { transform: translateY(-4px); box-shadow: 0 20px 60px -15px rgba(59, 130, 246, 0.2); }
-        .light-theme { color: #1e293b; }
-        .light-theme .text-slate-100 { color: #1e293b; }
-        .light-theme .text-slate-400 { color: #64748b; }
-        .light-theme .text-slate-500 { color: #6b7280; }
-        .light-theme .text-slate-700 { color: #334155; }
-        .light-theme .text-slate-800 { color: #1e293b; }
-        .light-theme .bg-slate-800 { background-color: #e2e8f0; }
-        .light-theme .bg-slate-800\/50 { background-color: rgba(226, 232, 240, 0.5); }
-        .light-theme .bg-slate-800\/30 { background-color: rgba(226, 232, 240, 0.3); }
-        .light-theme .border-slate-700 { border-color: #cbd5e1; }
-        .light-theme .border-slate-700\/50 { border-color: rgba(203, 213, 225, 0.5); }
-        .light-theme .border-slate-800 { border-color: #cbd5e1; }
-        .light-theme .hover\:bg-slate-800 { background-color: #e2e8f0; }
-        .light-theme .hover\:bg-slate-800:hover { background-color: #cbd5e1; }
-        .light-theme .sidebar-item { transition: all 0.2s; }
-        .light-theme .sidebar-item:hover { background: rgba(59, 130, 246, 0.08); }
-        .light-theme .sidebar-item.active { background: rgba(59, 130, 246, 0.1); border-right-color: #3b82f6; }
-        .light-theme .bg-slate-700 { background-color: #cbd5e1; }
-        .light-theme .bg-slate-900 { background-color: #f1f5f9; }
-        .light-theme .bg-slate-900\/50 { background-color: rgba(241, 245, 249, 0.5); }
-        .light-theme ::-webkit-scrollbar-track { background: #f1f5f9; }
-        .light-theme ::-webkit-scrollbar-thumb { background: #cbd5e1; }
-        
-        .glass { background: rgba(15, 23, 42, 0.6); backdrop-filter: blur(20px); border: 1px solid rgba(255,255,255,0.05); }
-        .card-hover { transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
-        .card-hover:hover { transform: translateY(-4px) scale(1.02); box-shadow: 0 20px 60px -15px rgba(59, 130, 246, 0.3); }
-        .gradient-border { position: relative; }
-        .gradient-border::before { content: ''; position: absolute; inset: 0; border-radius: inherit; padding: 1px; background: linear-gradient(135deg, #3b82f6, #8b5cf6, #06b6d4); -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0); -webkit-mask-composite: xor; mask-composite: exclude; }
-        .pulse-dot { animation: pulse 2s infinite; }
-        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
-        .flow-line { stroke-dasharray: 8 4; animation: flowDash 1.5s linear infinite; }
-        @keyframes flowDash { to { stroke-dashoffset: -12; } }
-        .sidebar-item { transition: all 0.2s; }
-        .sidebar-item:hover { background: rgba(59, 130, 246, 0.1); }
-        .sidebar-item.active { background: rgba(59, 130, 246, 0.15); border-right: 3px solid #3b82f6; }
-        .chart-bar { animation: growUp 0.8s ease-out forwards; transform-origin: bottom; }
-        @keyframes growUp { from { transform: scaleY(0); } to { transform: scaleY(1); } }
-        .fade-in { animation: fadeIn 0.5s ease-out; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-        .topology-node { transition: all 0.3s; }
-        .topology-node:hover { filter: drop-shadow(0 0 12px rgba(59, 130, 246, 0.6)); }
-        ::-webkit-scrollbar { width: 6px; }
-        ::-webkit-scrollbar-track { background: #0f172a; }
-        ::-webkit-scrollbar-thumb { background: #334155; border-radius: 3px; }
-        .voucher-card { width: 170px; height: 85px; border: 1px dashed #475569; }
-    </style>
+* { font-family: 'Plus Jakarta Sans', sans-serif; }
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-thumb { background: #334155; border-radius: 3px; }
+.card-hover { transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
+.card-hover:hover { transform: translateY(-4px); box-shadow: 0 20px 40px rgba(0,0,0,0.3); }
+.glow { box-shadow: 0 0 20px rgba(99, 102, 241, 0.3); }
+.pulse-dot { animation: pulse 2s infinite; }
+@keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
+.gradient-border { background: linear-gradient(135deg, #6366f1, #8b5cf6, #06b6d4); padding: 1px; border-radius: 12px; }
+.gradient-border > div { background: #0f172a; border-radius: 11px; }
+.flow-line { stroke-dasharray: 8; animation: dash 1s linear infinite; }
+@keyframes dash { to { stroke-dashoffset: -16; } }
+.sidebar-item { transition: all 0.2s; }
+.sidebar-item:hover { background: rgba(99,102,241,0.1); padding-left: 1.25rem; }
+.sidebar-item.active { background: rgba(99,102,241,0.15); border-right: 3px solid #6366f1; }
+.chart-bar { animation: growUp 0.8s ease-out forwards; transform-origin: bottom; }
+@keyframes growUp { from { transform: scaleY(0); } to { transform: scaleY(1); } }
+.fade-in { animation: fadeIn 0.5s ease-out; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+.status-online { background: #10b981; box-shadow: 0 0 8px #10b981; }
+.status-warning { background: #f59e0b; box-shadow: 0 0 8px #f59e0b; }
+.status-offline { background: #ef4444; box-shadow: 0 0 8px #ef4444; }
+/* Light Mode */
+body.light-mode { @apply bg-gray-50 text-gray-900; }
+body.light-mode #app { @apply bg-gray-50; }
+body.light-mode #app aside { @apply bg-white border-gray-200 shadow-sm; }
+body.light-mode #app aside .sidebar-item { @apply text-gray-700; }
+body.light-mode #app aside .sidebar-item:hover { @apply bg-indigo-50; }
+body.light-mode #app aside .sidebar-item.active { @apply bg-indigo-50 text-indigo-600 border-r-indigo-600; }
+body.light-mode #app header { @apply bg-white border-gray-200 shadow-sm; }
+body.light-mode .gradient-border > div { @apply bg-white; }
+body.light-mode .bg-\[\#0f1629\] { @apply bg-white border-gray-200; }
+body.light-mode .bg-\[\#0a0e1a\] { @apply bg-gray-50; }
+body.light-mode .border-gray-800 { @apply border-gray-200; }
+body.light-mode .text-gray-400 { @apply text-gray-600; }
+body.light-mode .text-gray-500 { @apply text-gray-700; }
+body.light-mode .text-gray-300 { @apply text-gray-800; }
+body.light-mode .bg-gray-800 { @apply bg-gray-100 border-gray-300; }
+body.light-mode .bg-gray-800\/50 { @apply bg-gray-100/50; }
+body.light-mode button { @apply transition-all duration-200; }
+body.light-mode .card-hover { @apply shadow-sm; }
+body.light-mode .card-hover:hover { @apply shadow-md; }
+body.light-mode input, body.light-mode textarea, body.light-mode select { @apply bg-white border-gray-300 text-gray-900; }
+body.light-mode input:focus, body.light-mode textarea:focus, body.light-mode select:focus { @apply border-indigo-500 ring-1 ring-indigo-500; }
+body.light-mode button:not(.settings-tab) { @apply text-white; }
+body.light-mode .toggle-slider { @apply bg-gray-300; }
+body.light-mode .toggle-slider:before { @apply bg-white; }
+.toggle-switch { position: relative; display: inline-block; width: 40px; height: 20px; }
+.toggle-switch input { opacity: 0; width: 0; height: 0; }
+.toggle-slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #cbd5e1; transition: 0.3s; border-radius: 10px; }
+.toggle-slider:before { position: absolute; content: ""; height: 16px; width: 16px; left: 2px; bottom: 2px; background-color: white; transition: 0.3s; border-radius: 50%; }
+input:checked + .toggle-slider { background-color: #6366f1; }
+input:checked + .toggle-slider:before { transform: translateX(20px); }
+  </style>
   <style>body { box-sizing: border-box; }</style>
   <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
  </head>
- <body class="h-full bg-slate-950 text-slate-100 overflow-hidden dark-theme" id="app-body">
-  <div id="app" class="h-full flex">
+ <body class="h-full bg-[#0a0e1a] text-gray-200 overflow-hidden">
+  <div id="app" class="h-full w-full flex">
    <!-- Sidebar -->
-   <aside class="w-64 h-full glass flex flex-col shrink-0">
-    <div class="p-5 border-b border-slate-700/50">
-     <div class="flex items-center gap-3">
-      <div class="w-9 h-9 rounded-lg bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center">
-       <i data-lucide="wifi" class="w-5 h-5"></i>
-      </div>
-      <div>
-       <h1 id="platform-name" class="font-bold text-sm">NetBill Pro</h1>
-       <p id="tagline" class="text-[10px] text-slate-400">ISP Billing &amp; Network</p>
-      </div>
-     </div>
+   <aside class="w-64 bg-[#0f1629] border-r border-gray-800 flex flex-col h-full shrink-0">
+    <div class="p-5 border-b border-gray-800">
+     <h1 id="brand-name" class="text-xl font-bold bg-gradient-to-r from-indigo-400 to-cyan-400 bg-clip-text text-transparent">NetBill Pro</h1>
+     <p id="brand-tagline" class="text-xs text-gray-500 mt-1">ISP Management Platform</p>
     </div>
-    <nav class="flex-1 py-3 overflow-y-auto">
-     <div class="px-3 mb-2 text-[10px] uppercase text-slate-500 font-semibold tracking-wider">
+    <nav class="flex-1 py-4 overflow-y-auto">
+     <div class="px-3 mb-2 text-[10px] uppercase tracking-wider text-gray-600 font-semibold">
       Main
      </div>
-     <div class="nav-items space-y-0.5 px-2">
-      <a href="#" class="sidebar-item active flex items-center gap-3 px-3 py-2 rounded-lg text-sm" data-page="dashboard"><i data-lucide="layout-dashboard" class="w-4 h-4"></i>Dashboard</a> <a href="#" class="sidebar-item flex items-center gap-3 px-3 py-2 rounded-lg text-sm" data-page="billing"><i data-lucide="receipt" class="w-4 h-4"></i>Billing</a> <a href="#" class="sidebar-item flex items-center gap-3 px-3 py-2 rounded-lg text-sm" data-page="customers"><i data-lucide="users" class="w-4 h-4"></i>Customers</a> <a href="#" class="sidebar-item flex items-center gap-3 px-3 py-2 rounded-lg text-sm" data-page="network"><i data-lucide="server" class="w-4 h-4"></i>Network</a> <a href="#" class="sidebar-item flex items-center gap-3 px-3 py-2 rounded-lg text-sm" data-page="mikrotik"><i data-lucide="cpu" class="w-4 h-4"></i>MikroTik</a> <a href="#" class="sidebar-item flex items-center gap-3 px-3 py-2 rounded-lg text-sm" data-page="voucher"><i data-lucide="ticket" class="w-4 h-4"></i>Voucher</a> <a href="#" class="sidebar-item flex items-center gap-3 px-3 py-2 rounded-lg text-sm" data-page="tickets"><i data-lucide="message-circle" class="w-4 h-4"></i>Tickets</a> <a href="#" class="sidebar-item flex items-center gap-3 px-3 py-2 rounded-lg text-sm" data-page="inventory"><i data-lucide="package" class="w-4 h-4"></i>Inventory</a>
+     <div class="sidebar-item active flex items-center gap-3 px-4 py-2.5 text-sm cursor-pointer text-indigo-300" data-page="dashboard" onclick="switchPage('dashboard')">
+      <i data-lucide="layout-dashboard" class="w-4 h-4"></i> Dashboard
      </div>
-     <div class="px-3 mt-4 mb-2 text-[10px] uppercase text-slate-500 font-semibold tracking-wider">
+     <div class="sidebar-item flex items-center gap-3 px-4 py-2.5 text-sm cursor-pointer text-gray-400" data-page="billing" onclick="switchPage('billing')">
+      <i data-lucide="receipt" class="w-4 h-4"></i> Billing Engine
+     </div>
+     <div class="sidebar-item flex items-center gap-3 px-4 py-2.5 text-sm cursor-pointer text-gray-400" data-page="network" onclick="switchPage('network')">
+      <i data-lucide="wifi" class="w-4 h-4"></i> Network
+     </div>
+     <div class="sidebar-item flex items-center gap-3 px-4 py-2.5 text-sm cursor-pointer text-gray-400" data-page="mikrotik" onclick="switchPage('mikrotik')">
+      <i data-lucide="server" class="w-4 h-4"></i> MikroTik
+     </div>
+     <div class="sidebar-item flex items-center gap-3 px-4 py-2.5 text-sm cursor-pointer text-gray-400" data-page="customers" onclick="switchPage('customers')">
+      <i data-lucide="users" class="w-4 h-4"></i> Customers
+     </div>
+     <div class="px-3 mt-4 mb-2 text-[10px] uppercase tracking-wider text-gray-600 font-semibold">
+      Operations
+     </div>
+     <div class="sidebar-item flex items-center gap-3 px-4 py-2.5 text-sm cursor-pointer text-gray-400" data-page="tickets" onclick="switchPage('tickets')">
+      <i data-lucide="headphones" class="w-4 h-4"></i> Support
+     </div>
+     <div class="sidebar-item flex items-center gap-3 px-4 py-2.5 text-sm cursor-pointer text-gray-400" data-page="voucher" onclick="switchPage('voucher')">
+      <i data-lucide="ticket" class="w-4 h-4"></i> Voucher
+     </div>
+     <div class="sidebar-item flex items-center gap-3 px-4 py-2.5 text-sm cursor-pointer text-gray-400" data-page="inventory" onclick="switchPage('inventory')">
+      <i data-lucide="package" class="w-4 h-4"></i> Inventory &amp; POS
+     </div>
+     <div class="sidebar-item flex items-center gap-3 px-4 py-2.5 text-sm cursor-pointer text-gray-400" data-page="whitelabel" onclick="switchPage('whitelabel')">
+      <i data-lucide="palette" class="w-4 h-4"></i> White-Label
+     </div>
+     <div class="sidebar-item flex items-center gap-3 px-4 py-2.5 text-sm cursor-pointer text-gray-400" data-page="flow" onclick="switchPage('flow')">
+      <i data-lucide="git-branch" class="w-4 h-4"></i> Workflow
+     </div>
+     <div class="px-3 mt-4 mb-2 text-[10px] uppercase tracking-wider text-gray-600 font-semibold">
       System
      </div>
-     <div class="px-2 space-y-0.5">
-      <a href="#" class="sidebar-item flex items-center gap-3 px-3 py-2 rounded-lg text-sm" data-page="onboarding"><i data-lucide="rocket" class="w-4 h-4"></i>Onboarding</a> <a href="#" class="sidebar-item flex items-center gap-3 px-3 py-2 rounded-lg text-sm" data-page="settings"><i data-lucide="settings" class="w-4 h-4"></i>Settings</a>
+     <div class="sidebar-item flex items-center gap-3 px-4 py-2.5 text-sm cursor-pointer text-gray-400" data-page="settings" onclick="switchPage('settings')">
+      <i data-lucide="settings" class="w-4 h-4"></i> Settings
      </div>
     </nav>
-    <div class="p-3 border-t border-slate-700/50">
-     <div class="flex items-center gap-3 px-2">
-      <div class="w-8 h-8 rounded-full bg-gradient-to-br from-emerald-400 to-cyan-500 flex items-center justify-center text-xs font-bold">
+    <div class="p-4 border-t border-gray-800">
+     <div class="flex items-center gap-3">
+      <div class="w-8 h-8 rounded-full bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center text-xs font-bold">
        SA
       </div>
-      <div class="flex-1 min-w-0">
-       <p class="text-xs font-medium truncate">Super Admin</p>
-       <p class="text-[10px] text-slate-400">ISP Maju Jaya</p>
+      <div>
+       <div class="text-xs font-medium">
+        SuperAdmin
+       </div>
+       <div class="text-[10px] text-gray-500">
+        admin@isp.net
+       </div>
       </div>
      </div>
     </div>
    </aside><!-- Main Content -->
-   <main class="flex-1 h-full overflow-y-auto">
+   <main class="flex-1 overflow-y-auto h-full">
     <!-- Top Bar -->
-    <header class="sticky top-0 z-10 glass px-6 py-3 flex items-center justify-between">
+    <header class="sticky top-0 z-10 bg-[#0a0e1a]/80 backdrop-blur-xl border-b border-gray-800 px-6 py-3 flex items-center justify-between">
      <div class="flex items-center gap-4">
-      <h2 id="page-title" class="text-lg font-semibold">Dashboard</h2><span class="px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-400 text-[10px] font-medium flex items-center gap-1"><span class="w-1.5 h-1.5 rounded-full bg-emerald-400 pulse-dot"></span>Live</span>
+      <h2 id="page-title" class="text-lg font-semibold">Dashboard</h2><span class="text-xs bg-indigo-500/20 text-indigo-300 px-2 py-0.5 rounded-full">Live</span>
      </div>
      <div class="flex items-center gap-3">
-      <button class="relative p-2 rounded-lg hover:bg-slate-800 transition"><i data-lucide="bell" class="w-4 h-4"></i><span class="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full"></span></button> <button class="p-2 rounded-lg hover:bg-slate-800 transition"><i data-lucide="search" class="w-4 h-4"></i></button> <button onclick="toggleTheme()" class="p-2 rounded-lg hover:bg-slate-800 transition flex items-center gap-2" title="Toggle theme"><i id="theme-icon" data-lucide="moon" class="w-4 h-4"></i></button>
+      <div class="relative">
+       <i data-lucide="bell" class="w-5 h-5 text-gray-400 cursor-pointer hover:text-white transition"></i> <span class="absolute -top-1 -right-1 w-2 h-2 bg-red-500 rounded-full"></span>
+      </div>
+      <div class="text-xs bg-emerald-500/20 text-emerald-300 px-2 py-1 rounded-full flex items-center gap-1">
+       <span class="w-1.5 h-1.5 rounded-full status-online"></span> 12 Routers Online
+      </div><button class="text-xs bg-gray-800 hover:bg-gray-700 px-3 py-1.5 rounded-lg transition flex items-center gap-1"> <i data-lucide="shield" class="w-3 h-3"></i> 2FA Active </button> <button onclick="toggleTheme()" id="theme-btn" class="text-xs bg-gray-800 hover:bg-gray-700 px-3 py-1.5 rounded-lg transition flex items-center gap-1"> <i data-lucide="moon" class="w-3 h-3"></i> </button>
      </div>
-    </header><!-- Pages -->
-    <div id="page-content" class="p-6">
-     <!-- Dashboard page rendered by JS -->
+    </header><!-- Page Content -->
+    <div id="page-content" class="p-6 fade-in">
+     <!-- Dashboard Page (default) -->
+     <div id="page-dashboard">
+      <!-- Stats Cards -->
+      <div class="grid grid-cols-4 gap-4 mb-6">
+       <div class="card-hover gradient-border">
+        <div class="p-4">
+         <div class="flex justify-between items-start">
+          <div>
+           <p class="text-[10px] uppercase tracking-wider text-gray-500">Monthly Revenue</p>
+           <p class="text-2xl font-bold mt-1 text-white">Rp 847.2M</p>
+           <p class="text-xs text-emerald-400 mt-1">↑ 12.5% vs last month</p>
+          </div>
+          <div class="w-10 h-10 rounded-lg bg-indigo-500/20 flex items-center justify-center"><i data-lucide="trending-up" class="w-5 h-5 text-indigo-400"></i>
+          </div>
+         </div>
+        </div>
+       </div>
+       <div class="card-hover gradient-border">
+        <div class="p-4">
+         <div class="flex justify-between items-start">
+          <div>
+           <p class="text-[10px] uppercase tracking-wider text-gray-500">Active Customers</p>
+           <p class="text-2xl font-bold mt-1 text-white">2,847</p>
+           <p class="text-xs text-emerald-400 mt-1">↑ 48 new this week</p>
+          </div>
+          <div class="w-10 h-10 rounded-lg bg-cyan-500/20 flex items-center justify-center"><i data-lucide="users" class="w-5 h-5 text-cyan-400"></i>
+          </div>
+         </div>
+        </div>
+       </div>
+       <div class="card-hover gradient-border">
+        <div class="p-4">
+         <div class="flex justify-between items-start">
+          <div>
+           <p class="text-[10px] uppercase tracking-wider text-gray-500">Unpaid Invoices</p>
+           <p class="text-2xl font-bold mt-1 text-white">156</p>
+           <p class="text-xs text-amber-400 mt-1">Rp 89.3M pending</p>
+          </div>
+          <div class="w-10 h-10 rounded-lg bg-amber-500/20 flex items-center justify-center"><i data-lucide="alert-circle" class="w-5 h-5 text-amber-400"></i>
+          </div>
+         </div>
+        </div>
+       </div>
+       <div class="card-hover gradient-border">
+        <div class="p-4">
+         <div class="flex justify-between items-start">
+          <div>
+           <p class="text-[10px] uppercase tracking-wider text-gray-500">Isolated Users</p>
+           <p class="text-2xl font-bold mt-1 text-white">34</p>
+           <p class="text-xs text-red-400 mt-1">Auto-isolir active</p>
+          </div>
+          <div class="w-10 h-10 rounded-lg bg-red-500/20 flex items-center justify-center"><i data-lucide="shield-off" class="w-5 h-5 text-red-400"></i>
+          </div>
+         </div>
+        </div>
+       </div>
+      </div><!-- Charts Row -->
+      <div class="grid grid-cols-3 gap-4 mb-6">
+       <!-- Revenue Chart -->
+       <div class="col-span-2 bg-[#0f1629] rounded-xl border border-gray-800 p-5">
+        <div class="flex justify-between items-center mb-4">
+         <h3 class="text-sm font-semibold">Revenue Trend (6 Months)</h3>
+         <div class="flex gap-2">
+          <span class="text-[10px] bg-indigo-500/20 text-indigo-300 px-2 py-0.5 rounded">Revenue</span> <span class="text-[10px] bg-cyan-500/20 text-cyan-300 px-2 py-0.5 rounded">Collected</span>
+         </div>
+        </div>
+        <div class="flex items-end gap-3 h-40">
+         <div class="flex-1 flex flex-col items-center gap-1">
+          <div class="w-full flex gap-1 items-end justify-center h-32">
+           <div class="chart-bar w-5 bg-gradient-to-t from-indigo-600 to-indigo-400 rounded-t" style="height:60%;animation-delay:0s"></div>
+           <div class="chart-bar w-5 bg-gradient-to-t from-cyan-600 to-cyan-400 rounded-t" style="height:50%;animation-delay:0.1s"></div>
+          </div><span class="text-[10px] text-gray-500">Jul</span>
+         </div>
+         <div class="flex-1 flex flex-col items-center gap-1">
+          <div class="w-full flex gap-1 items-end justify-center h-32">
+           <div class="chart-bar w-5 bg-gradient-to-t from-indigo-600 to-indigo-400 rounded-t" style="height:65%;animation-delay:0.2s"></div>
+           <div class="chart-bar w-5 bg-gradient-to-t from-cyan-600 to-cyan-400 rounded-t" style="height:58%;animation-delay:0.3s"></div>
+          </div><span class="text-[10px] text-gray-500">Aug</span>
+         </div>
+         <div class="flex-1 flex flex-col items-center gap-1">
+          <div class="w-full flex gap-1 items-end justify-center h-32">
+           <div class="chart-bar w-5 bg-gradient-to-t from-indigo-600 to-indigo-400 rounded-t" style="height:70%;animation-delay:0.4s"></div>
+           <div class="chart-bar w-5 bg-gradient-to-t from-cyan-600 to-cyan-400 rounded-t" style="height:62%;animation-delay:0.5s"></div>
+          </div><span class="text-[10px] text-gray-500">Sep</span>
+         </div>
+         <div class="flex-1 flex flex-col items-center gap-1">
+          <div class="w-full flex gap-1 items-end justify-center h-32">
+           <div class="chart-bar w-5 bg-gradient-to-t from-indigo-600 to-indigo-400 rounded-t" style="height:75%;animation-delay:0.6s"></div>
+           <div class="chart-bar w-5 bg-gradient-to-t from-cyan-600 to-cyan-400 rounded-t" style="height:70%;animation-delay:0.7s"></div>
+          </div><span class="text-[10px] text-gray-500">Oct</span>
+         </div>
+         <div class="flex-1 flex flex-col items-center gap-1">
+          <div class="w-full flex gap-1 items-end justify-center h-32">
+           <div class="chart-bar w-5 bg-gradient-to-t from-indigo-600 to-indigo-400 rounded-t" style="height:85%;animation-delay:0.8s"></div>
+           <div class="chart-bar w-5 bg-gradient-to-t from-cyan-600 to-cyan-400 rounded-t" style="height:78%;animation-delay:0.9s"></div>
+          </div><span class="text-[10px] text-gray-500">Nov</span>
+         </div>
+         <div class="flex-1 flex flex-col items-center gap-1">
+          <div class="w-full flex gap-1 items-end justify-center h-32">
+           <div class="chart-bar w-5 bg-gradient-to-t from-indigo-600 to-indigo-400 rounded-t" style="height:95%;animation-delay:1s"></div>
+           <div class="chart-bar w-5 bg-gradient-to-t from-cyan-600 to-cyan-400 rounded-t" style="height:85%;animation-delay:1.1s"></div>
+          </div><span class="text-[10px] text-gray-500">Dec</span>
+         </div>
+        </div>
+       </div><!-- Churn Analysis -->
+       <div class="bg-[#0f1629] rounded-xl border border-gray-800 p-5">
+        <h3 class="text-sm font-semibold mb-4">Churn Analysis</h3>
+        <div class="space-y-3">
+         <div>
+          <div class="flex justify-between text-xs mb-1"><span class="text-gray-400">Retention Rate</span><span class="text-emerald-400">94.2%</span>
+          </div>
+          <div class="h-2 bg-gray-800 rounded-full">
+           <div class="h-2 bg-emerald-500 rounded-full" style="width:94%"></div>
+          </div>
+         </div>
+         <div>
+          <div class="flex justify-between text-xs mb-1"><span class="text-gray-400">Churn Rate</span><span class="text-red-400">5.8%</span>
+          </div>
+          <div class="h-2 bg-gray-800 rounded-full">
+           <div class="h-2 bg-red-500 rounded-full" style="width:5.8%"></div>
+          </div>
+         </div>
+         <div>
+          <div class="flex justify-between text-xs mb-1"><span class="text-gray-400">Payment Success</span><span class="text-indigo-400">87.3%</span>
+          </div>
+          <div class="h-2 bg-gray-800 rounded-full">
+           <div class="h-2 bg-indigo-500 rounded-full" style="width:87%"></div>
+          </div>
+         </div>
+         <div>
+          <div class="flex justify-between text-xs mb-1"><span class="text-gray-400">SLA Compliance</span><span class="text-cyan-400">99.1%</span>
+          </div>
+          <div class="h-2 bg-gray-800 rounded-full">
+           <div class="h-2 bg-cyan-500 rounded-full" style="width:99%"></div>
+          </div>
+         </div>
+        </div>
+        <div class="mt-4 p-3 bg-red-500/10 rounded-lg border border-red-500/20">
+         <p class="text-[10px] text-red-300">⚠ 12 customers at risk of churning (overdue &gt;30 days)</p>
+        </div>
+       </div>
+      </div><!-- MikroTik Monitoring & Bandwidth -->
+      <div class="grid grid-cols-2 gap-4 mb-6">
+       <div class="bg-[#0f1629] rounded-xl border border-gray-800 p-5">
+        <div class="flex justify-between items-center mb-4">
+         <h3 class="text-sm font-semibold">MikroTik Routers</h3><span class="text-[10px] bg-emerald-500/20 text-emerald-300 px-2 py-0.5 rounded-full">Realtime</span>
+        </div>
+        <div class="space-y-2" id="mikrotik-routers">
+         <div class="flex items-center justify-between p-2.5 bg-gray-800/50 rounded-lg">
+          <div class="flex items-center gap-2"><span class="w-2 h-2 rounded-full status-online"></span><span class="text-xs">RB4011 - Main Gateway</span>
+          </div>
+          <div class="text-[10px] text-gray-400">
+           CPU: 23% | RAM: 45%
+          </div>
+         </div>
+         <div class="flex items-center justify-between p-2.5 bg-gray-800/50 rounded-lg">
+          <div class="flex items-center gap-2"><span class="w-2 h-2 rounded-full status-online"></span><span class="text-xs">CCR1036 - Core</span>
+          </div>
+          <div class="text-[10px] text-gray-400">
+           CPU: 18% | RAM: 62%
+          </div>
+         </div>
+         <div class="flex items-center justify-between p-2.5 bg-gray-800/50 rounded-lg">
+          <div class="flex items-center gap-2"><span class="w-2 h-2 rounded-full status-warning"></span><span class="text-xs">hEX S - Branch A</span>
+          </div>
+          <div class="text-[10px] text-amber-400">
+           CPU: 78% | RAM: 81%
+          </div>
+         </div>
+         <div class="flex items-center justify-between p-2.5 bg-gray-800/50 rounded-lg">
+          <div class="flex items-center gap-2"><span class="w-2 h-2 rounded-full status-online"></span><span class="text-xs">RB750Gr3 - Branch B</span>
+          </div>
+          <div class="text-[10px] text-gray-400">
+           CPU: 12% | RAM: 34%
+          </div>
+         </div>
+         <div class="flex items-center justify-between p-2.5 bg-gray-800/50 rounded-lg">
+          <div class="flex items-center gap-2"><span class="w-2 h-2 rounded-full status-offline"></span><span class="text-xs">RB951 - Remote Site</span>
+          </div>
+          <div class="text-[10px] text-red-400">
+           OFFLINE - Last seen 2m ago
+          </div>
+         </div>
+        </div>
+       </div><!-- Bandwidth Usage -->
+       <div class="bg-[#0f1629] rounded-xl border border-gray-800 p-5">
+        <h3 class="text-sm font-semibold mb-4">Bandwidth Usage (Live)</h3>
+        <div class="space-y-3" id="bandwidth-container">
+         <div>
+          <div class="flex justify-between text-xs mb-1"><span>Upload</span><span class="text-cyan-400" id="upload-stat">2.4 Gbps / 5 Gbps</span>
+          </div>
+          <div class="h-3 bg-gray-800 rounded-full overflow-hidden">
+           <div class="h-3 bg-gradient-to-r from-cyan-600 to-cyan-400 rounded-full transition-all" id="upload-bar" style="width:48%"></div>
+          </div>
+         </div>
+         <div>
+          <div class="flex justify-between text-xs mb-1"><span>Download</span><span class="text-indigo-400" id="download-stat">4.1 Gbps / 5 Gbps</span>
+          </div>
+          <div class="h-3 bg-gray-800 rounded-full overflow-hidden">
+           <div class="h-3 bg-gradient-to-r from-indigo-600 to-indigo-400 rounded-full transition-all" id="download-bar" style="width:82%"></div>
+          </div>
+         </div>
+        </div>
+        <div class="mt-4 grid grid-cols-3 gap-2 text-center">
+         <div class="bg-gray-800/50 rounded-lg p-2">
+          <p class="text-lg font-bold text-white" id="active-sessions">2,103</p>
+          <p class="text-[10px] text-gray-500">Active Sessions</p>
+         </div>
+         <div class="bg-gray-800/50 rounded-lg p-2">
+          <p class="text-lg font-bold text-white" id="uptime-stat">99.7%</p>
+          <p class="text-[10px] text-gray-500">Uptime</p>
+         </div>
+         <div class="bg-gray-800/50 rounded-lg p-2">
+          <p class="text-lg font-bold text-white" id="latency-stat">3ms</p>
+          <p class="text-[10px] text-gray-500">Avg Latency</p>
+         </div>
+        </div>
+       </div>
+      </div><!-- Recent Activity -->
+      <div class="bg-[#0f1629] rounded-xl border border-gray-800 p-5">
+       <h3 class="text-sm font-semibold mb-4">Recent Activity</h3>
+       <div class="grid grid-cols-2 gap-3">
+        <div class="flex items-center gap-3 p-2 rounded-lg bg-emerald-500/5 border border-emerald-500/20">
+         <div class="w-8 h-8 rounded-full bg-emerald-500/20 flex items-center justify-center"><i data-lucide="check-circle" class="w-4 h-4 text-emerald-400"></i>
+         </div>
+         <div>
+          <p class="text-xs">Payment received - Ahmad Rizki</p>
+          <p class="text-[10px] text-gray-500">Rp 350,000 via Midtrans • 2m ago</p>
+         </div>
+        </div>
+        <div class="flex items-center gap-3 p-2 rounded-lg bg-red-500/5 border border-red-500/20">
+         <div class="w-8 h-8 rounded-full bg-red-500/20 flex items-center justify-center"><i data-lucide="shield-off" class="w-4 h-4 text-red-400"></i>
+         </div>
+         <div>
+          <p class="text-xs">Auto-isolir triggered - Budi Santoso</p>
+          <p class="text-[10px] text-gray-500">Overdue 7 days • 5m ago</p>
+         </div>
+        </div>
+        <div class="flex items-center gap-3 p-2 rounded-lg bg-indigo-500/5 border border-indigo-500/20">
+         <div class="w-8 h-8 rounded-full bg-indigo-500/20 flex items-center justify-center"><i data-lucide="user-plus" class="w-4 h-4 text-indigo-400"></i>
+         </div>
+         <div>
+          <p class="text-xs">New customer registered</p>
+          <p class="text-[10px] text-gray-500">Siti Nurhaliza - Plan 50Mbps • 8m ago</p>
+         </div>
+        </div>
+        <div class="flex items-center gap-3 p-2 rounded-lg bg-cyan-500/5 border border-cyan-500/20">
+         <div class="w-8 h-8 rounded-full bg-cyan-500/20 flex items-center justify-center"><i data-lucide="unlock" class="w-4 h-4 text-cyan-400"></i>
+         </div>
+         <div>
+          <p class="text-xs">Auto-unisolir - Dewi Anggraini</p>
+          <p class="text-[10px] text-gray-500">Payment confirmed via Xendit • 12m ago</p>
+         </div>
+        </div>
+       </div>
+      </div>
+     </div><!-- Billing Page -->
+     <div id="page-billing" class="hidden">
+      <div class="grid grid-cols-3 gap-4 mb-6">
+       <div class="card-hover bg-[#0f1629] rounded-xl border border-gray-800 p-5">
+        <div class="flex items-center gap-3 mb-3">
+         <div class="w-10 h-10 rounded-lg bg-indigo-500/20 flex items-center justify-center"><i data-lucide="zap" class="w-5 h-5 text-indigo-400"></i>
+         </div>
+         <div>
+          <p class="text-sm font-semibold">Auto Invoice</p>
+          <p class="text-[10px] text-gray-500">Generated monthly on 1st</p>
+         </div>
+        </div>
+        <div class="text-2xl font-bold">
+         2,847
+        </div>
+        <p class="text-xs text-gray-500">Invoices this month</p>
+       </div>
+       <div class="card-hover bg-[#0f1629] rounded-xl border border-gray-800 p-5">
+        <div class="flex items-center gap-3 mb-3">
+         <div class="w-10 h-10 rounded-lg bg-emerald-500/20 flex items-center justify-center"><i data-lucide="credit-card" class="w-5 h-5 text-emerald-400"></i>
+         </div>
+         <div>
+          <p class="text-sm font-semibold">Payment Gateway</p>
+          <p class="text-[10px] text-gray-500">Midtrans &amp; Xendit active</p>
+         </div>
+        </div>
+        <div class="flex gap-2 mt-2">
+         <span class="text-[10px] bg-blue-500/20 text-blue-300 px-2 py-1 rounded">Midtrans ✓</span> <span class="text-[10px] bg-purple-500/20 text-purple-300 px-2 py-1 rounded">Xendit ✓</span>
+        </div>
+       </div>
+       <div class="card-hover bg-[#0f1629] rounded-xl border border-gray-800 p-5">
+        <div class="flex items-center gap-3 mb-3">
+         <div class="w-10 h-10 rounded-lg bg-amber-500/20 flex items-center justify-center"><i data-lucide="percent" class="w-5 h-5 text-amber-400"></i>
+         </div>
+         <div>
+          <p class="text-sm font-semibold">Prorate Engine</p>
+          <p class="text-[10px] text-gray-500">Auto calculate partial billing</p>
+         </div>
+        </div>
+        <div class="text-xs text-gray-400 mt-2">
+         Late fee: 5% after 7 days<br>
+          Discount: Early pay -2%
+        </div>
+       </div>
+      </div><!-- Invoice Table -->
+      <div class="bg-[#0f1629] rounded-xl border border-gray-800 p-5">
+       <div class="flex justify-between items-center mb-4">
+        <h3 class="text-sm font-semibold">Recent Invoices</h3>
+        <div class="flex gap-2">
+         <button class="text-[10px] bg-indigo-500/20 text-indigo-300 px-3 py-1.5 rounded-lg hover:bg-indigo-500/30 transition">Generate All</button> <button class="text-[10px] bg-gray-700 text-gray-300 px-3 py-1.5 rounded-lg hover:bg-gray-600 transition">Export PDF</button>
+        </div>
+       </div>
+       <table class="w-full text-xs">
+        <thead>
+         <tr class="text-gray-500 border-b border-gray-800">
+          <th class="text-left py-2 font-medium">Invoice</th>
+          <th class="text-left py-2 font-medium">Customer</th>
+          <th class="text-left py-2 font-medium">Plan</th>
+          <th class="text-right py-2 font-medium">Amount</th>
+          <th class="text-right py-2 font-medium">Status</th>
+         </tr>
+        </thead>
+        <tbody>
+         <tr class="border-b border-gray-800/50">
+          <td class="py-2.5">#INV-2024-001</td>
+          <td>Ahmad Rizki</td>
+          <td>50 Mbps</td>
+          <td class="text-right">Rp 350,000</td>
+          <td class="text-right"><span class="bg-emerald-500/20 text-emerald-300 px-2 py-0.5 rounded">Paid</span></td>
+         </tr>
+         <tr class="border-b border-gray-800/50">
+          <td class="py-2.5">#INV-2024-002</td>
+          <td>Siti Nurhaliza</td>
+          <td>100 Mbps</td>
+          <td class="text-right">Rp 550,000</td>
+          <td class="text-right"><span class="bg-amber-500/20 text-amber-300 px-2 py-0.5 rounded">Pending</span></td>
+         </tr>
+         <tr class="border-b border-gray-800/50">
+          <td class="py-2.5">#INV-2024-003</td>
+          <td>Budi Santoso</td>
+          <td>30 Mbps</td>
+          <td class="text-right">Rp 250,000</td>
+          <td class="text-right"><span class="bg-red-500/20 text-red-300 px-2 py-0.5 rounded">Overdue</span></td>
+         </tr>
+         <tr class="border-b border-gray-800/50">
+          <td class="py-2.5">#INV-2024-004</td>
+          <td>Dewi Anggraini</td>
+          <td>50 Mbps</td>
+          <td class="text-right">Rp 350,000</td>
+          <td class="text-right"><span class="bg-emerald-500/20 text-emerald-300 px-2 py-0.5 rounded">Paid</span></td>
+         </tr>
+        </tbody>
+       </table>
+      </div>
+     </div><!-- Network Page -->
+     <div id="page-network" class="hidden">
+      <div class="grid grid-cols-2 gap-4 mb-6">
+       <!-- Topology -->
+       <div class="bg-[#0f1629] rounded-xl border border-gray-800 p-5">
+        <h3 class="text-sm font-semibold mb-4">Network Topology</h3>
+        <svg class="w-full h-48" viewbox="0 0 400 180">
+         <line x1="200" y1="20" x2="100" y2="80" class="flow-line" stroke="#6366f1" stroke-width="2" /> <line x1="200" y1="20" x2="300" y2="80" class="flow-line" stroke="#6366f1" stroke-width="2" /> <line x1="100" y1="80" x2="60" y2="140" class="flow-line" stroke="#06b6d4" stroke-width="1.5" /> <line x1="100" y1="80" x2="140" y2="140" class="flow-line" stroke="#06b6d4" stroke-width="1.5" /> <line x1="300" y1="80" x2="260" y2="140" class="flow-line" stroke="#06b6d4" stroke-width="1.5" /> <line x1="300" y1="80" x2="340" y2="140" class="flow-line" stroke="#06b6d4" stroke-width="1.5" /> <circle cx="200" cy="20" r="12" fill="#4f46e5" /><text x="200" y="24" text-anchor="middle" fill="white" font-size="8">
+          ISP
+         </text> <circle cx="100" cy="80" r="10" fill="#0891b2" /><text x="100" y="84" text-anchor="middle" fill="white" font-size="7">
+          OLT1
+         </text> <circle cx="300" cy="80" r="10" fill="#0891b2" /><text x="300" y="84" text-anchor="middle" fill="white" font-size="7">
+          OLT2
+         </text> <circle cx="60" cy="140" r="8" fill="#10b981" /><text x="60" y="144" text-anchor="middle" fill="white" font-size="6">
+          ODP
+         </text> <circle cx="140" cy="140" r="8" fill="#10b981" /><text x="140" y="144" text-anchor="middle" fill="white" font-size="6">
+          ODP
+         </text> <circle cx="260" cy="140" r="8" fill="#10b981" /><text x="260" y="144" text-anchor="middle" fill="white" font-size="6">
+          ODP
+         </text> <circle cx="340" cy="140" r="8" fill="#f59e0b" /><text x="340" y="144" text-anchor="middle" fill="white" font-size="6">
+          ODP
+         </text> <text x="200" y="170" text-anchor="middle" fill="#6b7280" font-size="9">
+          ↕ Auto-discovery active
+         </text>
+        </svg>
+       </div><!-- Bandwidth Plans -->
+       <div class="bg-[#0f1629] rounded-xl border border-gray-800 p-5">
+        <div class="flex justify-between items-center mb-4">
+         <h3 class="text-sm font-semibold">Bandwidth Plans</h3><button class="text-[10px] bg-indigo-500 text-white px-3 py-1.5 rounded-lg hover:bg-indigo-600 transition">+ Add Plan</button>
+        </div>
+        <div class="space-y-2">
+         <div class="flex items-center justify-between p-3 bg-gray-800/50 rounded-lg card-hover">
+          <div>
+           <p class="text-xs font-medium">Basic 10 Mbps</p>
+           <p class="text-[10px] text-gray-500">10M/5M • 423 users</p>
+          </div><span class="text-xs text-emerald-400">Rp 150,000</span>
+         </div>
+         <div class="flex items-center justify-between p-3 bg-gray-800/50 rounded-lg card-hover">
+          <div>
+           <p class="text-xs font-medium">Standard 30 Mbps</p>
+           <p class="text-[10px] text-gray-500">30M/15M • 891 users</p>
+          </div><span class="text-xs text-emerald-400">Rp 250,000</span>
+         </div>
+         <div class="flex items-center justify-between p-3 bg-gray-800/50 rounded-lg card-hover">
+          <div>
+           <p class="text-xs font-medium">Premium 50 Mbps</p>
+           <p class="text-[10px] text-gray-500">50M/25M • 1,024 users</p>
+          </div><span class="text-xs text-emerald-400">Rp 350,000</span>
+         </div>
+         <div class="flex items-center justify-between p-3 bg-gray-800/50 rounded-lg card-hover">
+          <div>
+           <p class="text-xs font-medium">Business 100 Mbps</p>
+           <p class="text-[10px] text-gray-500">100M/50M • 509 users</p>
+          </div><span class="text-xs text-emerald-400">Rp 550,000</span>
+         </div>
+        </div>
+       </div>
+      </div><!-- Coverage Map -->
+      <div class="bg-[#0f1629] rounded-xl border border-gray-800 p-5">
+       <h3 class="text-sm font-semibold mb-4">Coverage Area Map</h3>
+       <div class="h-40 bg-gray-800/50 rounded-lg flex items-center justify-center relative overflow-hidden">
+        <div class="absolute inset-0 opacity-20" style="background: radial-gradient(circle at 30% 40%, #6366f1 0%, transparent 40%), radial-gradient(circle at 70% 60%, #06b6d4 0%, transparent 35%), radial-gradient(circle at 50% 30%, #8b5cf6 0%, transparent 30%)"></div>
+        <div class="text-center z-10">
+         <i data-lucide="map-pin" class="w-8 h-8 text-indigo-400 mx-auto mb-2"></i>
+         <p class="text-xs text-gray-400">3 Coverage Zones Active</p>
+         <p class="text-[10px] text-gray-500">Jakarta Selatan • Depok • Tangerang</p>
+        </div>
+       </div>
+      </div>
+     </div><!-- MikroTik Page -->
+     <div id="page-mikrotik" class="hidden">
+      <div class="grid grid-cols-3 gap-4 mb-6">
+       <div class="card-hover bg-[#0f1629] rounded-xl border border-gray-800 p-5">
+        <h3 class="text-xs text-gray-500 mb-2">PPPoE Active</h3>
+        <p class="text-2xl font-bold" id="mikrotik-pppoe">1,847</p>
+        <p class="text-[10px] text-emerald-400">↑ 12 connected today</p>
+       </div>
+       <div class="card-hover bg-[#0f1629] rounded-xl border border-gray-800 p-5">
+        <h3 class="text-xs text-gray-500 mb-2">Hotspot Users</h3>
+        <p class="text-2xl font-bold" id="mikrotik-hotspot">956</p>
+        <p class="text-[10px] text-cyan-400">234 voucher active</p>
+       </div>
+       <div class="card-hover bg-[#0f1629] rounded-xl border border-gray-800 p-5">
+        <h3 class="text-xs text-gray-500 mb-2">Queue Active</h3>
+        <p class="text-2xl font-bold" id="mikrotik-queue">2,803</p>
+        <p class="text-[10px] text-gray-400">Simple Queue + PCQ</p>
+       </div>
+      </div>
+      <div class="grid grid-cols-2 gap-4">
+       <div class="bg-[#0f1629] rounded-xl border border-gray-800 p-5">
+        <h3 class="text-sm font-semibold mb-3">MikroTik Features</h3>
+        <div class="grid grid-cols-2 gap-2">
+         <div class="p-2 bg-emerald-500/10 rounded-lg border border-emerald-500/20 text-center cursor-pointer hover:bg-emerald-500/20 transition">
+          <p class="text-[10px] text-emerald-300">PPPoE Server</p>
+         </div>
+         <div class="p-2 bg-indigo-500/10 rounded-lg border border-indigo-500/20 text-center cursor-pointer hover:bg-indigo-500/20 transition">
+          <p class="text-[10px] text-indigo-300">Hotspot</p>
+         </div>
+         <div class="p-2 bg-cyan-500/10 rounded-lg border border-cyan-500/20 text-center cursor-pointer hover:bg-cyan-500/20 transition">
+          <p class="text-[10px] text-cyan-300">Queue Mgmt</p>
+         </div>
+         <div class="p-2 bg-purple-500/10 rounded-lg border border-purple-500/20 text-center cursor-pointer hover:bg-purple-500/20 transition">
+          <p class="text-[10px] text-purple-300">Firewall</p>
+         </div>
+         <div class="p-2 bg-amber-500/10 rounded-lg border border-amber-500/20 text-center cursor-pointer hover:bg-amber-500/20 transition">
+          <p class="text-[10px] text-amber-300">DHCP Server</p>
+         </div>
+         <div class="p-2 bg-rose-500/10 rounded-lg border border-rose-500/20 text-center cursor-pointer hover:bg-rose-500/20 transition">
+          <p class="text-[10px] text-rose-300">Auto Isolir</p>
+         </div>
+         <div class="p-2 bg-teal-500/10 rounded-lg border border-teal-500/20 text-center cursor-pointer hover:bg-teal-500/20 transition">
+          <p class="text-[10px] text-teal-300">Bandwidth Test</p>
+         </div>
+         <div class="p-2 bg-orange-500/10 rounded-lg border border-orange-500/20 text-center cursor-pointer hover:bg-orange-500/20 transition">
+          <p class="text-[10px] text-orange-300">User Manager</p>
+         </div>
+        </div>
+       </div>
+       <div class="bg-[#0f1629] rounded-xl border border-gray-800 p-5">
+        <h3 class="text-sm font-semibold mb-3">Auto Isolir/Unisolir</h3>
+        <div class="space-y-2">
+         <div class="p-3 bg-red-500/10 rounded-lg border border-red-500/20 flex items-center justify-between cursor-pointer hover:bg-red-500/20 transition">
+          <div class="flex items-center gap-2"><i data-lucide="shield-off" class="w-4 h-4 text-red-400"></i><span class="text-xs">Overdue → Auto Block</span>
+          </div><span class="text-[10px] bg-red-500/30 text-red-300 px-2 py-0.5 rounded">Active</span>
+         </div>
+         <div class="p-3 bg-emerald-500/10 rounded-lg border border-emerald-500/20 flex items-center justify-between cursor-pointer hover:bg-emerald-500/20 transition">
+          <div class="flex items-center gap-2"><i data-lucide="unlock" class="w-4 h-4 text-emerald-400"></i><span class="text-xs">Payment OK → Auto Unblock</span>
+          </div><span class="text-[10px] bg-emerald-500/30 text-emerald-300 px-2 py-0.5 rounded">Active</span>
+         </div>
+         <div class="p-3 bg-indigo-500/10 rounded-lg border border-indigo-500/20 flex items-center justify-between cursor-pointer hover:bg-indigo-500/20 transition">
+          <div class="flex items-center gap-2"><i data-lucide="bell" class="w-4 h-4 text-indigo-400"></i><span class="text-xs">Push Notif → Firebase FCM</span>
+          </div><span class="text-[10px] bg-indigo-500/30 text-indigo-300 px-2 py-0.5 rounded">Active</span>
+         </div>
+        </div>
+       </div>
+      </div>
+     </div><!-- Customers Page -->
+     <div id="page-customers" class="hidden">
+      <div class="bg-[#0f1629] rounded-xl border border-gray-800 p-5 mb-4">
+       <div class="flex justify-between items-center mb-4">
+        <h3 class="text-sm font-semibold">Customer Management</h3>
+        <div class="flex gap-2">
+         <button class="text-[10px] bg-indigo-500 text-white px-3 py-1.5 rounded-lg">+ Add Customer</button> <button class="text-[10px] bg-gray-700 text-gray-300 px-3 py-1.5 rounded-lg">Export Excel</button>
+        </div>
+       </div>
+       <div class="grid grid-cols-4 gap-3 mb-4">
+        <div class="bg-gray-800/50 rounded-lg p-3 text-center">
+         <p class="text-lg font-bold">2,847</p>
+         <p class="text-[10px] text-gray-500">Total</p>
+        </div>
+        <div class="bg-emerald-500/10 rounded-lg p-3 text-center">
+         <p class="text-lg font-bold text-emerald-400">2,659</p>
+         <p class="text-[10px] text-gray-500">Active</p>
+        </div>
+        <div class="bg-red-500/10 rounded-lg p-3 text-center">
+         <p class="text-lg font-bold text-red-400">34</p>
+         <p class="text-[10px] text-gray-500">Isolated</p>
+        </div>
+        <div class="bg-amber-500/10 rounded-lg p-3 text-center">
+         <p class="text-lg font-bold text-amber-400">154</p>
+         <p class="text-[10px] text-gray-500">Pending</p>
+        </div>
+       </div>
+       <table class="w-full text-xs">
+        <thead>
+         <tr class="text-gray-500 border-b border-gray-800">
+          <th class="text-left py-2">Name</th>
+          <th class="text-left py-2">Plan</th>
+          <th class="text-left py-2">PPPoE</th>
+          <th class="text-left py-2">Status</th>
+          <th class="text-right py-2">Due Date</th>
+         </tr>
+        </thead>
+        <tbody>
+         <tr class="border-b border-gray-800/50 hover:bg-gray-800/30 transition">
+          <td class="py-2.5">Ahmad Rizki</td>
+          <td>50 Mbps</td>
+          <td>pppoe-ahmad</td>
+          <td><span class="bg-emerald-500/20 text-emerald-300 px-2 py-0.5 rounded">Active</span></td>
+          <td class="text-right">Jan 15</td>
+         </tr>
+         <tr class="border-b border-gray-800/50 hover:bg-gray-800/30 transition">
+          <td class="py-2.5">Budi Santoso</td>
+          <td>30 Mbps</td>
+          <td>pppoe-budi</td>
+          <td><span class="bg-red-500/20 text-red-300 px-2 py-0.5 rounded">Isolated</span></td>
+          <td class="text-right text-red-400">Jan 1 (overdue)</td>
+         </tr>
+         <tr class="border-b border-gray-800/50 hover:bg-gray-800/30 transition">
+          <td class="py-2.5">Siti Nurhaliza</td>
+          <td>100 Mbps</td>
+          <td>pppoe-siti</td>
+          <td><span class="bg-emerald-500/20 text-emerald-300 px-2 py-0.5 rounded">Active</span></td>
+          <td class="text-right">Jan 20</td>
+         </tr>
+        </tbody>
+       </table>
+      </div>
+     </div><!-- Tickets Page -->
+     <div id="page-tickets" class="hidden">
+      <div class="grid grid-cols-3 gap-4 mb-4">
+       <div class="card-hover bg-[#0f1629] rounded-xl border border-gray-800 p-4">
+        <p class="text-[10px] text-gray-500">Open Tickets</p>
+        <p class="text-xl font-bold">23</p>
+        <p class="text-[10px] text-amber-400">5 urgent / SLA breach</p>
+       </div>
+       <div class="card-hover bg-[#0f1629] rounded-xl border border-gray-800 p-4">
+        <p class="text-[10px] text-gray-500">Avg Resolution</p>
+        <p class="text-xl font-bold">4.2h</p>
+        <p class="text-[10px] text-emerald-400">↓ 18% faster</p>
+       </div>
+       <div class="card-hover bg-[#0f1629] rounded-xl border border-gray-800 p-4">
+        <p class="text-[10px] text-gray-500">WhatsApp Bot</p>
+        <p class="text-xl font-bold text-emerald-400">Active</p>
+        <p class="text-[10px] text-gray-500">Auto-reply enabled</p>
+       </div>
+      </div>
+      <div class="bg-[#0f1629] rounded-xl border border-gray-800 p-5">
+       <h3 class="text-sm font-semibold mb-3">Tickets Queue</h3>
+       <div class="space-y-2">
+        <div class="p-3 bg-gray-800/50 rounded-lg flex items-center justify-between card-hover">
+         <div class="flex items-center gap-3">
+          <span class="w-2 h-2 rounded-full bg-red-500"></span>
+          <div>
+           <p class="text-xs font-medium">#T-089 Internet mati total</p>
+           <p class="text-[10px] text-gray-500">Ahmad Rizki • 30 min ago</p>
+          </div>
+         </div>
+         <div class="flex items-center gap-2">
+          <span class="text-[10px] bg-red-500/20 text-red-300 px-2 py-0.5 rounded">Urgent</span> <span class="text-[10px] text-gray-500">Tech: Roni</span>
+         </div>
+        </div>
+        <div class="p-3 bg-gray-800/50 rounded-lg flex items-center justify-between card-hover">
+         <div class="flex items-center gap-3">
+          <span class="w-2 h-2 rounded-full bg-amber-500"></span>
+          <div>
+           <p class="text-xs font-medium">#T-090 Speed lambat</p>
+           <p class="text-[10px] text-gray-500">Dewi Anggraini • 1h ago</p>
+          </div>
+         </div>
+         <div class="flex items-center gap-2">
+          <span class="text-[10px] bg-amber-500/20 text-amber-300 px-2 py-0.5 rounded">Medium</span> <span class="text-[10px] text-gray-500">Tech: Andi</span>
+         </div>
+        </div>
+       </div>
+      </div>
+     </div><!-- Voucher Page -->
+     <div id="page-voucher" class="hidden">
+      <div class="bg-[#0f1629] rounded-xl border border-gray-800 p-5 mb-4">
+       <div class="flex justify-between items-center mb-4">
+        <h3 class="text-sm font-semibold">Voucher Editor &amp; Print</h3>
+        <div class="flex gap-2">
+         <button onclick="printVouchers()" class="text-[10px] bg-indigo-500 text-white px-3 py-1.5 rounded-lg hover:bg-indigo-600 transition">🖨 Print Unlimited</button>
+        </div>
+       </div>
+       <div class="grid grid-cols-2 gap-4 mb-4">
+        <div>
+         <label class="text-[10px] text-gray-500 block mb-1">Profile/Plan</label> <select class="w-full bg-gray-800 border border-gray-700 rounded-lg px-3 py-2 text-xs text-white"><option>Hotspot 3 Jam - Rp 5,000</option><option>Hotspot 6 Jam - Rp 10,000</option><option>Hotspot 24 Jam - Rp 20,000</option></select>
+        </div>
+        <div>
+         <label class="text-[10px] text-gray-500 block mb-1">Qty</label> <input type="number" value="30" class="w-full bg-gray-800 border border-gray-700 rounded-lg px-3 py-2 text-xs text-white">
+        </div>
+       </div>
+       <div id="voucher-grid" class="grid grid-cols-5 gap-2">
+        <div class="bg-gray-800/80 border border-gray-700 rounded-lg p-2 text-center">
+         <p class="text-[8px] text-gray-500">Voucher Code</p>
+         <p class="text-[10px] font-mono font-bold text-indigo-300">HX7-K9M-2PL</p>
+         <p class="text-[8px] text-gray-600">3 Jam | Rp 5,000</p>
+        </div>
+        <div class="bg-gray-800/80 border border-gray-700 rounded-lg p-2 text-center">
+         <p class="text-[8px] text-gray-500">Voucher Code</p>
+         <p class="text-[10px] font-mono font-bold text-indigo-300">BN4-W8R-6QT</p>
+         <p class="text-[8px] text-gray-600">3 Jam | Rp 5,000</p>
+        </div>
+        <div class="bg-gray-800/80 border border-gray-700 rounded-lg p-2 text-center">
+         <p class="text-[8px] text-gray-500">Voucher Code</p>
+         <p class="text-[10px] font-mono font-bold text-indigo-300">YP2-L5F-3MK</p>
+         <p class="text-[8px] text-gray-600">3 Jam | Rp 5,000</p>
+        </div>
+        <div class="bg-gray-800/80 border border-gray-700 rounded-lg p-2 text-center">
+         <p class="text-[8px] text-gray-500">Voucher Code</p>
+         <p class="text-[10px] font-mono font-bold text-indigo-300">ZT8-N3V-7JR</p>
+         <p class="text-[8px] text-gray-600">3 Jam | Rp 5,000</p>
+        </div>
+        <div class="bg-gray-800/80 border border-gray-700 rounded-lg p-2 text-center">
+         <p class="text-[8px] text-gray-500">Voucher Code</p>
+         <p class="text-[10px] font-mono font-bold text-indigo-300">QW6-D1X-4HS</p>
+         <p class="text-[8px] text-gray-600">3 Jam | Rp 5,000</p>
+        </div>
+       </div>
+      </div>
+     </div><!-- Inventory Page -->
+     <div id="page-inventory" class="hidden">
+      <div class="flex gap-4 mb-6"><!-- Tabs -->
+       <div class="flex gap-2"><button onclick="switchInventoryTab('inventory')" class="inv-tab-btn active px-4 py-2 rounded-lg bg-indigo-500/20 text-indigo-300 text-sm font-medium transition" data-tab="inventory">📦 Inventory</button> <button onclick="switchInventoryTab('pos')" class="inv-tab-btn px-4 py-2 rounded-lg bg-gray-700 text-gray-300 text-sm font-medium hover:bg-gray-600 transition" data-tab="pos">🛒 POS</button>
+       </div>
+      </div><!-- Inventory Management Tab -->
+      <div id="inv-inventory-tab" class="space-y-4"><!-- Stats -->
+       <div class="grid grid-cols-4 gap-4 mb-6">
+        <div class="card-hover bg-[#0f1629] rounded-xl border border-gray-800 p-4">
+         <p class="text-[10px] text-gray-500">Total Items</p>
+         <p class="text-2xl font-bold" id="inv-total-items">0</p>
+         <p class="text-[10px] text-gray-500 mt-1">SKU registered</p>
+        </div>
+        <div class="card-hover bg-[#0f1629] rounded-xl border border-gray-800 p-4">
+         <p class="text-[10px] text-gray-500">Total Value</p>
+         <p class="text-2xl font-bold text-emerald-400" id="inv-total-value">Rp 0</p>
+         <p class="text-[10px] text-gray-500 mt-1">Inventory worth</p>
+        </div>
+        <div class="card-hover bg-[#0f1629] rounded-xl border border-gray-800 p-4">
+         <p class="text-[10px] text-gray-500">Low Stock Alert</p>
+         <p class="text-2xl font-bold text-amber-400" id="inv-low-stock">0</p>
+         <p class="text-[10px] text-gray-500 mt-1">Need reorder</p>
+        </div>
+        <div class="card-hover bg-[#0f1629] rounded-xl border border-gray-800 p-4">
+         <p class="text-[10px] text-gray-500">Sales Today</p>
+         <p class="text-2xl font-bold text-cyan-400" id="inv-sales-today">Rp 0</p>
+         <p class="text-[10px] text-gray-500 mt-1">Total transactions</p>
+        </div>
+       </div><!-- Add Item Form -->
+       <div class="bg-[#0f1629] rounded-xl border border-gray-800 p-5 mb-6">
+        <h3 class="text-sm font-semibold mb-4">Add New Item</h3>
+        <div class="grid grid-cols-5 gap-3 mb-4"><input type="text" id="inv-item-name" placeholder="Item Name" class="bg-gray-800 border border-gray-700 rounded-lg px-3 py-2 text-xs text-white placeholder-gray-500 focus:border-indigo-500 outline-none transition"> <input type="text" id="inv-sku" placeholder="SKU" class="bg-gray-800 border border-gray-700 rounded-lg px-3 py-2 text-xs text-white placeholder-gray-500 focus:border-indigo-500 outline-none transition"> <select id="inv-category" class="bg-gray-800 border border-gray-700 rounded-lg px-3 py-2 text-xs text-white focus:border-indigo-500 outline-none transition"> <option value="Hardware">Hardware</option> <option value="Cable">Cable</option> <option value="Accessories">Accessories</option> <option value="Services">Services</option> </select> <input type="number" id="inv-unit-price" placeholder="Unit Price" class="bg-gray-800 border border-gray-700 rounded-lg px-3 py-2 text-xs text-white placeholder-gray-500 focus:border-indigo-500 outline-none transition" min="0" step="1000">
+         <div class="flex gap-2"><input type="number" id="inv-quantity" placeholder="Qty" class="flex-1 bg-gray-800 border border-gray-700 rounded-lg px-3 py-2 text-xs text-white placeholder-gray-500 focus:border-indigo-500 outline-none transition" min="0"> <button onclick="addInventoryItem()" class="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg text-xs font-medium transition active:scale-95">+ Add</button>
+         </div>
+        </div>
+       </div><!-- Items Table -->
+       <div class="bg-[#0f1629] rounded-xl border border-gray-800 p-5">
+        <div class="flex justify-between items-center mb-4">
+         <h3 class="text-sm font-semibold">Inventory Items</h3>
+         <div class="flex gap-2"><button class="text-[10px] bg-gray-700 hover:bg-gray-600 px-3 py-1.5 rounded-lg transition">📥 Import</button> <button class="text-[10px] bg-gray-700 hover:bg-gray-600 px-3 py-1.5 rounded-lg transition">📤 Export</button>
+         </div>
+        </div>
+        <div class="overflow-x-auto">
+         <table class="w-full text-xs">
+          <thead>
+           <tr class="text-gray-500 border-b border-gray-800">
+            <th class="text-left py-2 px-2">Item Name</th>
+            <th class="text-left py-2 px-2">SKU</th>
+            <th class="text-left py-2 px-2">Category</th>
+            <th class="text-right py-2 px-2">Stock</th>
+            <th class="text-right py-2 px-2">Unit Price</th>
+            <th class="text-right py-2 px-2">Total Value</th>
+            <th class="text-center py-2 px-2">Status</th>
+            <th class="text-center py-2 px-2">Action</th>
+           </tr>
+          </thead>
+          <tbody id="inv-items-tbody"><!-- Items will be rendered here -->
+          </tbody>
+         </table>
+        </div>
+        <div id="inv-empty-state" class="text-center py-8 text-gray-500">
+         <p class="text-sm">No items in inventory. Add your first item to get started.</p>
+        </div>
+       </div>
+      </div><!-- POS Tab -->
+      <div id="inv-pos-tab" class="hidden space-y-4">
+       <div class="grid grid-cols-4 gap-4"><!-- POS Left: Product Selection -->
+        <div class="col-span-2 bg-[#0f1629] rounded-xl border border-gray-800 p-5">
+         <h3 class="text-sm font-semibold mb-4">Products</h3>
+         <div class="mb-3"><input type="text" id="pos-search" placeholder="Search product..." class="w-full bg-gray-800 border border-gray-700 rounded-lg px-3 py-2 text-xs text-white placeholder-gray-500 focus:border-indigo-500 outline-none transition">
+         </div>
+         <div class="space-y-2 max-h-96 overflow-y-auto" id="pos-products-list"><!-- Products will be rendered here -->
+         </div>
+        </div><!-- POS Right: Cart -->
+        <div class="col-span-2 space-y-4"><!-- Cart Items -->
+         <div class="bg-[#0f1629] rounded-xl border border-gray-800 p-5">
+          <h3 class="text-sm font-semibold mb-4">Shopping Cart</h3>
+          <div class="space-y-2 max-h-64 overflow-y-auto mb-4" id="pos-cart-items">
+           <p class="text-xs text-gray-500 text-center py-4">Cart is empty</p>
+          </div><!-- Cart Summary -->
+          <div class="space-y-2 p-3 bg-gray-800/50 rounded-lg border border-gray-700">
+           <div class="flex justify-between text-xs"><span class="text-gray-400">Subtotal:</span> <span id="pos-subtotal" class="text-white font-medium">Rp 0</span>
+           </div>
+           <div class="flex justify-between text-xs"><span class="text-gray-400">Discount:</span> <input type="number" id="pos-discount" placeholder="Rp 0" class="w-24 bg-gray-700 border border-gray-600 rounded px-2 py-1 text-xs text-white placeholder-gray-500 focus:border-indigo-500 outline-none transition" min="0" step="1000" onchange="calculatePOSTotal()">
+           </div>
+           <div class="border-t border-gray-700 pt-2 flex justify-between text-sm font-bold"><span>Total:</span> <span id="pos-total" class="text-emerald-400">Rp 0</span>
+           </div>
+          </div>
+         </div><!-- Payment Method -->
+         <div class="bg-[#0f1629] rounded-xl border border-gray-800 p-5">
+          <h3 class="text-xs font-semibold mb-3 uppercase text-gray-500">Payment Method</h3>
+          <div class="space-y-2 mb-4"><label class="flex items-center gap-2 cursor-pointer"> <input type="radio" name="payment-method" value="cash" checked class="w-4 h-4"> <span class="text-xs">💵 Cash</span> </label> <label class="flex items-center gap-2 cursor-pointer"> <input type="radio" name="payment-method" value="card" class="w-4 h-4"> <span class="text-xs">💳 Debit/Credit Card</span> </label> <label class="flex items-center gap-2 cursor-pointer"> <input type="radio" name="payment-method" value="transfer" class="w-4 h-4"> <span class="text-xs">🏦 Bank Transfer</span> </label> <label class="flex items-center gap-2 cursor-pointer"> <input type="radio" name="payment-method" value="ewallet" class="w-4 h-4"> <span class="text-xs">📱 E-Wallet</span> </label>
+          </div>
+         </div><!-- Action Buttons -->
+         <div class="flex gap-2"><button onclick="clearPOSCart()" class="flex-1 px-4 py-2 bg-red-600/20 hover:bg-red-600/30 text-red-300 rounded-lg text-xs font-medium transition">🗑️ Clear</button> <button onclick="completePOSSale()" class="flex-1 px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg text-xs font-medium transition active:scale-95">✓ Complete Sale</button>
+         </div>
+        </div>
+       </div><!-- Sales History -->
+       <div class="bg-[#0f1629] rounded-xl border border-gray-800 p-5">
+        <h3 class="text-sm font-semibold mb-4">Today's Sales</h3>
+        <div class="overflow-x-auto">
+         <table class="w-full text-xs">
+          <thead>
+           <tr class="text-gray-500 border-b border-gray-800">
+            <th class="text-left py-2 px-2">Sale ID</th>
+            <th class="text-left py-2 px-2">Time</th>
+            <th class="text-right py-2 px-2">Amount</th>
+            <th class="text-left py-2 px-2">Method</th>
+            <th class="text-left py-2 px-2">Status</th>
+            <th class="text-center py-2 px-2">Receipt</th>
+           </tr>
+          </thead>
+          <tbody id="pos-sales-tbody"><!-- Sales will be rendered here -->
+          </tbody>
+         </table>
+        </div>
+       </div>
+      </div>
+     </div><!-- White-Label Page -->
+     <div id="page-whitelabel" class="hidden">
+      <div class="bg-[#0f1629] rounded-xl border border-gray-800 p-5 mb-4">
+       <h3 class="text-sm font-semibold mb-4">White-Label Configuration</h3>
+       <div class="grid grid-cols-2 gap-6">
+        <div class="space-y-3">
+         <div><label class="text-[10px] text-gray-500 block mb-1">Custom Domain</label><input type="text" value="billing.myisp.co.id" class="w-full bg-gray-800 border border-gray-700 rounded-lg px-3 py-2 text-xs text-white">
+         </div>
+         <div><label class="text-[10px] text-gray-500 block mb-1">ISP Name</label><input type="text" value="MyISP Network" class="w-full bg-gray-800 border border-gray-700 rounded-lg px-3 py-2 text-xs text-white">
+         </div>
+         <div><label class="text-[10px] text-gray-500 block mb-1">Primary Color</label><input type="color" value="#6366f1" class="w-10 h-8 rounded cursor-pointer">
+         </div>
+        </div>
+        <div class="space-y-3">
+         <div class="p-4 bg-gray-800/50 rounded-lg">
+          <p class="text-[10px] text-gray-500 mb-2">Branding Preview</p>
+          <div class="bg-gray-900 rounded-lg p-3">
+           <div class="text-sm font-bold text-indigo-400">
+            MyISP Network
+           </div>
+           <p class="text-[10px] text-gray-500 mt-1">Custom invoice, email, mobile app</p>
+          </div>
+         </div>
+         <div class="flex gap-2">
+          <span class="text-[10px] bg-emerald-500/20 text-emerald-300 px-2 py-1 rounded">✓ Custom Domain</span> <span class="text-[10px] bg-emerald-500/20 text-emerald-300 px-2 py-1 rounded">✓ Logo Branding</span> <span class="text-[10px] bg-emerald-500/20 text-emerald-300 px-2 py-1 rounded">✓ Email Templates</span>
+         </div>
+        </div>
+       </div>
+      </div>
+     </div><!-- Workflow Page -->
+     <div id="page-flow" class="hidden">
+      <div class="bg-[#0f1629] rounded-xl border border-gray-800 p-5">
+       <h3 class="text-sm font-semibold mb-4">ISP Onboarding Workflow</h3>
+       <div class="flex items-center justify-center gap-0 flex-wrap py-4">
+        <div class="flex flex-col items-center">
+         <div class="w-14 h-14 rounded-xl bg-indigo-500/20 border border-indigo-500/40 flex items-center justify-center card-hover cursor-pointer"><i data-lucide="user-plus" class="w-6 h-6 text-indigo-400"></i>
+         </div>
+         <p class="text-[9px] text-gray-400 mt-1.5 text-center w-16">Tenant<br>
+           Register</p>
+        </div>
+        <svg class="w-8 h-4"><line x1="0" y1="8" x2="32" y2="8" class="flow-line" stroke="#6366f1" stroke-width="2" />
+        </svg>
+        <div class="flex flex-col items-center">
+         <div class="w-14 h-14 rounded-xl bg-purple-500/20 border border-purple-500/40 flex items-center justify-center card-hover cursor-pointer"><i data-lucide="settings" class="w-6 h-6 text-purple-400"></i>
+         </div>
+         <p class="text-[9px] text-gray-400 mt-1.5 text-center w-16">ISP<br>
+           Onboarding</p>
+        </div>
+        <svg class="w-8 h-4"><line x1="0" y1="8" x2="32" y2="8" class="flow-line" stroke="#8b5cf6" stroke-width="2" />
+        </svg>
+        <div class="flex flex-col items-center">
+         <div class="w-14 h-14 rounded-xl bg-cyan-500/20 border border-cyan-500/40 flex items-center justify-center card-hover cursor-pointer"><i data-lucide="server" class="w-6 h-6 text-cyan-400"></i>
+         </div>
+         <p class="text-[9px] text-gray-400 mt-1.5 text-center w-16">Setup<br>
+           Router</p>
+        </div>
+        <svg class="w-8 h-4"><line x1="0" y1="8" x2="32" y2="8" class="flow-line" stroke="#06b6d4" stroke-width="2" />
+        </svg>
+        <div class="flex flex-col items-center">
+         <div class="w-14 h-14 rounded-xl bg-teal-500/20 border border-teal-500/40 flex items-center justify-center card-hover cursor-pointer"><i data-lucide="wifi" class="w-6 h-6 text-teal-400"></i>
+         </div>
+         <p class="text-[9px] text-gray-400 mt-1.5 text-center w-16">MikroTik<br>
+           Connect</p>
+        </div>
+        <svg class="w-8 h-4"><line x1="0" y1="8" x2="32" y2="8" class="flow-line" stroke="#14b8a6" stroke-width="2" />
+        </svg>
+        <div class="flex flex-col items-center">
+         <div class="w-14 h-14 rounded-xl bg-emerald-500/20 border border-emerald-500/40 flex items-center justify-center card-hover cursor-pointer"><i data-lucide="receipt" class="w-6 h-6 text-emerald-400"></i>
+         </div>
+         <p class="text-[9px] text-gray-400 mt-1.5 text-center w-16">Auto<br>
+           Billing</p>
+        </div>
+        <svg class="w-8 h-4"><line x1="0" y1="8" x2="32" y2="8" class="flow-line" stroke="#10b981" stroke-width="2" />
+        </svg>
+        <div class="flex flex-col items-center">
+         <div class="w-14 h-14 rounded-xl bg-green-500/20 border border-green-500/40 flex items-center justify-center card-hover cursor-pointer"><i data-lucide="credit-card" class="w-6 h-6 text-green-400"></i>
+         </div>
+         <p class="text-[9px] text-gray-400 mt-1.5 text-center w-16">Invoice +<br>
+           Payment</p>
+        </div>
+       </div><!-- Second flow row -->
+       <div class="mt-6 pt-6 border-t border-gray-800">
+        <h3 class="text-xs font-semibold mb-4 text-gray-400">Automation Flow</h3>
+        <div class="flex items-center justify-center gap-0 flex-wrap">
+         <div class="flex flex-col items-center">
+          <div class="w-14 h-14 rounded-xl bg-amber-500/20 border border-amber-500/40 flex items-center justify-center card-hover cursor-pointer"><i data-lucide="bell" class="w-6 h-6 text-amber-400"></i>
+          </div>
+          <p class="text-[9px] text-gray-400 mt-1.5 text-center w-16">Push Notif<br>
+            FCM</p>
+         </div>
+         <svg class="w-8 h-4"><line x1="0" y1="8" x2="32" y2="8" class="flow-line" stroke="#f59e0b" stroke-width="2" />
+         </svg>
+         <div class="flex flex-col items-center">
+          <div class="w-14 h-14 rounded-xl bg-red-500/20 border border-red-500/40 flex items-center justify-center card-hover cursor-pointer"><i data-lucide="shield-off" class="w-6 h-6 text-red-400"></i>
+          </div>
+          <p class="text-[9px] text-gray-400 mt-1.5 text-center w-16">Auto<br>
+            Isolir</p>
+         </div>
+         <svg class="w-8 h-4"><line x1="0" y1="8" x2="32" y2="8" class="flow-line" stroke="#ef4444" stroke-width="2" />
+         </svg>
+         <div class="flex flex-col items-center">
+          <div class="w-14 h-14 rounded-xl bg-orange-500/20 border border-orange-500/40 flex items-center justify-center card-hover cursor-pointer"><i data-lucide="x-circle" class="w-6 h-6 text-orange-400"></i>
+          </div>
+          <p class="text-[9px] text-gray-400 mt-1.5 text-center w-16">Overdue<br>
+            = Block</p>
+         </div>
+         <svg class="w-8 h-4"><line x1="0" y1="8" x2="32" y2="8" class="flow-line" stroke="#f97316" stroke-width="2" />
+         </svg>
+         <div class="flex flex-col items-center">
+          <div class="w-14 h-14 rounded-xl bg-emerald-500/20 border border-emerald-500/40 flex items-center justify-center card-hover cursor-pointer"><i data-lucide="check-circle" class="w-6 h-6 text-emerald-400"></i>
+          </div>
+          <p class="text-[9px] text-gray-400 mt-1.5 text-center w-16">Payment<br>
+            OK</p>
+         </div>
+         <svg class="w-8 h-4"><line x1="0" y1="8" x2="32" y2="8" class="flow-line" stroke="#10b981" stroke-width="2" />
+         </svg>
+         <div class="flex flex-col items-center">
+          <div class="w-14 h-14 rounded-xl bg-green-500/20 border border-green-500/40 flex items-center justify-center card-hover cursor-pointer"><i data-lucide="unlock" class="w-6 h-6 text-green-400"></i>
+          </div>
+          <p class="text-[9px] text-gray-400 mt-1.5 text-center w-16">Auto<br>
+            Unisolir</p>
+         </div>
+        </div>
+       </div><!-- Docker/CI info -->
+       <div class="mt-6 pt-6 border-t border-gray-800">
+        <h3 class="text-xs font-semibold mb-3 text-gray-400">Infrastructure</h3>
+        <div class="grid grid-cols-4 gap-2">
+         <div class="p-3 bg-blue-500/10 rounded-lg border border-blue-500/20 text-center card-hover cursor-pointer"><i data-lucide="box" class="w-5 h-5 text-blue-400 mx-auto mb-1"></i>
+          <p class="text-[10px] text-blue-300">Docker</p>
+         </div>
+         <div class="p-3 bg-purple-500/10 rounded-lg border border-purple-500/20 text-center card-hover cursor-pointer"><i data-lucide="git-branch" class="w-5 h-5 text-purple-400 mx-auto mb-1"></i>
+          <p class="text-[10px] text-purple-300">CI/CD</p>
+         </div>
+         <div class="p-3 bg-amber-500/10 rounded-lg border border-amber-500/20 text-center card-hover cursor-pointer"><i data-lucide="flame" class="w-5 h-5 text-amber-400 mx-auto mb-1"></i>
+          <p class="text-[10px] text-amber-300">Firebase</p>
+         </div>
+         <div class="p-3 bg-cyan-500/10 rounded-lg border border-cyan-500/20 text-center card-hover cursor-pointer"><i data-lucide="shield" class="w-5 h-5 text-cyan-400 mx-auto mb-1"></i>
+          <p class="text-[10px] text-cyan-300">Encrypted</p>
+         </div>
+        </div>
+       </div>
+      </div>
+     </div><!-- Settings Page -->
+     <div id="page-settings" class="hidden">
+      <div class="grid grid-cols-3 gap-6"><!-- Left Sidebar -->
+       <div class="col-span-1">
+        <div class="bg-[#0f1629] rounded-xl border border-gray-800 p-4">
+         <div class="space-y-1"><button onclick="switchSettings('general')" class="settings-tab w-full text-left px-4 py-2.5 rounded-lg text-sm flex items-center gap-2 bg-indigo-500/20 text-indigo-300" data-tab="general"> <i data-lucide="sliders-horizontal" class="w-4 h-4"></i> General </button> <button onclick="switchSettings('billing')" class="settings-tab w-full text-left px-4 py-2.5 rounded-lg text-sm flex items-center gap-2 text-gray-400 hover:bg-gray-800/50" data-tab="billing"> <i data-lucide="credit-card" class="w-4 h-4"></i> Billing Settings </button> <button onclick="switchSettings('security')" class="settings-tab w-full text-left px-4 py-2.5 rounded-lg text-sm flex items-center gap-2 text-gray-400 hover:bg-gray-800/50" data-tab="security"> <i data-lucide="shield" class="w-4 h-4"></i> Security </button> <button onclick="switchSettings('email')" class="settings-tab w-full text-left px-4 py-2.5 rounded-lg text-sm flex items-center gap-2 text-gray-400 hover:bg-gray-800/50" data-tab="email"> <i data-lucide="mail" class="w-4 h-4"></i> Email Templates </button> <button onclick="switchSettings('api')" class="settings-tab w-full text-left px-4 py-2.5 rounded-lg text-sm flex items-center gap-2 text-gray-400 hover:bg-gray-800/50" data-tab="api"> <i data-lucide="code" class="w-4 h-4"></i> API Keys </button> <button onclick="switchSettings('backup')" class="settings-tab w-full text-left px-4 py-2.5 rounded-lg text-sm flex items-center gap-2 text-gray-400 hover:bg-gray-800/50" data-tab="backup"> <i data-lucide="hard-drive" class="w-4 h-4"></i> Backup </button>
+         </div>
+        </div>
+       </div><!-- Right Content -->
+       <div class="col-span-2"><!-- General Settings -->
+        <div id="settings-general" class="bg-[#0f1629] rounded-xl border border-gray-800 p-6">
+         <h3 class="text-lg font-bold mb-6">General Settings</h3>
+         <div class="space-y-5">
+          <div><label class="text-sm text-gray-300 block mb-2">Platform Name</label> <input type="text" value="NetBill Pro" class="w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-2 text-white focus:border-indigo-500 outline-none transition">
+          </div>
+          <div><label class="text-sm text-gray-300 block mb-2">Support Email</label> <input type="email" value="support@netbill.co.id" class="w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-2 text-white focus:border-indigo-500 outline-none transition">
+          </div>
+          <div><label class="text-sm text-gray-300 block mb-2">Support Phone</label> <input type="tel" value="+62 274 XXXX XXXX" class="w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-2 text-white focus:border-indigo-500 outline-none transition">
+          </div>
+          <div><label class="text-sm text-gray-300 block mb-2">Company Address</label> <textarea class="w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-2 text-white focus:border-indigo-500 outline-none transition h-24">Jl. Teknologi No. 123, Jakarta Selatan 12345</textarea>
+          </div>
+          <div class="flex gap-3 pt-4"><button type="button" class="px-6 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg text-sm font-medium transition active:scale-95">Save Changes</button> <button type="button" class="px-6 py-2 bg-gray-700 hover:bg-gray-600 text-white rounded-lg text-sm font-medium transition active:scale-95">Cancel</button>
+          </div>
+         </div>
+        </div><!-- Billing Settings -->
+        <div id="settings-billing" class="hidden bg-[#0f1629] rounded-xl border border-gray-800 p-6">
+         <h3 class="text-lg font-bold mb-6">Billing Settings</h3>
+         <div class="space-y-5">
+          <div class="grid grid-cols-2 gap-4">
+           <div><label class="text-sm text-gray-300 block mb-2">Invoice Due Days</label> <input type="number" value="14" class="w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-2 text-white focus:border-indigo-500 outline-none transition">
+           </div>
+           <div><label class="text-sm text-gray-300 block mb-2">Late Fee (%)</label> <input type="number" value="5" step="0.1" class="w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-2 text-white focus:border-indigo-500 outline-none transition">
+           </div>
+          </div>
+          <div class="grid grid-cols-2 gap-4">
+           <div><label class="text-sm text-gray-300 block mb-2">Early Payment Discount (%)</label> <input type="number" value="2" step="0.1" class="w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-2 text-white focus:border-indigo-500 outline-none transition">
+           </div>
+           <div><label class="text-sm text-gray-300 block mb-2">Auto-Isolir Days</label> <input type="number" value="7" class="w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-2 text-white focus:border-indigo-500 outline-none transition">
+           </div>
+          </div>
+          <div class="p-4 bg-indigo-500/10 border border-indigo-500/20 rounded-lg">
+           <p class="text-xs text-indigo-300"><strong>Active Gateways:</strong> Midtrans ✓ | Xendit ✓ | Manual Transfer ✓</p>
+          </div>
+          <div class="flex gap-3 pt-4"><button type="button" class="px-6 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg text-sm font-medium transition active:scale-95">Save Changes</button> <button type="button" class="px-6 py-2 bg-gray-700 hover:bg-gray-600 text-white rounded-lg text-sm font-medium transition active:scale-95">Cancel</button>
+          </div>
+         </div>
+        </div><!-- Security Settings -->
+        <div id="settings-security" class="hidden bg-[#0f1629] rounded-xl border border-gray-800 p-6">
+         <h3 class="text-lg font-bold mb-6">Security Settings</h3>
+         <div class="space-y-5">
+          <div class="flex items-center justify-between p-4 bg-gray-800/50 rounded-lg">
+           <div>
+            <p class="text-sm font-medium">Two-Factor Authentication (2FA)</p>
+            <p class="text-xs text-gray-500">Require 2FA for all admin accounts</p>
+           </div><label class="toggle-switch"> <input type="checkbox" checked> <span class="toggle-slider"></span> </label>
+          </div>
+          <div class="flex items-center justify-between p-4 bg-gray-800/50 rounded-lg">
+           <div>
+            <p class="text-sm font-medium">Encrypt Credentials</p>
+            <p class="text-xs text-gray-500">Auto-encrypt MikroTik credentials</p>
+           </div><label class="toggle-switch"> <input type="checkbox" checked> <span class="toggle-slider"></span> </label>
+          </div>
+          <div class="flex items-center justify-between p-4 bg-gray-800/50 rounded-lg">
+           <div>
+            <p class="text-sm font-medium">Rate Limiting</p>
+            <p class="text-xs text-gray-500">Enable API rate limiting per tenant</p>
+           </div><label class="toggle-switch"> <input type="checkbox" checked> <span class="toggle-slider"></span> </label>
+          </div>
+          <div><label class="text-sm text-gray-300 block mb-2">Session Timeout (minutes)</label> <input type="number" value="30" class="w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-2 text-white focus:border-indigo-500 outline-none transition">
+          </div>
+          <div class="flex gap-3 pt-4"><button type="button" class="px-6 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg text-sm font-medium transition active:scale-95">Save Changes</button> <button type="button" class="px-6 py-2 bg-gray-700 hover:bg-gray-600 text-white rounded-lg text-sm font-medium transition active:scale-95">Cancel</button>
+          </div>
+         </div>
+        </div><!-- Email Templates -->
+        <div id="settings-email" class="hidden bg-[#0f1629] rounded-xl border border-gray-800 p-6">
+         <h3 class="text-lg font-bold mb-6">Email Templates</h3>
+         <div class="space-y-3 mb-6"><button class="w-full text-left p-4 bg-gray-800/50 rounded-lg hover:bg-gray-800 transition flex items-center justify-between">
+           <div>
+            <p class="text-sm font-medium">Invoice Notification</p>
+            <p class="text-[10px] text-gray-500">Sent when invoice is generated</p>
+           </div><i data-lucide="chevron-right" class="w-4 h-4 text-gray-500"></i> </button> <button class="w-full text-left p-4 bg-gray-800/50 rounded-lg hover:bg-gray-800 transition flex items-center justify-between">
+           <div>
+            <p class="text-sm font-medium">Payment Confirmation</p>
+            <p class="text-[10px] text-gray-500">Sent after successful payment</p>
+           </div><i data-lucide="chevron-right" class="w-4 h-4 text-gray-500"></i> </button> <button class="w-full text-left p-4 bg-gray-800/50 rounded-lg hover:bg-gray-800 transition flex items-center justify-between">
+           <div>
+            <p class="text-sm font-medium">Overdue Warning</p>
+            <p class="text-[10px] text-gray-500">Sent when payment is overdue</p>
+           </div><i data-lucide="chevron-right" class="w-4 h-4 text-gray-500"></i> </button> <button class="w-full text-left p-4 bg-gray-800/50 rounded-lg hover:bg-gray-800 transition flex items-center justify-between">
+           <div>
+            <p class="text-sm font-medium">Isolation Notice</p>
+            <p class="text-[10px] text-gray-500">Sent before account isolation</p>
+           </div><i data-lucide="chevron-right" class="w-4 h-4 text-gray-500"></i> </button>
+         </div>
+         <p class="text-xs text-gray-500">Click any template above to customize its content</p>
+        </div><!-- API Keys -->
+        <div id="settings-api" class="hidden bg-[#0f1629] rounded-xl border border-gray-800 p-6">
+         <h3 class="text-lg font-bold mb-6">API Keys</h3>
+         <div class="space-y-4">
+          <div class="p-4 bg-gray-800/50 rounded-lg">
+           <div class="flex justify-between items-start mb-2">
+            <div>
+             <p class="text-sm font-medium">Midtrans API Key</p>
+             <p class="text-[10px] text-gray-500">Server Key</p>
+            </div><span class="text-[10px] bg-emerald-500/20 text-emerald-300 px-2 py-0.5 rounded">Connected</span>
+           </div>
+           <div class="flex items-center gap-2"><input type="password" value="sk_live_xxxxxxxxxxxxx" class="flex-1 bg-gray-700 border border-gray-600 rounded px-3 py-1.5 text-xs text-white"> <button class="px-3 py-1.5 bg-gray-700 hover:bg-gray-600 rounded text-xs">Copy</button>
+           </div>
+          </div>
+          <div class="p-4 bg-gray-800/50 rounded-lg">
+           <div class="flex justify-between items-start mb-2">
+            <div>
+             <p class="text-sm font-medium">Xendit API Key</p>
+             <p class="text-[10px] text-gray-500">Secret Key</p>
+            </div><span class="text-[10px] bg-emerald-500/20 text-emerald-300 px-2 py-0.5 rounded">Connected</span>
+           </div>
+           <div class="flex items-center gap-2"><input type="password" value="xnd_live_xxxxxxxxxxxxx" class="flex-1 bg-gray-700 border border-gray-600 rounded px-3 py-1.5 text-xs text-white"> <button class="px-3 py-1.5 bg-gray-700 hover:bg-gray-600 rounded text-xs">Copy</button>
+           </div>
+          </div>
+          <div class="p-4 bg-gray-800/50 rounded-lg">
+           <div class="flex justify-between items-start mb-2">
+            <div>
+             <p class="text-sm font-medium">Firebase FCM Key</p>
+             <p class="text-[10px] text-gray-500">Server Key</p>
+            </div><span class="text-[10px] bg-emerald-500/20 text-emerald-300 px-2 py-0.5 rounded">Connected</span>
+           </div>
+           <div class="flex items-center gap-2"><input type="password" value="AAAXXXXXX:APAXXXXXXXXXXXXXXXXXXXXXX" class="flex-1 bg-gray-700 border border-gray-600 rounded px-3 py-1.5 text-xs text-white"> <button class="px-3 py-1.5 bg-gray-700 hover:bg-gray-600 rounded text-xs">Copy</button>
+           </div>
+          </div>
+         </div>
+        </div><!-- Backup Settings -->
+        <div id="settings-backup" class="hidden bg-[#0f1629] rounded-xl border border-gray-800 p-6">
+         <h3 class="text-lg font-bold mb-6">Backup &amp; Restore</h3>
+         <div class="space-y-4">
+          <div class="p-4 bg-emerald-500/10 border border-emerald-500/20 rounded-lg">
+           <p class="text-sm text-emerald-300"><strong>Last Backup:</strong> Today, 02:15 AM</p>
+           <p class="text-[10px] text-emerald-200 mt-1">Automatic daily backup enabled</p>
+          </div>
+          <div class="grid grid-cols-2 gap-3"><button class="p-4 bg-indigo-500/20 border border-indigo-500/30 rounded-lg hover:bg-indigo-500/30 transition text-center"> <i data-lucide="download" class="w-5 h-5 text-indigo-400 mx-auto mb-2"></i> <p class="text-sm text-indigo-300">Backup Now</p></button> <button class="p-4 bg-purple-500/20 border border-purple-500/30 rounded-lg hover:bg-purple-500/30 transition text-center"> <i data-lucide="upload" class="w-5 h-5 text-purple-400 mx-auto mb-2"></i> <p class="text-sm text-purple-300">Restore</p></button>
+          </div>
+          <div class="p-4 bg-gray-800/50 rounded-lg">
+           <p class="text-sm font-medium mb-3">Backup History</p>
+           <div class="space-y-2 text-xs">
+            <div class="flex justify-between"><span class="text-gray-400">backup_2024_01_15.zip</span> <span class="text-gray-500">256 MB</span>
+            </div>
+            <div class="flex justify-between"><span class="text-gray-400">backup_2024_01_14.zip</span> <span class="text-gray-500">243 MB</span>
+            </div>
+            <div class="flex justify-between"><span class="text-gray-400">backup_2024_01_13.zip</span> <span class="text-gray-500">251 MB</span>
+            </div>
+           </div>
+          </div>
+         </div>
+        </div>
+       </div>
+      </div>
+     </div>
     </div>
    </main>
   </div>
   <script>
-    const defaultConfig = {
-        platform_name: 'NetBill Pro',
-        tagline: 'ISP Billing & Network',
-        theme_mode: 'dark',
-        background_color: '#020617',
-        surface_color: '#0f172a',
-        text_color: '#e2e8f0',
-        primary_color: '#3b82f6',
-        accent_color: '#8b5cf6'
-    };
+const defaultConfig = {
+  platform_name: 'NetBill Pro',
+  tagline: 'ISP Management Platform',
+  invoice_due_days: 14,
+  late_fee: 5,
+  early_payment_discount: 2,
+  auto_isolir_days: 7,
+  twofa_enabled: true,
+  encryption_enabled: true,
+  rate_limiting_enabled: true,
+  session_timeout: 30,
+  theme: 'dark',
+  pppoe_active: 1847,
+  hotspot_users: 956,
+  queue_active: 2803,
+  upload_gbps: 2.4,
+  download_gbps: 4.1,
+  active_sessions: 2103,
+  uptime_percent: 99.7,
+  latency_ms: 3
+};
 
-    let currentPage = 'dashboard';
-    let isDarkMode = true;
+let currentSettings = { ...defaultConfig };
+let isDarkMode = true;
 
-    function toggleTheme() {
-        isDarkMode = !isDarkMode;
-        applyTheme();
+// Theme toggle
+function toggleTheme() {
+  isDarkMode = !isDarkMode;
+  const body = document.body;
+  const themeBtn = document.getElementById('theme-btn');
+  const icon = themeBtn.querySelector('i');
+  
+  if (isDarkMode) {
+    body.classList.remove('light-mode');
+    icon.setAttribute('data-lucide', 'moon');
+    currentSettings.theme = 'dark';
+  } else {
+    body.classList.add('light-mode');
+    icon.setAttribute('data-lucide', 'sun');
+    currentSettings.theme = 'light';
+  }
+  
+  if (window.dataSdk) {
+    window.dataSdk.update({ 
+      id: 'settings-main',
+      ...currentSettings 
+    }).catch(err => console.error('Theme save error:', err));
+  }
+  
+  lucide.createIcons();
+}
+
+// Page navigation
+function switchPage(page) {
+  document.querySelectorAll('[id^="page-"]').forEach(el => {
+    if (el.id !== 'page-content') el.classList.add('hidden');
+  });
+  
+  const target = document.getElementById('page-' + page);
+  if (target) { 
+    target.classList.remove('hidden'); 
+    target.classList.add('fade-in'); 
+  }
+  
+  const pageTitle = document.getElementById('page-title');
+  const titleMap = {
+    dashboard: 'Dashboard',
+    billing: 'Billing Engine',
+    network: 'Network',
+    mikrotik: 'MikroTik',
+    customers: 'Customers',
+    tickets: 'Support',
+    voucher: 'Voucher',
+    inventory: 'Inventory & POS',
+    whitelabel: 'White-Label',
+    flow: 'Workflow',
+    settings: 'Settings'
+  };
+  
+  if (pageTitle) pageTitle.textContent = titleMap[page] || page;
+  
+  document.querySelectorAll('.sidebar-item').forEach(el => {
+    el.classList.remove('active', 'text-indigo-300');
+    el.classList.add('text-gray-400');
+    if (el.dataset.page === page) { 
+      el.classList.add('active', 'text-indigo-300'); 
+      el.classList.remove('text-gray-400'); 
     }
+  });
+}
 
-    function applyTheme() {
-        const body = document.getElementById('app-body');
-        const themeIcon = document.getElementById('theme-icon');
-        
-        if (isDarkMode) {
-            body.classList.remove('light-theme');
-            body.classList.add('dark-theme');
-            themeIcon.setAttribute('data-lucide', 'moon');
-            themeIcon.setAttribute('title', 'Switch to light mode');
-        } else {
-            body.classList.remove('dark-theme');
-            body.classList.add('light-theme');
-            themeIcon.setAttribute('data-lucide', 'sun');
-            themeIcon.setAttribute('title', 'Switch to dark mode');
+// Settings tab navigation
+function switchSettings(tab) {
+  document.querySelectorAll('[id^="settings-"]').forEach(el => el.classList.add('hidden'));
+  const target = document.getElementById('settings-' + tab);
+  if (target) target.classList.remove('hidden');
+  
+  document.querySelectorAll('.settings-tab').forEach(el => {
+    el.classList.remove('bg-indigo-500/20', 'text-indigo-300');
+    el.classList.add('text-gray-400', 'hover:bg-gray-800/50');
+    if (el.dataset.tab === tab) {
+      el.classList.add('bg-indigo-500/20', 'text-indigo-300');
+      el.classList.remove('text-gray-400', 'hover:bg-gray-800/50');
+    }
+  });
+}
+
+// Print unlimited vouchers
+function printVouchers() {
+  const profileSelect = document.querySelector('#page-voucher select');
+  const qtyInput = document.querySelector('#page-voucher input[type="number"]');
+  
+  if (!profileSelect || !qtyInput) return;
+  
+  const profile = profileSelect.value;
+  const qty = Math.min(parseInt(qtyInput.value) || 30, 500);
+  
+  let html = `
+    <!DOCTYPE html>
+    <html>
+    <head>
+      <style>
+        body { font-family: Arial, sans-serif; margin: 0; padding: 20px; }
+        .header { text-align: center; margin-bottom: 30px; }
+        .grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; }
+        .voucher { 
+          border: 2px solid #333; 
+          border-radius: 8px; 
+          padding: 12px; 
+          text-align: center; 
+          page-break-inside: avoid; 
+          background: #f9f9f9;
+          box-sizing: border-box;
         }
-        lucide.createIcons();
-    }
+        .code { font-size: 12px; font-weight: bold; font-family: monospace; color: #4f46e5; margin: 4px 0; }
+        .label { font-size: 8px; color: #666; }
+        @media print { body { margin: 0; padding: 10px; } .voucher { margin: 2px; } }
+      </style>
+    </head>
+    <body>
+      <div class="header"><h2>Voucher Print</h2><p>${profile}</p></div>
+      <div class="grid">
+  `;
+  
+  for (let i = 0; i < qty; i++) {
+    const code = Array(3).fill(0).map(() => {
+      let s = '';
+      for (let j = 0; j < 3; j++) {
+        s += 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789'[Math.floor(Math.random() * 32)];
+      }
+      return s;
+    }).join('-');
+    
+    html += `
+      <div class="voucher">
+        <div class="label">VOUCHER CODE</div>
+        <div class="code">${code}</div>
+        <div class="label">${profile.split(' - ')[0]}</div>
+      </div>
+    `;
+  }
+  
+  html += '</div></body></html>';
+  
+  const printWindow = window.open('', '', 'width=1200,height=800');
+  if (printWindow) {
+    printWindow.document.write(html);
+    printWindow.document.close();
+    setTimeout(() => printWindow.print(), 300);
+  }
+}
 
-    // Pages content
-    const pages = {
-        dashboard: () => `
-            <div class="fade-in space-y-6">
-                <!-- Stats -->
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-                    ${statCard('Rp 847.5M', 'Revenue MTD', 'trending-up', '+12.5%', 'emerald')}
-                    ${statCard('2,847', 'Active Customers', 'users', '+48', 'blue')}
-                    ${statCard('98.7%', 'Uptime', 'activity', 'Excellent', 'cyan')}
-                    ${statCard('23', 'Open Tickets', 'message-circle', '-5 today', 'amber')}
-                </div>
-                <!-- Charts Row -->
-                <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
-                    <div class="lg:col-span-2 glass rounded-xl p-5">
-                        <div class="flex items-center justify-between mb-4">
-                            <h3 class="font-semibold text-sm">Revenue Overview</h3>
-                            <select class="bg-slate-800 border border-slate-700 rounded-lg px-3 py-1 text-xs"><option>Last 12 Months</option></select>
-                        </div>
-                        <div class="flex items-end gap-2 h-40">
-                            ${[65,72,58,80,75,90,85,92,88,95,87,100].map((h,i) => `<div class="flex-1 flex flex-col items-center gap-1"><div class="w-full rounded-t-md bg-gradient-to-t from-blue-600 to-purple-500 chart-bar" style="height:${h}%;animation-delay:${i*0.05}s"></div><span class="text-[9px] text-slate-500">${['J','F','M','A','M','J','J','A','S','O','N','D'][i]}</span></div>`).join('')}
-                        </div>
-                    </div>
-                    <div class="glass rounded-xl p-5">
-                        <h3 class="font-semibold text-sm mb-4">Customer Growth</h3>
-                        <div class="space-y-3">
-                            ${growthItem('New', 48, 'emerald')}
-                            ${growthItem('Active', 2847, 'blue')}
-                            ${growthItem('Churned', 12, 'red')}
-                            ${growthItem('Isolated', 34, 'amber')}
-                        </div>
-                        <div class="mt-4 pt-4 border-t border-slate-700/50">
-                            <p class="text-xs text-slate-400">Churn Rate</p>
-                            <p class="text-2xl font-bold text-emerald-400">0.42%</p>
-                        </div>
-                    </div>
-                </div>
-                <!-- Bandwidth & Recent -->
-                <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
-                    <div class="glass rounded-xl p-5">
-                        <h3 class="font-semibold text-sm mb-4">Bandwidth Usage (Realtime)</h3>
-                        <svg viewBox="0 0 400 120" class="w-full">
-                            <defs><linearGradient id="bwGrad" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#3b82f6" stop-opacity="0.3"/><stop offset="100%" stop-color="#3b82f6" stop-opacity="0"/></linearGradient></defs>
-                            <path d="M0,80 Q50,60 100,70 T200,50 T300,65 T400,40" fill="none" stroke="#3b82f6" stroke-width="2"/>
-                            <path d="M0,80 Q50,60 100,70 T200,50 T300,65 T400,40 L400,120 L0,120Z" fill="url(#bwGrad)"/>
-                            <path d="M0,90 Q50,85 100,88 T200,75 T300,80 T400,70" fill="none" stroke="#8b5cf6" stroke-width="2" stroke-dasharray="4 2"/>
-                        </svg>
-                        <div class="flex gap-4 mt-2 text-xs"><span class="flex items-center gap-1"><span class="w-3 h-0.5 bg-blue-500 rounded"></span>Download: 4.2 Gbps</span><span class="flex items-center gap-1"><span class="w-3 h-0.5 bg-purple-500 rounded"></span>Upload: 1.8 Gbps</span></div>
-                    </div>
-                    <div class="glass rounded-xl p-5">
-                        <h3 class="font-semibold text-sm mb-4">Recent Invoices</h3>
-                        <div class="space-y-2">
-                            ${recentInvoice('INV-2024-001847', 'PT Maju Jaya', 'Rp 350.000', 'paid')}
-                            ${recentInvoice('INV-2024-001846', 'Warnet Galaxy', 'Rp 1.200.000', 'paid')}
-                            ${recentInvoice('INV-2024-001845', 'Budi Santoso', 'Rp 250.000', 'overdue')}
-                            ${recentInvoice('INV-2024-001844', 'Café Digital', 'Rp 500.000', 'pending')}
-                        </div>
-                    </div>
-                </div>
-            </div>
-        `,
-        billing: () => `
-            <div class="fade-in space-y-6">
-                <div class="flex items-center justify-between">
-                    <div>
-                        <h3 class="text-lg font-semibold">Billing Engine</h3>
-                        <p class="text-xs text-slate-400">Auto-generate, prorate, late fees & multi-gateway</p>
-                    </div>
-                    <div class="flex gap-2">
-                        <button class="px-4 py-2 bg-blue-600 hover:bg-blue-700 rounded-lg text-sm font-medium transition flex items-center gap-2"><i data-lucide="plus" class="w-4 h-4"></i>Generate Invoice</button>
-                        <button onclick="exportBillingData()" class="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 rounded-lg text-sm font-medium transition flex items-center gap-2"><i data-lucide="download" class="w-4 h-4"></i>Export</button>
-                    </div>
-                </div>
-                <!-- Payment Gateways -->
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                    ${gatewayCard('Midtrans', 'Active', '✓', 'emerald')}
-                    ${gatewayCard('Xendit', 'Active', '✓', 'blue')}
-                    ${gatewayCard('Manual Transfer', 'Active', '✓', 'purple')}
-                </div>
-                <!-- Billing Settings -->
-                <div class="glass rounded-xl p-5">
-                    <h4 class="font-semibold text-sm mb-4">Billing Configuration</h4>
-                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-                        <div class="bg-slate-800/50 rounded-lg p-4"><p class="text-[10px] text-slate-400 uppercase">Billing Cycle</p><p class="text-lg font-bold">Monthly</p><p class="text-xs text-slate-400">Every 1st</p></div>
-                        <div class="bg-slate-800/50 rounded-lg p-4"><p class="text-[10px] text-slate-400 uppercase">Late Fee</p><p class="text-lg font-bold">Rp 10.000</p><p class="text-xs text-slate-400">After 7 days</p></div>
-                        <div class="bg-slate-800/50 rounded-lg p-4"><p class="text-[10px] text-slate-400 uppercase">Auto Isolir</p><p class="text-lg font-bold text-amber-400">Day 14</p><p class="text-xs text-slate-400">After due date</p></div>
-                        <div class="bg-slate-800/50 rounded-lg p-4"><p class="text-[10px] text-slate-400 uppercase">Prorate</p><p class="text-lg font-bold text-emerald-400">Enabled</p><p class="text-xs text-slate-400">Per-day calculation</p></div>
-                    </div>
-                </div>
-                <!-- Invoice Table -->
-                <div class="glass rounded-xl overflow-hidden">
-                    <table class="w-full text-sm">
-                        <thead class="bg-slate-800/50"><tr><th class="px-4 py-3 text-left text-xs text-slate-400">Invoice</th><th class="px-4 py-3 text-left text-xs text-slate-400">Customer</th><th class="px-4 py-3 text-left text-xs text-slate-400">Amount</th><th class="px-4 py-3 text-left text-xs text-slate-400">Due Date</th><th class="px-4 py-3 text-left text-xs text-slate-400">Status</th><th class="px-4 py-3 text-left text-xs text-slate-400">Action</th></tr></thead>
-                        <tbody>
-                            ${invoiceRow('INV-001847','Budi Santoso','Rp 350.000','2024-02-01','paid')}
-                            ${invoiceRow('INV-001846','Warnet Galaxy','Rp 1.200.000','2024-02-01','paid')}
-                            ${invoiceRow('INV-001845','Café Digital','Rp 500.000','2024-01-25','overdue')}
-                            ${invoiceRow('INV-001844','Toko Makmur','Rp 250.000','2024-02-05','pending')}
-                            ${invoiceRow('INV-001843','RT 05 Net','Rp 750.000','2024-02-01','isolated')}
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        `,
-        customers: () => `
-            <div class="fade-in space-y-6">
-                <div class="flex items-center justify-between">
-                    <h3 class="text-lg font-semibold">Customer Management</h3>
-                    <div class="flex gap-2">
-                        <button class="px-4 py-2 bg-blue-600 hover:bg-blue-700 rounded-lg text-sm font-medium transition flex items-center gap-2"><i data-lucide="user-plus" class="w-4 h-4"></i>Add Customer</button>
-                        <button onclick="exportCustomerData()" class="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 rounded-lg text-sm font-medium transition flex items-center gap-2"><i data-lucide="download" class="w-4 h-4"></i>Export</button>
-                    </div>
-                </div>
-                <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
-                    ${miniStat('Total', '2,847', 'users')}
-                    ${miniStat('Active', '2,761', 'check-circle')}
-                    ${miniStat('Isolated', '34', 'shield-off')}
-                    ${miniStat('Suspended', '52', 'x-circle')}
-                </div>
-                <div class="glass rounded-xl overflow-hidden">
-                    <table class="w-full text-sm">
-                        <thead class="bg-slate-800/50"><tr><th class="px-4 py-3 text-left text-xs text-slate-400">Customer</th><th class="px-4 py-3 text-left text-xs text-slate-400">Plan</th><th class="px-4 py-3 text-left text-xs text-slate-400">IP Address</th><th class="px-4 py-3 text-left text-xs text-slate-400">Status</th><th class="px-4 py-3 text-left text-xs text-slate-400">Due</th></tr></thead>
-                        <tbody>
-                            ${customerRow('Budi Santoso','20 Mbps','192.168.1.101','active','Feb 1')}
-                            ${customerRow('Warnet Galaxy','100 Mbps','192.168.1.102','active','Feb 1')}
-                            ${customerRow('Café Digital','50 Mbps','192.168.1.103','isolated','Jan 25')}
-                            ${customerRow('Toko Makmur','10 Mbps','192.168.1.104','active','Feb 5')}
-                            ${customerRow('RT 05 Net','30 Mbps','192.168.1.105','suspended','Jan 15')}
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        `,
-        network: () => `
-            <div class="fade-in space-y-6">
-                <h3 class="text-lg font-semibold">Network Topology</h3>
-                <div class="glass rounded-xl p-6">
-                    <svg viewBox="0 0 800 300" class="w-full">
-                        <!-- Internet -->
-                        <g class="topology-node"><rect x="350" y="10" width="100" height="40" rx="8" fill="#1e293b" stroke="#3b82f6"/><text x="400" y="35" text-anchor="middle" fill="#e2e8f0" font-size="11">Internet</text></g>
-                        <!-- Core Router -->
-                        <line x1="400" y1="50" x2="400" y2="90" stroke="#3b82f6" stroke-width="2" class="flow-line"/>
-                        <g class="topology-node"><rect x="340" y="90" width="120" height="40" rx="8" fill="#1e293b" stroke="#8b5cf6"/><text x="400" y="115" text-anchor="middle" fill="#e2e8f0" font-size="11">Core MikroTik</text></g>
-                        <!-- Distribution -->
-                        <line x1="400" y1="130" x2="200" y2="180" stroke="#06b6d4" stroke-width="1.5" class="flow-line"/>
-                        <line x1="400" y1="130" x2="400" y2="180" stroke="#06b6d4" stroke-width="1.5" class="flow-line"/>
-                        <line x1="400" y1="130" x2="600" y2="180" stroke="#06b6d4" stroke-width="1.5" class="flow-line"/>
-                        <g class="topology-node"><rect x="140" y="180" width="120" height="35" rx="6" fill="#1e293b" stroke="#06b6d4"/><text x="200" y="202" text-anchor="middle" fill="#e2e8f0" font-size="10">OLT Area A</text></g>
-                        <g class="topology-node"><rect x="340" y="180" width="120" height="35" rx="6" fill="#1e293b" stroke="#06b6d4"/><text x="400" y="202" text-anchor="middle" fill="#e2e8f0" font-size="10">OLT Area B</text></g>
-                        <g class="topology-node"><rect x="540" y="180" width="120" height="35" rx="6" fill="#1e293b" stroke="#06b6d4"/><text x="600" y="202" text-anchor="middle" fill="#e2e8f0" font-size="10">OLT Area C</text></g>
-                        <!-- ODP -->
-                        ${[140,180,220,340,380,420,540,580,620].map((x,i) => `<line x1="${x < 300 ? 200 : x < 500 ? 400 : 600}" y1="215" x2="${x+30}" y2="250" stroke="#475569" stroke-width="1"/><rect x="${x}" y="250" width="60" height="25" rx="4" fill="#0f172a" stroke="#475569" class="topology-node"/><text x="${x+30}" y="266" text-anchor="middle" fill="#94a3b8" font-size="8">ODP-${i+1}</text>`).join('')}
-                    </svg>
-                </div>
-                <!-- Router List -->
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                    ${routerCard('MK-Core-01','CCR1036','Online','4.2 Gbps', '98.9%')}
-                    ${routerCard('MK-Dist-A','RB4011','Online','1.8 Gbps', '99.2%')}
-                    ${routerCard('MK-Dist-B','hEX S','Warning','890 Mbps', '95.1%')}
-                </div>
-            </div>
-        `,
-        mikrotik: () => `
-            <div class="fade-in space-y-6">
-                <div class="flex items-center justify-between">
-                    <h3 class="text-lg font-semibold">MikroTik Management</h3>
-                    <button class="px-4 py-2 bg-blue-600 hover:bg-blue-700 rounded-lg text-sm font-medium transition flex items-center gap-2"><i data-lucide="plus" class="w-4 h-4"></i>Add Router</button>
-                </div>
-                <!-- Realtime Monitor -->
-                <div class="glass rounded-xl p-5">
-                    <div class="flex items-center justify-between mb-3">
-                        <h4 class="font-semibold text-sm">Realtime Traffic Monitor</h4>
-                        <span class="flex items-center gap-1 text-xs text-emerald-400"><span class="w-2 h-2 rounded-full bg-emerald-400 pulse-dot"></span>Connected via API</span>
-                    </div>
-                    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-4">
-                        <div class="bg-slate-800/50 rounded-lg p-3"><p class="text-[10px] text-slate-400">CPU Load</p><p class="text-xl font-bold text-blue-400">34%</p><div class="w-full h-1.5 bg-slate-700 rounded-full mt-1"><div class="h-full bg-blue-500 rounded-full" style="width:34%"></div></div></div>
-                        <div class="bg-slate-800/50 rounded-lg p-3"><p class="text-[10px] text-slate-400">Memory</p><p class="text-xl font-bold text-purple-400">62%</p><div class="w-full h-1.5 bg-slate-700 rounded-full mt-1"><div class="h-full bg-purple-500 rounded-full" style="width:62%"></div></div></div>
-                        <div class="bg-slate-800/50 rounded-lg p-3"><p class="text-[10px] text-slate-400">Active Users</p><p class="text-xl font-bold text-cyan-400">1,247</p></div>
-                        <div class="bg-slate-800/50 rounded-lg p-3"><p class="text-[10px] text-slate-400">Uptime</p><p class="text-xl font-bold text-emerald-400">47d 12h</p></div>
-                    </div>
-                    <!-- Queue/Hotspot -->
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <div class="bg-slate-800/30 rounded-lg p-4">
-                            <h5 class="text-xs font-semibold text-slate-300 mb-3">Simple Queue (Top 5)</h5>
-                            <div class="space-y-2">
-                                ${queueItem('Warnet Galaxy','95.2/100 Mbps','95')}
-                                ${queueItem('Café Digital','42.1/50 Mbps','84')}
-                                ${queueItem('RT 05 Net','25.8/30 Mbps','86')}
-                                ${queueItem('Budi Santoso','12.4/20 Mbps','62')}
-                                ${queueItem('Toko Makmur','5.2/10 Mbps','52')}
-                            </div>
-                        </div>
-                        <div class="bg-slate-800/30 rounded-lg p-4">
-                            <h5 class="text-xs font-semibold text-slate-300 mb-3">Hotspot Active Users</h5>
-                            <div class="space-y-2">
-                                ${hotspotUser('user001','192.168.88.101','2h 34m')}
-                                ${hotspotUser('user002','192.168.88.102','1h 12m')}
-                                ${hotspotUser('user003','192.168.88.103','45m')}
-                                ${hotspotUser('user004','192.168.88.104','23m')}
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- Auto Isolir Flow -->
-                <div class="glass rounded-xl p-5">
-                    <h4 class="font-semibold text-sm mb-4">Auto Isolir & Unisolir Flow</h4>
-                    <div class="flex items-center gap-2 overflow-x-auto pb-2">
-                        ${flowStep('Invoice Due', 'receipt', 'blue')}
-                        ${flowArrow()}
-                        ${flowStep('Overdue 7d', 'alert-triangle', 'amber')}
-                        ${flowArrow()}
-                        ${flowStep('Push Notif', 'bell', 'purple')}
-                        ${flowArrow()}
-                        ${flowStep('Auto Isolir', 'shield-off', 'red')}
-                        ${flowArrow()}
-                        ${flowStep('Payment OK', 'check-circle', 'emerald')}
-                        ${flowArrow()}
-                        ${flowStep('Auto Unisolir', 'shield', 'cyan')}
-                    </div>
-                </div>
-            </div>
-        `,
-        voucher: () => `
-            <div class="fade-in space-y-6">
-                <div class="flex items-center justify-between">
-                    <h3 class="text-lg font-semibold">Voucher Editor & Print</h3>
-                    <div class="flex gap-2">
-                        <button onclick="window.print()" class="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 rounded-lg text-sm font-medium transition flex items-center gap-2"><i data-lucide="printer" class="w-4 h-4"></i>Print 30/Page</button>
-                        <button class="px-4 py-2 bg-blue-600 hover:bg-blue-700 rounded-lg text-sm font-medium transition flex items-center gap-2"><i data-lucide="plus" class="w-4 h-4"></i>Generate</button>
-                    </div>
-                </div>
-                <!-- Voucher Config -->
-                <div class="glass rounded-xl p-5">
-                    <h4 class="font-semibold text-sm mb-3">Voucher Template</h4>
-                    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-4">
-                        <div><label class="text-xs text-slate-400">Plan</label><select class="w-full mt-1 bg-slate-800 border border-slate-700 rounded-lg px-3 py-2 text-sm"><option>10 Mbps - Rp 50.000</option><option>20 Mbps - Rp 85.000</option><option>50 Mbps - Rp 150.000</option></select></div>
-                        <div><label class="text-xs text-slate-400">Duration</label><select class="w-full mt-1 bg-slate-800 border border-slate-700 rounded-lg px-3 py-2 text-sm"><option>30 Days</option><option>7 Days</option><option>1 Day</option></select></div>
-                        <div><label class="text-xs text-slate-400">Quantity</label><input type="number" value="30" class="w-full mt-1 bg-slate-800 border border-slate-700 rounded-lg px-3 py-2 text-sm"></div>
-                        <div><label class="text-xs text-slate-400">Prefix</label><input type="text" value="ISP-" class="w-full mt-1 bg-slate-800 border border-slate-700 rounded-lg px-3 py-2 text-sm"></div>
-                    </div>
-                </div>
-                <!-- Voucher Preview (30 per page) -->
-                <div class="glass rounded-xl p-5">
-                    <h4 class="font-semibold text-sm mb-3">Print Preview (30 vouchers / A4)</h4>
-                    <div class="grid grid-cols-5 md:grid-cols-6 gap-2">
-                        ${Array.from({length:30}, (_,i) => `
-                            <div class="voucher-card rounded-lg p-2 flex flex-col justify-between bg-slate-900 card-hover cursor-pointer">
-                                <div class="flex items-center justify-between"><span class="text-[8px] font-bold text-blue-400">ISP Maju Jaya</span><span class="text-[7px] text-slate-500">10Mbps</span></div>
-                                <div class="text-center"><p class="text-[9px] font-mono font-bold text-slate-200">ISP-${String(Math.random().toString(36).substr(2,8)).toUpperCase()}</p></div>
-                                <div class="flex justify-between items-center"><span class="text-[7px] text-slate-500">30 Hari</span><span class="text-[7px] text-emerald-400">Rp 50K</span></div>
-                            </div>
-                        `).join('')}
-                    </div>
-                </div>
-            </div>
-        `,
-        tickets: () => `
-            <div class="fade-in space-y-6">
-                <div class="flex items-center justify-between">
-                    <h3 class="text-lg font-semibold">Support Tickets</h3>
-                    <div class="flex gap-2">
-                        <button class="px-4 py-2 bg-blue-600 hover:bg-blue-700 rounded-lg text-sm font-medium transition flex items-center gap-2"><i data-lucide="plus" class="w-4 h-4"></i>New Ticket</button>
-                        <button onclick="exportTicketsData()" class="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 rounded-lg text-sm font-medium transition flex items-center gap-2"><i data-lucide="download" class="w-4 h-4"></i>Export</button>
-                    </div>
-                </div>
-                <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
-                    ${miniStat('Open','23','alert-circle')}
-                    ${miniStat('In Progress','12','clock')}
-                    ${miniStat('Resolved Today','8','check-circle')}
-                    ${miniStat('Avg SLA','2.4h','timer')}
-                </div>
-                <div class="glass rounded-xl overflow-hidden">
-                    <table class="w-full text-sm">
-                        <thead class="bg-slate-800/50"><tr><th class="px-4 py-3 text-left text-xs text-slate-400">ID</th><th class="px-4 py-3 text-left text-xs text-slate-400">Subject</th><th class="px-4 py-3 text-left text-xs text-slate-400">Customer</th><th class="px-4 py-3 text-left text-xs text-slate-400">Priority</th><th class="px-4 py-3 text-left text-xs text-slate-400">Technician</th><th class="px-4 py-3 text-left text-xs text-slate-400">Status</th></tr></thead>
-                        <tbody>
-                            ${ticketRow('TKT-445','Internet mati total','Budi S.','high','Andi','open')}
-                            ${ticketRow('TKT-444','Lambat sore hari','Warnet G.','medium','Deni','progress')}
-                            ${ticketRow('TKT-443','Minta upgrade plan','Café D.','low','—','open')}
-                            ${ticketRow('TKT-442','FO putus tiang','RT 05','critical','Bram','progress')}
-                        </tbody>
-                    </table>
-                </div>
-                <!-- WhatsApp Integration -->
-                <div class="glass rounded-xl p-5">
-                    <div class="flex items-center gap-3 mb-3">
-                        <div class="w-8 h-8 rounded-lg bg-emerald-600/20 flex items-center justify-center"><i data-lucide="message-circle" class="w-4 h-4 text-emerald-400"></i></div>
-                        <div><h4 class="font-semibold text-sm">WhatsApp Integration</h4><p class="text-xs text-slate-400">Auto-send notifications to customers</p></div>
-                        <span class="ml-auto px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-400 text-[10px]">Connected</span>
-                    </div>
-                    <div class="grid grid-cols-3 gap-3 text-center">
-                        <div class="bg-slate-800/50 rounded-lg p-3"><p class="text-lg font-bold">1,247</p><p class="text-[10px] text-slate-400">Sent Today</p></div>
-                        <div class="bg-slate-800/50 rounded-lg p-3"><p class="text-lg font-bold">98.2%</p><p class="text-[10px] text-slate-400">Delivered</p></div>
-                        <div class="bg-slate-800/50 rounded-lg p-3"><p class="text-lg font-bold">342</p><p class="text-[10px] text-slate-400">Replies</p></div>
-                    </div>
-                </div>
-            </div>
-        `,
-        inventory: () => `
-            <div class="fade-in space-y-6">
-                <div class="flex items-center justify-between">
-                    <h3 class="text-lg font-semibold">Inventory & POS</h3>
-                    <button class="px-4 py-2 bg-blue-600 hover:bg-blue-700 rounded-lg text-sm font-medium transition flex items-center gap-2"><i data-lucide="plus" class="w-4 h-4"></i>Add Item</button>
-                </div>
-                <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
-                    ${miniStat('Total Items','156','package')}
-                    ${miniStat('Low Stock','12','alert-triangle')}
-                    ${miniStat('Sales MTD','Rp 28.5M','shopping-cart')}
-                    ${miniStat('Transactions','89','receipt')}
-                </div>
-                <div class="glass rounded-xl overflow-hidden">
-                    <table class="w-full text-sm">
-                        <thead class="bg-slate-800/50"><tr><th class="px-4 py-3 text-left text-xs text-slate-400">Item</th><th class="px-4 py-3 text-left text-xs text-slate-400">Category</th><th class="px-4 py-3 text-left text-xs text-slate-400">Stock</th><th class="px-4 py-3 text-left text-xs text-slate-400">Price</th><th class="px-4 py-3 text-left text-xs text-slate-400">Status</th></tr></thead>
-                        <tbody>
-                            ${inventoryRow('ONU ZTE F660','ONT/ONU','45','Rp 285.000','ok')}
-                            ${inventoryRow('Kabel FO 1 Core/m','Kabel','2300','Rp 3.500','ok')}
-                            ${inventoryRow('Connector SC/APC','Connector','23','Rp 8.000','low')}
-                            ${inventoryRow('ODP 8 Port','ODP','8','Rp 125.000','low')}
-                            ${inventoryRow('Router RB750Gr3','Router','15','Rp 890.000','ok')}
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        `,
-        onboarding: () => `
-            <div class="fade-in space-y-6">
-                <h3 class="text-lg font-semibold">ISP Onboarding Flow</h3>
-                <div class="glass rounded-xl p-6">
-                    <div class="flex flex-col gap-4">
-                        ${onboardStep(1, 'Tenant Register', 'Create ISP account & choose plan', 'check', true)}
-                        ${onboardStep(2, 'ISP Onboarding', 'Setup company profile & branding', 'check', true)}
-                        ${onboardStep(3, 'Setup Router', 'Configure MikroTik connection', 'check', true)}
-                        ${onboardStep(4, 'MikroTik Connect', 'API integration & sync', 'loader', false)}
-                        ${onboardStep(5, 'Auto Billing', 'Configure billing cycle & gateways', 'circle', false)}
-                        ${onboardStep(6, 'Invoice + Payment', 'Generate first batch invoices', 'circle', false)}
-                        ${onboardStep(7, 'Push Notif (FCM)', 'Setup Firebase notifications', 'circle', false)}
-                        ${onboardStep(8, 'Go Live!', 'Launch your ISP billing system', 'circle', false)}
-                    </div>
-                </div>
-                <!-- White Label -->
-                <div class="glass rounded-xl p-5">
-                    <h4 class="font-semibold text-sm mb-4">White-Label Configuration</h4>
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <div class="bg-slate-800/50 rounded-lg p-4 space-y-3">
-                            <div><label class="text-xs text-slate-400">Custom Domain</label><input type="text" value="billing.ispmajujaya.id" class="w-full mt-1 bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-sm"></div>
-                            <div><label class="text-xs text-slate-400">Company Name</label><input type="text" value="ISP Maju Jaya" class="w-full mt-1 bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-sm"></div>
-                            <div><label class="text-xs text-slate-400">Primary Color</label><div class="flex gap-2 mt-1"><input type="color" value="#3b82f6" class="w-10 h-10 rounded cursor-pointer"><input type="text" value="#3b82f6" class="flex-1 bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-sm"></div></div>
-                        </div>
-                        <div class="bg-slate-800/50 rounded-lg p-4 space-y-3">
-                            <div><label class="text-xs text-slate-400">Invoice Template</label><select class="w-full mt-1 bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-sm"><option>Modern Blue</option><option>Classic</option><option>Minimal</option></select></div>
-                            <div><label class="text-xs text-slate-400">Email Template</label><select class="w-full mt-1 bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-sm"><option>Professional</option><option>Friendly</option><option>Minimal</option></select></div>
-                            <div class="flex items-center justify-between"><span class="text-xs text-slate-400">Docker Auto-Deploy</span><span class="px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-400 text-[10px]">Active</span></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        `,
-        settings: () => `
-            <div class="fade-in space-y-6">
-                <h3 class="text-lg font-semibold">Settings</h3>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div class="glass rounded-xl p-5 space-y-4">
-                        <h4 class="font-semibold text-sm">Security</h4>
-                        <div class="space-y-3">
-                            <div class="flex items-center justify-between"><span class="text-sm">2FA Authentication</span><button class="w-10 h-5 rounded-full bg-emerald-500 relative"><span class="absolute right-0.5 top-0.5 w-4 h-4 bg-white rounded-full"></span></button></div>
-                            <div class="flex items-center justify-between"><span class="text-sm">Rate Limiting</span><button class="w-10 h-5 rounded-full bg-emerald-500 relative"><span class="absolute right-0.5 top-0.5 w-4 h-4 bg-white rounded-full"></span></button></div>
-                            <div class="flex items-center justify-between"><span class="text-sm">Encrypted Credentials</span><button class="w-10 h-5 rounded-full bg-emerald-500 relative"><span class="absolute right-0.5 top-0.5 w-4 h-4 bg-white rounded-full"></span></button></div>
-                        </div>
-                    </div>
-                    <div class="glass rounded-xl p-5 space-y-4">
-                        <h4 class="font-semibold text-sm">Roles & Permissions</h4>
-                        <div class="space-y-2">
-                            ${roleItem('Super Admin','Full access','red')}
-                            ${roleItem('Admin','Manage billing & customers','blue')}
-                            ${roleItem('Staff','View & basic operations','emerald')}
-                            ${roleItem('Customer','Self-service portal','slate')}
-                        </div>
-                    </div>
-                </div>
-                <div class="glass rounded-xl p-5">
-                    <h4 class="font-semibold text-sm mb-3">Firebase Push Notification</h4>
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                        <div class="bg-slate-800/50 rounded-lg p-3"><p class="text-[10px] text-slate-400">Status</p><p class="text-sm font-semibold text-emerald-400">Connected</p></div>
-                        <div class="bg-slate-800/50 rounded-lg p-3"><p class="text-[10px] text-slate-400">Sent Today</p><p class="text-sm font-semibold">2,341</p></div>
-                        <div class="bg-slate-800/50 rounded-lg p-3"><p class="text-[10px] text-slate-400">FCM Project</p><p class="text-sm font-semibold truncate">isp-billing-prod</p></div>
-                    </div>
-                </div>
-            </div>
-        `
-    };
+// Update MikroTik real-time stats
+function updateMikroTikStats(config) {
+  const pppoeEl = document.getElementById('mikrotik-pppoe');
+  const hotspotEl = document.getElementById('mikrotik-hotspot');
+  const queueEl = document.getElementById('mikrotik-queue');
+  
+  if (pppoeEl) pppoeEl.textContent = config.pppoe_active || defaultConfig.pppoe_active;
+  if (hotspotEl) hotspotEl.textContent = config.hotspot_users || defaultConfig.hotspot_users;
+  if (queueEl) queueEl.textContent = config.queue_active || defaultConfig.queue_active;
+}
 
-    // Helper functions
-    function getColorClasses(color) {
-        const colorMap = {
-            emerald: { bg: 'rgba(16, 185, 129, 0.15)', text: '#10b981' },
-            blue: { bg: 'rgba(59, 130, 246, 0.15)', text: '#3b82f6' },
-            cyan: { bg: 'rgba(6, 182, 212, 0.15)', text: '#06b6d4' },
-            amber: { bg: 'rgba(217, 119, 6, 0.15)', text: '#d97706' },
-            red: { bg: 'rgba(239, 68, 68, 0.15)', text: '#ef4444' },
-            purple: { bg: 'rgba(139, 92, 246, 0.15)', text: '#8b5cf6' }
-        };
-        return colorMap[color] || colorMap.blue;
-    }
-    function statCard(value, label, icon, change, color) {
-        const c = getColorClasses(color);
-        return `<div class="glass rounded-xl p-4 card-hover cursor-pointer"><div class="flex items-center justify-between mb-2"><div class="w-9 h-9 rounded-lg flex items-center justify-center" style="background-color:${c.bg}"><i data-lucide="${icon}" class="w-4 h-4" style="color:${c.text}"></i></div><span class="text-[10px] font-medium" style="color:${c.text}">${change}</span></div><p class="text-xl font-bold">${value}</p><p class="text-xs text-slate-400 mt-0.5">${label}</p></div>`;
-    }
-    function growthItem(label, count, color) {
-        const c = getColorClasses(color);
-        return `<div class="flex items-center justify-between"><span class="text-xs text-slate-400">${label}</span><span class="text-sm font-semibold" style="color:${c.text}">${count.toLocaleString()}</span></div>`;
-    }
-    function recentInvoice(id, name, amount, status) {
-        const colors = {paid:'emerald',overdue:'red',pending:'amber'};
-        const c = getColorClasses(colors[status]);
-        return `<div class="flex items-center justify-between py-2 border-b border-slate-800 last:border-0"><div><p class="text-xs font-medium">${name}</p><p class="text-[10px] text-slate-500">${id}</p></div><div class="text-right"><p class="text-xs font-semibold">${amount}</p><span class="text-[9px] px-1.5 py-0.5 rounded-full" style="background-color:${c.bg};color:${c.text}">${status}</span></div></div>`;
-    }
-    function gatewayCard(name, status, icon, color) {
-        const c = getColorClasses(color);
-        return `<div class="glass rounded-xl p-4 card-hover"><div class="flex items-center gap-3"><div class="w-10 h-10 rounded-lg flex items-center justify-center text-base font-bold" style="background-color:${c.bg};color:${c.text}">${icon}</div><div><p class="text-sm font-semibold">${name}</p><p class="text-xs" style="color:${c.text}">${status}</p></div></div></div>`;
-    }
-    function invoiceRow(id,name,amount,due,status) {
-        const colors = {paid:'emerald',overdue:'red',pending:'amber',isolated:'purple'};
-        const c = getColorClasses(colors[status]);
-        return `<tr class="border-t border-slate-800 hover:bg-slate-800/30"><td class="px-4 py-3 text-xs font-mono">${id}</td><td class="px-4 py-3 text-xs">${name}</td><td class="px-4 py-3 text-xs font-semibold">${amount}</td><td class="px-4 py-3 text-xs text-slate-400">${due}</td><td class="px-4 py-3"><span class="text-[10px] px-2 py-0.5 rounded-full" style="background-color:${c.bg};color:${c.text}">${status}</span></td><td class="px-4 py-3"><button class="text-xs text-blue-400 hover:underline">View</button></td></tr>`;
-    }
-    function miniStat(label, value, icon) {
-        return `<div class="glass rounded-xl p-4 card-hover"><div class="flex items-center gap-3"><i data-lucide="${icon}" class="w-4 h-4" style="color:#3b82f6"></i><div><p class="text-lg font-bold">${value}</p><p class="text-[10px] text-slate-400">${label}</p></div></div></div>`;
-    }
-    function customerRow(name,plan,ip,status,due) {
-        const colors = {active:'emerald',isolated:'amber',suspended:'red'};
-        const c = getColorClasses(colors[status]);
-        return `<tr class="border-t border-slate-800 hover:bg-slate-800/30"><td class="px-4 py-3 text-xs font-medium">${name}</td><td class="px-4 py-3 text-xs">${plan}</td><td class="px-4 py-3 text-xs font-mono text-slate-400">${ip}</td><td class="px-4 py-3"><span class="text-[10px] px-2 py-0.5 rounded-full" style="background-color:${c.bg};color:${c.text}">${status}</span></td><td class="px-4 py-3 text-xs text-slate-400">${due}</td></tr>`;
-    }
-    function routerCard(name,model,status,traffic,uptime) {
-        const isOnline = status === 'Online';
-        return `<div class="glass rounded-xl p-4 card-hover"><div class="flex items-center justify-between mb-3"><div class="flex items-center gap-2"><i data-lucide="cpu" class="w-4 h-4" style="color:#3b82f6"></i><span class="text-sm font-semibold">${name}</span></div><span class="w-2 h-2 rounded-full pulse-dot" style="background-color:${isOnline?'#10b981':'#d97706'}"></span></div><div class="space-y-1 text-xs text-slate-400"><p>Model: <span class="text-slate-200">${model}</span></p><p>Traffic: <span class="text-slate-200">${traffic}</span></p><p>Uptime: <span style="color:#10b981">${uptime}</span></p></div></div>`;
-    }
-    function queueItem(name, usage, pct) {
-        return `<div class="flex items-center gap-2"><div class="flex-1"><div class="flex justify-between text-[10px] mb-0.5"><span class="text-slate-300">${name}</span><span class="text-slate-500">${usage}</span></div><div class="w-full h-1.5 bg-slate-700 rounded-full"><div class="h-full bg-gradient-to-r from-blue-500 to-cyan-400 rounded-full" style="width:${pct}%"></div></div></div></div>`;
-    }
-    function hotspotUser(user, ip, time) {
-        return `<div class="flex items-center justify-between text-xs py-1.5 border-b border-slate-700/50 last:border-0"><span class="text-slate-300">${user}</span><span class="text-slate-500 font-mono">${ip}</span><span class="text-cyan-400">${time}</span></div>`;
-    }
-    function flowStep(label, icon, color) {
-        const colorMap = { blue: '#3b82f6', amber: '#d97706', emerald: '#10b981', red: '#ef4444', purple: '#8b5cf6', cyan: '#06b6d4' };
-        const c = getColorClasses(color);
-        return `<div class="flex flex-col items-center gap-1 min-w-[80px]"><div class="w-10 h-10 rounded-full flex items-center justify-center" style="background-color:${c.bg}"><i data-lucide="${icon}" class="w-4 h-4" style="color:${c.text}"></i></div><span class="text-[9px] text-center text-slate-300">${label}</span></div>`;
-    }
-    function flowArrow() {
-        return `<i data-lucide="chevron-right" class="w-4 h-4 text-slate-600 shrink-0"></i>`;
-    }
-    function ticketRow(id,subject,customer,priority,tech,status) {
-        const pColors = {low:'blue',medium:'amber',high:'orange',critical:'red'};
-        const sColors = {open:'blue',progress:'amber',resolved:'emerald'};
-        const pc = getColorClasses(pColors[priority]);
-        const sc = getColorClasses(sColors[status]);
-        return `<tr class="border-t border-slate-800 hover:bg-slate-800/30"><td class="px-4 py-3 text-xs font-mono">${id}</td><td class="px-4 py-3 text-xs">${subject}</td><td class="px-4 py-3 text-xs">${customer}</td><td class="px-4 py-3"><span class="text-[10px] px-2 py-0.5 rounded-full" style="background-color:${pc.bg};color:${pc.text}">${priority}</span></td><td class="px-4 py-3 text-xs">${tech}</td><td class="px-4 py-3"><span class="text-[10px] px-2 py-0.5 rounded-full" style="background-color:${sc.bg};color:${sc.text}">${status}</span></td></tr>`;
-    }
-    function inventoryRow(name,cat,stock,price,status) {
-        const isLow = status === 'low';
-        const c = getColorClasses(isLow ? 'red' : 'emerald');
-        return `<tr class="border-t border-slate-800 hover:bg-slate-800/30"><td class="px-4 py-3 text-xs font-medium">${name}</td><td class="px-4 py-3 text-xs text-slate-400">${cat}</td><td class="px-4 py-3 text-xs ${isLow?'font-semibold':''}" style="color:${isLow?'#ef4444':'inherit'}">${stock}</td><td class="px-4 py-3 text-xs">${price}</td><td class="px-4 py-3"><span class="text-[10px] px-2 py-0.5 rounded-full" style="background-color:${c.bg};color:${c.text}">${isLow?'Low Stock':'In Stock'}</span></td></tr>`;
-    }
-    function onboardStep(num, title, desc, icon, done) {
-        const c = done ? getColorClasses('emerald') : null;
-        return `<div class="flex items-center gap-4"><div class="w-10 h-10 rounded-full border-2 flex items-center justify-center shrink-0" style="background-color:${done ? c.bg : 'rgb(30, 41, 59)'};border-color:${done ? c.text : 'rgb(71, 85, 105)'};color:${done ? c.text : 'rgb(100, 116, 139)'}"><i data-lucide="${icon}" class="w-4 h-4"></i></div><div><p class="text-sm font-medium" style="color:${done ? c.text : 'inherit'}">${num}. ${title}</p><p class="text-xs text-slate-400">${desc}</p></div></div>`;
-    }
-    function roleItem(name, desc, color) {
-        const c = getColorClasses(color);
-        return `<div class="flex items-center gap-3 py-2"><div class="w-2 h-2 rounded-full" style="background-color:${c.text}"></div><div><p class="text-xs font-medium">${name}</p><p class="text-[10px] text-slate-500">${desc}</p></div></div>`;
-    }
+// Update bandwidth stats
+function updateBandwidthStats(config) {
+  const uploadStat = document.getElementById('upload-stat');
+  const downloadStat = document.getElementById('download-stat');
+  const uploadBar = document.getElementById('upload-bar');
+  const downloadBar = document.getElementById('download-bar');
+  const sessionsEl = document.getElementById('active-sessions');
+  const uptimeEl = document.getElementById('uptime-stat');
+  const latencyEl = document.getElementById('latency-stat');
+  
+  const uploadGbps = config.upload_gbps || defaultConfig.upload_gbps;
+  const downloadGbps = config.download_gbps || defaultConfig.download_gbps;
+  const uploadPercent = (uploadGbps / 5) * 100;
+  const downloadPercent = (downloadGbps / 5) * 100;
+  
+  if (uploadStat) uploadStat.textContent = `${uploadGbps.toFixed(1)} Gbps / 5 Gbps`;
+  if (downloadStat) downloadStat.textContent = `${downloadGbps.toFixed(1)} Gbps / 5 Gbps`;
+  if (uploadBar) uploadBar.style.width = `${uploadPercent}%`;
+  if (downloadBar) downloadBar.style.width = `${downloadPercent}%`;
+  
+  if (sessionsEl) sessionsEl.textContent = (config.active_sessions || defaultConfig.active_sessions).toLocaleString();
+  if (uptimeEl) uptimeEl.textContent = `${config.uptime_percent || defaultConfig.uptime_percent}%`;
+  if (latencyEl) latencyEl.textContent = `${config.latency_ms || defaultConfig.latency_ms}ms`;
+}
 
-    // Export Functions
-    function downloadCSV(data, filename) {
-        const csv = data.map(row => Object.values(row).map(v => `"${v}"`).join(',')).join('\n');
-        const headers = Object.keys(data[0]).map(h => `"${h}"`).join(',');
-        const fullCSV = headers + '\n' + csv;
-        const blob = new Blob([fullCSV], { type: 'text/csv;charset=utf-8;' });
-        const link = document.createElement('a');
-        link.href = URL.createObjectURL(blob);
-        link.download = filename;
-        link.click();
-    }
+// Apply configuration to UI
+function applyConfig(config) {
+  const brandName = document.getElementById('brand-name');
+  const brandTagline = document.getElementById('brand-tagline');
+  
+  if (brandName) brandName.textContent = config.platform_name || defaultConfig.platform_name;
+  if (brandTagline) brandTagline.textContent = config.tagline || defaultConfig.tagline;
+  
+  updateMikroTikStats(config);
+  updateBandwidthStats(config);
+  
+  if (config.theme === 'light' && !isDarkMode) {
+    isDarkMode = false;
+  } else if (config.theme === 'dark' && isDarkMode) {
+    isDarkMode = true;
+  }
+}
 
-    function exportBillingData() {
-        const data = [
-            { Invoice: 'INV-001847', Customer: 'Budi Santoso', Amount: 'Rp 350.000', DueDate: '2024-02-01', Status: 'Paid', PaymentMethod: 'Midtrans' },
-            { Invoice: 'INV-001846', Customer: 'Warnet Galaxy', Amount: 'Rp 1.200.000', DueDate: '2024-02-01', Status: 'Paid', PaymentMethod: 'Xendit' },
-            { Invoice: 'INV-001845', Customer: 'Café Digital', Amount: 'Rp 500.000', DueDate: '2024-01-25', Status: 'Overdue', PaymentMethod: 'Pending' },
-            { Invoice: 'INV-001844', Customer: 'Toko Makmur', Amount: 'Rp 250.000', DueDate: '2024-02-05', Status: 'Pending', PaymentMethod: 'Pending' },
-            { Invoice: 'INV-001843', Customer: 'RT 05 Net', Amount: 'Rp 750.000', DueDate: '2024-02-01', Status: 'Isolated', PaymentMethod: 'Pending' }
-        ];
-        downloadCSV(data, `billing-export-${new Date().toISOString().split('T')[0]}.csv`);
-    }
+// Update settings UI from config
+function updateSettingsUI(config) {
+  const inputs = document.querySelectorAll('input[type="text"], input[type="email"], input[type="tel"], textarea');
+  inputs.forEach(input => {
+    if (input.placeholder.includes('Platform')) input.value = config.platform_name || defaultConfig.platform_name;
+    if (input.placeholder.includes('Tagline')) input.value = config.tagline || defaultConfig.tagline;
+  });
+  
+  const numbers = document.querySelectorAll('input[type="number"]');
+  numbers.forEach(input => {
+    const val = parseFloat(input.value);
+    if (val === 14) input.value = config.invoice_due_days || 14;
+    else if (val === 5) input.value = config.late_fee || 5;
+    else if (val === 2) input.value = config.early_payment_discount || 2;
+    else if (val === 7) input.value = config.auto_isolir_days || 7;
+    else if (val === 30) input.value = config.session_timeout || 30;
+  });
+  
+  const toggles = document.querySelectorAll('.toggle-switch input[type="checkbox"]');
+  if (toggles[0]) toggles[0].checked = config.twofa_enabled !== false;
+  if (toggles[1]) toggles[1].checked = config.encryption_enabled !== false;
+  if (toggles[2]) toggles[2].checked = config.rate_limiting_enabled !== false;
+}
 
-    function exportCustomerData() {
-        const data = [
-            { Name: 'Budi Santoso', Plan: '20 Mbps', IPAddress: '192.168.1.101', Status: 'Active', DueDate: 'Feb 1', BillingStatus: 'Paid' },
-            { Name: 'Warnet Galaxy', Plan: '100 Mbps', IPAddress: '192.168.1.102', Status: 'Active', DueDate: 'Feb 1', BillingStatus: 'Paid' },
-            { Name: 'Café Digital', Plan: '50 Mbps', IPAddress: '192.168.1.103', Status: 'Isolated', DueDate: 'Jan 25', BillingStatus: 'Overdue' },
-            { Name: 'Toko Makmur', Plan: '10 Mbps', IPAddress: '192.168.1.104', Status: 'Active', DueDate: 'Feb 5', BillingStatus: 'Pending' },
-            { Name: 'RT 05 Net', Plan: '30 Mbps', IPAddress: '192.168.1.105', Status: 'Suspended', DueDate: 'Jan 15', BillingStatus: 'Overdue' }
-        ];
-        downloadCSV(data, `customers-export-${new Date().toISOString().split('T')[0]}.csv`);
+// Data SDK handler
+const dataHandler = {
+  onDataChanged(data) {
+    if (data && data.length > 0) {
+      const settings = data.find(s => s.id === 'settings-main');
+      if (settings) {
+        currentSettings = { ...defaultConfig, ...settings };
+        applyConfig(currentSettings);
+        updateSettingsUI(currentSettings);
+      }
     }
+  }
+};
 
-    function exportTicketsData() {
-        const data = [
-            { TicketID: 'TKT-445', Subject: 'Internet mati total', Customer: 'Budi S.', Priority: 'High', Technician: 'Andi', Status: 'Open', CreatedDate: '2024-01-20' },
-            { TicketID: 'TKT-444', Subject: 'Lambat sore hari', Customer: 'Warnet G.', Priority: 'Medium', Technician: 'Deni', Status: 'In Progress', CreatedDate: '2024-01-19' },
-            { TicketID: 'TKT-443', Subject: 'Minta upgrade plan', Customer: 'Café D.', Priority: 'Low', Technician: '—', Status: 'Open', CreatedDate: '2024-01-18' },
-            { TicketID: 'TKT-442', Subject: 'FO putus tiang', Customer: 'RT 05', Priority: 'Critical', Technician: 'Bram', Status: 'In Progress', CreatedDate: '2024-01-17' }
-        ];
-        downloadCSV(data, `tickets-export-${new Date().toISOString().split('T')[0]}.csv`);
-    }
+// Initialize Data SDK
+async function initializeData() {
+  if (!window.dataSdk) {
+    console.error('Data SDK not available');
+    applyConfig(currentSettings);
+    return;
+  }
+  
+  const result = await window.dataSdk.init(dataHandler);
+  if (result.isError) {
+    console.error('Data SDK init failed:', result.error);
+    applyConfig(currentSettings);
+  }
+}
 
-    // Navigation
-    function navigateTo(page) {
-        currentPage = page;
-        document.getElementById('page-content').innerHTML = pages[page]();
-        document.getElementById('page-title').textContent = page.charAt(0).toUpperCase() + page.slice(1);
-        document.querySelectorAll('.sidebar-item').forEach(el => {
-            el.classList.toggle('active', el.dataset.page === page);
-        });
-        lucide.createIcons();
-    }
+// Initialize Element SDK
+if (window.elementSdk) {
+  window.elementSdk.init({
+    defaultConfig,
+    onConfigChange: async (config) => { 
+      currentSettings = { ...currentSettings, ...config };
+      applyConfig(currentSettings);
+      
+      if (window.dataSdk) {
+        await window.dataSdk.update({ 
+          id: 'settings-main',
+          ...currentSettings 
+        }).catch(err => console.error('Config update error:', err));
+      }
+    },
+    mapToCapabilities: (config) => ({
+      recolorables: [],
+      borderables: [],
+      fontEditable: undefined,
+      fontSizeable: undefined
+    }),
+    mapToEditPanelValues: (config) => new Map([
+      ['platform_name', config.platform_name || defaultConfig.platform_name],
+      ['tagline', config.tagline || defaultConfig.tagline]
+    ])
+  });
+}
 
-    document.querySelectorAll('.sidebar-item').forEach(item => {
-        item.addEventListener('click', (e) => {
-            e.preventDefault();
-            navigateTo(item.dataset.page);
-        });
+// Initialize on load
+initializeData();
+
+// Apply theme from storage
+const savedTheme = localStorage.getItem('app-theme');
+if (savedTheme === 'light') {
+  isDarkMode = false;
+  document.body.classList.add('light-mode');
+} else {
+  isDarkMode = true;
+  document.body.classList.remove('light-mode');
+}
+
+// Event delegation for safe form handling
+document.addEventListener('click', (e) => {
+  if (e.target.tagName === 'BUTTON' && e.target.type === 'submit') {
+    e.preventDefault();
+  }
+});
+
+// Ensure all buttons have correct type
+document.querySelectorAll('button').forEach(btn => {
+  if (!btn.type) btn.type = 'button';
+});
+
+// Save settings handler
+document.addEventListener('click', async (e) => {
+  if (e.target.textContent.includes('Save Changes')) {
+    e.preventDefault();
+    
+    const container = e.target.closest('[id^="settings-"]');
+    if (!container) return;
+    
+    const inputs = container.querySelectorAll('input, textarea, select');
+    inputs.forEach(input => {
+      if (input.type === 'checkbox') {
+        const key = `${input.parentElement.parentElement.textContent.toLowerCase().replace(/\s+/g, '_')}_enabled`;
+        currentSettings[key] = input.checked;
+      } else if (input.type === 'number') {
+        const numVal = parseFloat(input.value);
+        if (input.value === '14') currentSettings.invoice_due_days = numVal;
+        else if (input.value === '5') currentSettings.late_fee = numVal;
+        else if (input.value === '2') currentSettings.early_payment_discount = numVal;
+        else if (input.value === '7') currentSettings.auto_isolir_days = numVal;
+        else if (input.value === '30') currentSettings.session_timeout = numVal;
+      } else if (input.type === 'text' || input.type === 'email' || input.type === 'tel' || input.tagName === 'TEXTAREA') {
+        if (input.placeholder.includes('Platform')) currentSettings.platform_name = input.value;
+        else if (input.placeholder.includes('Tagline')) currentSettings.tagline = input.value;
+      }
     });
+    
+    if (window.dataSdk) {
+      try {
+        const result = await window.dataSdk.update({ 
+          id: 'settings-main',
+          ...currentSettings 
+        });
+        if (result.isOk) {
+          applyConfig(currentSettings);
+          updateSettingsUI(currentSettings);
+        }
+      } catch (err) {
+        console.error('Save error:', err);
+      }
+    }
+  }
+});
 
-    // Init
-    navigateTo('dashboard');
+// Simulate real-time bandwidth updates
+setInterval(() => {
+  const variation = () => (Math.random() - 0.5) * 0.4;
+  currentSettings.upload_gbps = Math.max(0.5, Math.min(5, defaultConfig.upload_gbps + variation()));
+  currentSettings.download_gbps = Math.max(0.5, Math.min(5, defaultConfig.download_gbps + variation()));
+  updateBandwidthStats(currentSettings);
+}, 2000);
 
-    // Element SDK
-    window.elementSdk.init({
-        defaultConfig,
-        onConfigChange: async (config) => {
-            document.getElementById('platform-name').textContent = config.platform_name || defaultConfig.platform_name;
-            document.getElementById('tagline').textContent = config.tagline || defaultConfig.tagline;
-            document.body.style.backgroundColor = config.background_color || defaultConfig.background_color;
-            if (config.theme_mode && config.theme_mode !== isDarkMode ? 'dark' : 'light') {
-                isDarkMode = config.theme_mode === 'dark';
-                applyTheme();
-            }
-        },
-        mapToCapabilities: (config) => ({
-            recolorables: [
-                { get: () => config.background_color || defaultConfig.background_color, set: (v) => { config.background_color = v; window.elementSdk.setConfig({ background_color: v }); }},
-                { get: () => config.surface_color || defaultConfig.surface_color, set: (v) => { config.surface_color = v; window.elementSdk.setConfig({ surface_color: v }); }},
-                { get: () => config.text_color || defaultConfig.text_color, set: (v) => { config.text_color = v; window.elementSdk.setConfig({ text_color: v }); }},
-                { get: () => config.primary_color || defaultConfig.primary_color, set: (v) => { config.primary_color = v; window.elementSdk.setConfig({ primary_color: v }); }},
-                { get: () => config.accent_color || defaultConfig.accent_color, set: (v) => { config.accent_color = v; window.elementSdk.setConfig({ accent_color: v }); }}
-            ],
-            borderables: [],
-            fontEditable: { get: () => config.font_family || 'Plus Jakarta Sans', set: (v) => { config.font_family = v; window.elementSdk.setConfig({ font_family: v }); }},
-            fontSizeable: undefined
-        }),
-        mapToEditPanelValues: (config) => new Map([
-            ['platform_name', config.platform_name || defaultConfig.platform_name],
-            ['tagline', config.tagline || defaultConfig.tagline],
-            ['theme_mode', config.theme_mode || defaultConfig.theme_mode]
-        ])
+// ============ INVENTORY & POS SYSTEM ============
+let inventoryItems = [];
+let posCart = [];
+let todaysSales = [];
+
+// Switch inventory tab
+function switchInventoryTab(tab) {
+  document.getElementById('inv-inventory-tab').classList.toggle('hidden', tab !== 'inventory');
+  document.getElementById('inv-pos-tab').classList.toggle('hidden', tab !== 'pos');
+  
+  document.querySelectorAll('.inv-tab-btn').forEach(btn => {
+    btn.classList.remove('bg-indigo-500/20', 'text-indigo-300');
+    btn.classList.add('bg-gray-700', 'text-gray-300');
+    if (btn.dataset.tab === tab) {
+      btn.classList.add('bg-indigo-500/20', 'text-indigo-300');
+      btn.classList.remove('bg-gray-700', 'text-gray-300');
+    }
+  });
+  
+  if (tab === 'pos') {
+    renderPOSProducts();
+  }
+}
+
+// Add inventory item
+async function addInventoryItem() {
+  const name = document.getElementById('inv-item-name').value.trim();
+  const sku = document.getElementById('inv-sku').value.trim();
+  const category = document.getElementById('inv-category').value;
+  const price = parseFloat(document.getElementById('inv-unit-price').value) || 0;
+  const qty = parseInt(document.getElementById('inv-quantity').value) || 0;
+  
+  if (!name || !sku || price <= 0 || qty <= 0) {
+    alert('Please fill all fields with valid values');
+    return;
+  }
+  
+  const item = {
+    id: 'item-' + Date.now(),
+    item_name: name,
+    sku: sku,
+    category: category,
+    unit_price: price,
+    quantity: qty,
+    reorder_level: 10,
+    status: qty <= 10 ? 'low' : 'ok'
+  };
+  
+  if (window.dataSdk) {
+    try {
+      const result = await window.dataSdk.create(item);
+      if (result.isOk) {
+        inventoryItems.push(item);
+        renderInventoryTable();
+        updateInventoryStats();
+        document.getElementById('inv-item-name').value = '';
+        document.getElementById('inv-sku').value = '';
+        document.getElementById('inv-unit-price').value = '';
+        document.getElementById('inv-quantity').value = '';
+      }
+    } catch (err) {
+      console.error('Add item error:', err);
+      inventoryItems.push(item);
+      renderInventoryTable();
+      updateInventoryStats();
+    }
+  } else {
+    inventoryItems.push(item);
+    renderInventoryTable();
+    updateInventoryStats();
+  }
+}
+
+// Render inventory table
+function renderInventoryTable() {
+  const tbody = document.getElementById('inv-items-tbody');
+  const emptyState = document.getElementById('inv-empty-state');
+  
+  tbody.innerHTML = '';
+  
+  if (inventoryItems.length === 0) {
+    emptyState.style.display = 'block';
+    return;
+  }
+  
+  emptyState.style.display = 'none';
+  
+  inventoryItems.forEach(item => {
+    const totalValue = item.quantity * item.unit_price;
+    const statusBadge = item.quantity <= item.reorder_level 
+      ? '<span class="bg-red-500/20 text-red-300 px-2 py-0.5 rounded text-[10px]">⚠ Low</span>'
+      : '<span class="bg-emerald-500/20 text-emerald-300 px-2 py-0.5 rounded text-[10px]">✓ OK</span>';
+    
+    const row = document.createElement('tr');
+    row.className = 'border-b border-gray-800/50 hover:bg-gray-800/30 transition';
+    row.dataset.itemId = item.id;
+    row.innerHTML = `
+      <td class="py-2.5 px-2">${item.item_name}</td>
+      <td class="py-2.5 px-2 text-gray-400">${item.sku}</td>
+      <td class="py-2.5 px-2 text-gray-400">${item.category}</td>
+      <td class="py-2.5 px-2 text-right">${item.quantity}</td>
+      <td class="py-2.5 px-2 text-right">Rp ${item.unit_price.toLocaleString('id-ID')}</td>
+      <td class="py-2.5 px-2 text-right font-medium">Rp ${totalValue.toLocaleString('id-ID')}</td>
+      <td class="py-2.5 px-2 text-center">${statusBadge}</td>
+      <td class="py-2.5 px-2 text-center">
+        <button onclick="deleteInventoryItem('${item.id}')" class="text-red-400 hover:text-red-300 transition text-xs">🗑</button>
+      </td>
+    `;
+    tbody.appendChild(row);
+  });
+}
+
+// Delete inventory item
+async function deleteInventoryItem(itemId) {
+  const item = inventoryItems.find(i => i.id === itemId);
+  if (!item) return;
+  
+  if (window.dataSdk && item.__backendId) {
+    try {
+      await window.dataSdk.delete(item);
+    } catch (err) {
+      console.error('Delete error:', err);
+    }
+  }
+  
+  inventoryItems = inventoryItems.filter(i => i.id !== itemId);
+  renderInventoryTable();
+  updateInventoryStats();
+}
+
+// Update inventory stats
+function updateInventoryStats() {
+  const totalItems = inventoryItems.length;
+  const totalValue = inventoryItems.reduce((sum, item) => sum + (item.quantity * item.unit_price), 0);
+  const lowStockItems = inventoryItems.filter(item => item.quantity <= item.reorder_level).length;
+  const salesToday = todaysSales.reduce((sum, sale) => sum + sale.sale_total, 0);
+  
+  document.getElementById('inv-total-items').textContent = totalItems;
+  document.getElementById('inv-total-value').textContent = 'Rp ' + totalValue.toLocaleString('id-ID');
+  document.getElementById('inv-low-stock').textContent = lowStockItems;
+  document.getElementById('inv-sales-today').textContent = 'Rp ' + salesToday.toLocaleString('id-ID');
+}
+
+// ============ POS FUNCTIONS ============
+
+// Render POS products
+function renderPOSProducts() {
+  const container = document.getElementById('pos-products-list');
+  container.innerHTML = '';
+  
+  if (inventoryItems.length === 0) {
+    container.innerHTML = '<p class="text-xs text-gray-500 text-center py-4">No products available</p>';
+    return;
+  }
+  
+  inventoryItems.forEach(item => {
+    if (item.quantity > 0) {
+      const div = document.createElement('div');
+      div.className = 'p-3 bg-gray-800/50 rounded-lg cursor-pointer hover:bg-gray-800 transition border border-gray-700';
+      div.onclick = () => addToCart(item);
+      div.innerHTML = `
+        <div class="flex justify-between items-start mb-1">
+          <p class="text-xs font-medium text-white">${item.item_name}</p>
+          <span class="text-[10px] text-gray-400">Stock: ${item.quantity}</span>
+        </div>
+        <p class="text-[10px] text-gray-500 mb-2">${item.sku}</p>
+        <p class="text-sm font-bold text-emerald-400">Rp ${item.unit_price.toLocaleString('id-ID')}</p>
+      `;
+      container.appendChild(div);
+    }
+  });
+}
+
+// Add to cart
+function addToCart(item) {
+  const existingCartItem = posCart.find(ci => ci.id === item.id);
+  
+  if (existingCartItem) {
+    if (existingCartItem.cart_quantity < item.quantity) {
+      existingCartItem.cart_quantity += 1;
+    }
+  } else {
+    posCart.push({
+      ...item,
+      cart_quantity: 1,
+      cart_id: 'cart-' + Date.now() + Math.random()
     });
-    </script>
- <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9f74c6bdb7bb4068',t:'MTc3ODAzNjg2NC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+  }
+  
+  renderPOSCart();
+  calculatePOSTotal();
+}
+
+// Render POS cart
+function renderPOSCart() {
+  const container = document.getElementById('pos-cart-items');
+  
+  if (posCart.length === 0) {
+    container.innerHTML = '<p class="text-xs text-gray-500 text-center py-4">Cart is empty</p>';
+    return;
+  }
+  
+  container.innerHTML = '';
+  
+  posCart.forEach((item, index) => {
+    const subtotal = item.unit_price * item.cart_quantity;
+    const div = document.createElement('div');
+    div.className = 'p-2 bg-gray-800/50 rounded-lg flex justify-between items-center border border-gray-700';
+    div.innerHTML = `
+      <div class="flex-1">
+        <p class="text-xs font-medium text-white">${item.item_name}</p>
+        <p class="text-[10px] text-gray-500">Rp ${item.unit_price.toLocaleString('id-ID')} × <input type="number" value="${item.cart_quantity}" min="1" max="${item.quantity}" class="w-10 bg-gray-700 border border-gray-600 rounded px-1 py-0.5 text-[10px] text-white" onchange="updateCartQty(${index}, this.value)"></p>
+      </div>
+      <div class="text-right mr-2">
+        <p class="text-xs font-bold text-cyan-400">Rp ${subtotal.toLocaleString('id-ID')}</p>
+      </div>
+      <button onclick="removeFromCart(${index})" class="text-red-400 hover:text-red-300 text-xs">✕</button>
+    `;
+    container.appendChild(div);
+  });
+}
+
+// Update cart quantity
+function updateCartQty(index, qty) {
+  const newQty = parseInt(qty);
+  if (newQty > 0 && newQty <= posCart[index].quantity) {
+    posCart[index].cart_quantity = newQty;
+    renderPOSCart();
+    calculatePOSTotal();
+  }
+}
+
+// Remove from cart
+function removeFromCart(index) {
+  posCart.splice(index, 1);
+  renderPOSCart();
+  calculatePOSTotal();
+}
+
+// Calculate POS total
+function calculatePOSTotal() {
+  const subtotal = posCart.reduce((sum, item) => sum + (item.unit_price * item.cart_quantity), 0);
+  const discount = parseFloat(document.getElementById('pos-discount').value) || 0;
+  const total = Math.max(0, subtotal - discount);
+  
+  document.getElementById('pos-subtotal').textContent = 'Rp ' + subtotal.toLocaleString('id-ID');
+  document.getElementById('pos-total').textContent = 'Rp ' + total.toLocaleString('id-ID');
+}
+
+// Clear POS cart
+function clearPOSCart() {
+  posCart = [];
+  renderPOSCart();
+  calculatePOSTotal();
+}
+
+// Complete POS sale
+async function completePOSSale() {
+  if (posCart.length === 0) {
+    alert('Cart is empty');
+    return;
+  }
+  
+  const discount = parseFloat(document.getElementById('pos-discount').value) || 0;
+  const subtotal = posCart.reduce((sum, item) => sum + (item.unit_price * item.cart_quantity), 0);
+  const total = Math.max(0, subtotal - discount);
+  const paymentMethod = document.querySelector('input[name="payment-method"]:checked').value;
+  
+  const sale = {
+    id: 'sale-' + Date.now(),
+    sale_id: 'SALE-' + Date.now().toString().slice(-8),
+    sale_date: new Date().toISOString(),
+    sale_total: total,
+    sale_status: 'completed',
+    items: posCart.map(item => ({
+      name: item.item_name,
+      quantity: item.cart_quantity,
+      price: item.unit_price
+    })),
+    method: paymentMethod,
+    discount: discount
+  };
+  
+  // Update inventory quantities
+  posCart.forEach(cartItem => {
+    const invItem = inventoryItems.find(i => i.id === cartItem.id);
+    if (invItem) {
+      invItem.quantity -= cartItem.cart_quantity;
+      invItem.status = invItem.quantity <= invItem.reorder_level ? 'low' : 'ok';
+    }
+  });
+  
+  if (window.dataSdk) {
+    try {
+      await window.dataSdk.create(sale);
+    } catch (err) {
+      console.error('Sale save error:', err);
+    }
+  }
+  
+  todaysSales.push(sale);
+  renderSalesHistory();
+  clearPOSCart();
+  renderPOSProducts();
+  updateInventoryStats();
+  renderInventoryTable();
+}
+
+// Render sales history
+function renderSalesHistory() {
+  const tbody = document.getElementById('pos-sales-tbody');
+  tbody.innerHTML = '';
+  
+  todaysSales.forEach(sale => {
+    const time = new Date(sale.sale_date).toLocaleTimeString('id-ID');
+    const row = document.createElement('tr');
+    row.className = 'border-b border-gray-800/50 hover:bg-gray-800/30 transition';
+    row.innerHTML = `
+      <td class="py-2.5 px-2 text-white font-medium">${sale.sale_id}</td>
+      <td class="py-2.5 px-2 text-gray-400">${time}</td>
+      <td class="py-2.5 px-2 text-right text-emerald-400 font-medium">Rp ${sale.sale_total.toLocaleString('id-ID')}</td>
+      <td class="py-2.5 px-2">
+        <span class="text-[10px] capitalize px-2 py-0.5 rounded bg-indigo-500/20 text-indigo-300">
+          ${sale.method === 'cash' ? '💵' : sale.method === 'card' ? '💳' : sale.method === 'transfer' ? '🏦' : '📱'} ${sale.method}
+        </span>
+      </td>
+      <td class="py-2.5 px-2"><span class="text-[10px] bg-emerald-500/20 text-emerald-300 px-2 py-0.5 rounded">✓ Done</span></td>
+      <td class="py-2.5 px-2 text-center">
+        <button onclick="printReceipt('${sale.sale_id}')" class="text-cyan-400 hover:text-cyan-300 text-xs">🖨 Print</button>
+      </td>
+    `;
+    tbody.appendChild(row);
+  });
+}
+
+// Print receipt
+function printReceipt(saleId) {
+  const sale = todaysSales.find(s => s.sale_id === saleId);
+  if (!sale) return;
+  
+  let html = `
+    <!DOCTYPE html>
+    <html>
+    <head>
+      <style>
+        body { font-family: monospace; width: 80mm; margin: 0; padding: 10px; }
+        .header { text-align: center; margin-bottom: 10px; font-weight: bold; font-size: 14px; }
+        .separator { border-top: 1px dashed #000; margin: 10px 0; }
+        table { width: 100%; font-size: 11px; }
+        td { padding: 4px 0; }
+        .right { text-align: right; }
+        .total { font-weight: bold; font-size: 13px; }
+        .footer { text-align: center; font-size: 10px; margin-top: 10px; color: #666; }
+      </style>
+    </head>
+    <body>
+      <div class="header">NetBill Pro</div>
+      <div class="header" style="font-size: 12px;">POS RECEIPT</div>
+      <div class="separator"></div>
+      <div>Invoice: ${sale.sale_id}</div>
+      <div>Date: ${new Date(sale.sale_date).toLocaleString('id-ID')}</div>
+      <div class="separator"></div>
+      <table>
+        <tr>
+          <td>Item</td>
+          <td class="right">Qty</td>
+          <td class="right">Total</td>
+        </tr>
+  `;
+  
+  sale.items.forEach(item => {
+    const itemTotal = item.price * item.quantity;
+    html += `
+      <tr>
+        <td>${item.name}</td>
+        <td class="right">${item.quantity}</td>
+        <td class="right">Rp ${itemTotal.toLocaleString('id-ID')}</td>
+      </tr>
+    `;
+  });
+  
+  const subtotal = sale.items.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+  
+  html += `
+      </table>
+      <div class="separator"></div>
+      <table>
+        <tr>
+          <td>Subtotal</td>
+          <td class="right">Rp ${subtotal.toLocaleString('id-ID')}</td>
+        </tr>
+  `;
+  
+  if (sale.discount > 0) {
+    html += `
+      <tr>
+        <td>Discount</td>
+        <td class="right">-Rp ${sale.discount.toLocaleString('id-ID')}</td>
+      </tr>
+    `;
+  }
+  
+  html += `
+        <tr class="total">
+          <td>TOTAL</td>
+          <td class="right">Rp ${sale.sale_total.toLocaleString('id-ID')}</td>
+        </tr>
+      </table>
+      <div class="separator"></div>
+      <div>Payment: ${sale.method.toUpperCase()}</div>
+      <div class="separator"></div>
+      <div class="footer">Thank you for your purchase!<br>Terima kasih telah berbelanja</div>
+    </body>
+    </html>
+  `;
+  
+  const printWindow = window.open('', '', 'width=400,height=600');
+  if (printWindow) {
+    printWindow.document.write(html);
+    printWindow.document.close();
+    setTimeout(() => printWindow.print(), 300);
+  }
+}
+
+// Initialize icons
+if (window.lucide) {
+  lucide.createIcons();
+}
+</script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9f7875d3a6aa5cdc',t:'MTc3ODA3NTQ5My4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>

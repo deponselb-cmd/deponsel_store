@@ -1,3 +1,4 @@
+
 <!doctype html>
 <html lang="en" class="h-full">
  <head>
@@ -41,32 +42,45 @@ tailwind.config = {
 .status-warning { background: #f59e0b; box-shadow: 0 0 8px #f59e0b; }
 .status-offline { background: #ef4444; box-shadow: 0 0 8px #ef4444; }
 /* Light Mode */
-body.light-mode { background-color: #f8fafc; color: #111827; }
-body.light-mode #app { background-color: #f8fafc; }
-body.light-mode #app aside { background-color: #ffffff; border-color: #e5e7eb; box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05); }
+body.light-mode { background: #f9fafb; color: #1f2937; }
+body.light-mode #app { background: #f9fafb; }
+body.light-mode #app aside { background: #ffffff; border-color: #e5e7eb; box-shadow: 0 1px 2px rgba(0,0,0,0.05); }
 body.light-mode #app aside .sidebar-item { color: #374151; }
-body.light-mode #app aside .sidebar-item:hover { background-color: #eef2ff; }
-body.light-mode #app aside .sidebar-item.active { background-color: #eef2ff; color: #4f46e5; border-right-color: #4f46e5; }
-body.light-mode #app header { background-color: #ffffff; border-color: #e5e7eb; box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05); }
-body.light-mode .gradient-border > div { background-color: #ffffff; }
-body.light-mode .bg-\[\#0f1629\] { background-color: #ffffff; border-color: #e5e7eb; }
-body.light-mode .bg-\[\#0a0e1a\] { background-color: #f8fafc; }
-body.light-mode .border-gray-800 { border-color: #e5e7eb; }
-body.light-mode .text-gray-400 { color: #4b5563; }
-body.light-mode .text-gray-500 { color: #374151; }
-body.light-mode .text-gray-300 { color: #1f2937; }
-body.light-mode .bg-gray-800 { background-color: #f3f4f6; border-color: #d1d5db; }
-body.light-mode .bg-gray-800\/50 { background-color: rgba(243, 244, 246, 0.5); }
-body.light-mode button { transition: all; transition-duration: 200ms; }
-body.light-mode .card-hover { box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05); }
-body.light-mode .card-hover:hover { box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); }
-body.light-mode input, body.light-mode textarea, body.light-mode select { background-color: #ffffff; border-color: #d1d5db; color: #111827; }
-body.light-mode input:focus, body.light-mode textarea:focus, body.light-mode select:focus { border-color: #6366f1; box-shadow: 0 0 0 1px #6366f1; }
-body.light-mode button:not(.settings-tab) { color: #111827; }
-body.light-mode button i { color: #111827; }
-body.light-mode .toggle-slider { background-color: #d1d5db; }
-body.light-mode .toggle-slider:before { background-color: #ffffff; }
-body.light-mode #theme-btn i { color: #374151; }
+body.light-mode #app aside .sidebar-item:hover { background: #eef2ff; }
+body.light-mode #app aside .sidebar-item.active { background: #eef2ff; color: #4f46e5; border-right-color: #4f46e5; }
+body.light-mode #app header { background: #ffffff; border-color: #e5e7eb; box-shadow: 0 1px 2px rgba(0,0,0,0.05); }
+body.light-mode .gradient-border > div { background: #ffffff; border-color: #e5e7eb; }
+body.light-mode [class*="bg-\[#0f1629\]"] { background: #ffffff !important; border-color: #e5e7eb !important; }
+body.light-mode [class*="bg-\[#0a0e1a\]"] { background: #f9fafb !important; }
+body.light-mode [class*="border-gray-800"] { border-color: #e5e7eb !important; }
+body.light-mode [class*="text-gray-400"] { color: #6b7280 !important; }
+body.light-mode [class*="text-gray-500"] { color: #6b7280 !important; }
+body.light-mode [class*="text-gray-300"] { color: #374151 !important; }
+body.light-mode [class*="text-gray-200"] { color: #374151 !important; }
+body.light-mode [class*="bg-gray-800"] { background: #f3f4f6 !important; border-color: #d1d5db !important; }
+body.light-mode [class*="bg-gray-800/50"] { background: #f3f4f6 !important; }
+body.light-mode input, body.light-mode textarea, body.light-mode select { background: #ffffff; border-color: #d1d5db; color: #1f2937; }
+body.light-mode input::placeholder, body.light-mode textarea::placeholder { color: #9ca3af; }
+body.light-mode input:focus, body.light-mode textarea:focus, body.light-mode select:focus { border-color: #4f46e5; box-shadow: 0 0 0 1px #4f46e5; }
+body.light-mode button { color: #ffffff; }
+body.light-mode button.settings-tab { color: #374151; }
+body.light-mode .card-hover { box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+body.light-mode .card-hover:hover { box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+body.light-mode .toggle-slider { background: #d1d5db; }
+body.light-mode .toggle-slider:before { background: #ffffff; }
+body.light-mode input:checked + .toggle-slider { background: #4f46e5; }
+body.light-mode table { color: #1f2937; }
+body.light-mode [class*="text-white"] { color: #1f2937 !important; }
+body.light-mode [class*="bg-indigo-500/20"] { background: #e0e7ff !important; }
+body.light-mode [class*="text-indigo-"] { color: #4f46e5 !important; }
+body.light-mode [class*="bg-emerald-500/20"] { background: #d1fae5 !important; }
+body.light-mode [class*="text-emerald-"] { color: #059669 !important; }
+body.light-mode [class*="bg-red-500/20"] { background: #fee2e2 !important; }
+body.light-mode [class*="text-red-"] { color: #dc2626 !important; }
+body.light-mode [class*="bg-amber-500/20"] { background: #fef3c7 !important; }
+body.light-mode [class*="text-amber-"] { color: #b45309 !important; }
+body.light-mode [class*="bg-cyan-500/20"] { background: #cffafe !important; }
+body.light-mode [class*="text-cyan-"] { color: #0891b2 !important; }
 .toggle-switch { position: relative; display: inline-block; width: 40px; height: 20px; }
 .toggle-switch input { opacity: 0; width: 0; height: 0; }
 .toggle-slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #cbd5e1; transition: 0.3s; border-radius: 10px; }
@@ -74,14 +88,11 @@ body.light-mode #theme-btn i { color: #374151; }
 input:checked + .toggle-slider { background-color: #6366f1; }
 input:checked + .toggle-slider:before { transform: translateX(20px); }
   </style>
-  <style>
-body { box-sizing: border-box; }
-  </style>
+  <style>body { box-sizing: border-box; }</style>
   <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
  </head>
  <body class="h-full bg-[#0a0e1a] text-gray-200 overflow-hidden">
-  <div id="app" class="h-full w-full flex">
-   <!-- Sidebar -->
+  <div id="app" class="h-full w-full flex"><!-- Sidebar -->
    <aside class="w-64 bg-[#0f1629] border-r border-gray-800 flex flex-col h-full shrink-0">
     <div class="p-5 border-b border-gray-800">
      <h1 id="brand-name" class="text-xl font-bold bg-gradient-to-r from-indigo-400 to-cyan-400 bg-clip-text text-transparent">NetBill Pro</h1>
@@ -91,53 +102,42 @@ body { box-sizing: border-box; }
      <div class="px-3 mb-2 text-[10px] uppercase tracking-wider text-gray-600 font-semibold">
       Main
      </div>
-     <div class="sidebar-item active flex items-center gap-3 px-4 py-2.5 text-sm cursor-pointer text-indigo-300" data-page="dashboard" onclick="switchPage('dashboard')">
-      <i data-lucide="layout-dashboard" class="w-4 h-4"></i> Dashboard
+     <div class="sidebar-item active flex items-center gap-3 px-4 py-2.5 text-sm cursor-pointer text-indigo-300" data-page="dashboard" onclick="switchPage('dashboard')"><i data-lucide="layout-dashboard" class="w-4 h-4"></i> Dashboard
      </div>
-     <div class="sidebar-item flex items-center gap-3 px-4 py-2.5 text-sm cursor-pointer text-gray-400" data-page="billing" onclick="switchPage('billing')">
-      <i data-lucide="receipt" class="w-4 h-4"></i> Billing Engine
+     <div class="sidebar-item flex items-center gap-3 px-4 py-2.5 text-sm cursor-pointer text-gray-400" data-page="billing" onclick="switchPage('billing')"><i data-lucide="receipt" class="w-4 h-4"></i> Billing Engine
      </div>
-     <div class="sidebar-item flex items-center gap-3 px-4 py-2.5 text-sm cursor-pointer text-gray-400" data-page="network" onclick="switchPage('network')">
-      <i data-lucide="wifi" class="w-4 h-4"></i> Network
+     <div class="sidebar-item flex items-center gap-3 px-4 py-2.5 text-sm cursor-pointer text-gray-400" data-page="network" onclick="switchPage('network')"><i data-lucide="wifi" class="w-4 h-4"></i> Network
      </div>
-     <div class="sidebar-item flex items-center gap-3 px-4 py-2.5 text-sm cursor-pointer text-gray-400" data-page="mikrotik" onclick="switchPage('mikrotik')">
-      <i data-lucide="server" class="w-4 h-4"></i> MikroTik
+     <div class="sidebar-item flex items-center gap-3 px-4 py-2.5 text-sm cursor-pointer text-gray-400" data-page="mikrotik" onclick="switchPage('mikrotik')"><i data-lucide="server" class="w-4 h-4"></i> MikroTik
      </div>
-     <div class="sidebar-item flex items-center gap-3 px-4 py-2.5 text-sm cursor-pointer text-gray-400" data-page="customers" onclick="switchPage('customers')">
-      <i data-lucide="users" class="w-4 h-4"></i> Customers
+     <div class="sidebar-item flex items-center gap-3 px-4 py-2.5 text-sm cursor-pointer text-gray-400" data-page="customers" onclick="switchPage('customers')"><i data-lucide="users" class="w-4 h-4"></i> Customers
      </div>
      <div class="px-3 mt-4 mb-2 text-[10px] uppercase tracking-wider text-gray-600 font-semibold">
       Operations
      </div>
-     <div class="sidebar-item flex items-center gap-3 px-4 py-2.5 text-sm cursor-pointer text-gray-400" data-page="tickets" onclick="switchPage('tickets')">
-      <i data-lucide="headphones" class="w-4 h-4"></i> Support
+     <div class="sidebar-item flex items-center gap-3 px-4 py-2.5 text-sm cursor-pointer text-gray-400" data-page="tickets" onclick="switchPage('tickets')"><i data-lucide="headphones" class="w-4 h-4"></i> Support
      </div>
-     <div class="sidebar-item flex items-center gap-3 px-4 py-2.5 text-sm cursor-pointer text-gray-400" data-page="voucher" onclick="switchPage('voucher')">
-      <i data-lucide="ticket" class="w-4 h-4"></i> Voucher
+     <div class="sidebar-item flex items-center gap-3 px-4 py-2.5 text-sm cursor-pointer text-gray-400" data-page="voucher" onclick="switchPage('voucher')"><i data-lucide="ticket" class="w-4 h-4"></i> Voucher
      </div>
-     <div class="sidebar-item flex items-center gap-3 px-4 py-2.5 text-sm cursor-pointer text-gray-400" data-page="inventory" onclick="switchPage('inventory')">
-      <i data-lucide="package" class="w-4 h-4"></i> Inventory &amp; POS
+     <div class="sidebar-item flex items-center gap-3 px-4 py-2.5 text-sm cursor-pointer text-gray-400" data-page="inventory" onclick="switchPage('inventory')"><i data-lucide="package" class="w-4 h-4"></i> Inventory &amp; POS
      </div>
-     <div class="sidebar-item flex items-center gap-3 px-4 py-2.5 text-sm cursor-pointer text-gray-400" data-page="whitelabel" onclick="switchPage('whitelabel')">
-      <i data-lucide="palette" class="w-4 h-4"></i> White-Label
+     <div class="sidebar-item flex items-center gap-3 px-4 py-2.5 text-sm cursor-pointer text-gray-400" data-page="whitelabel" onclick="switchPage('whitelabel')"><i data-lucide="palette" class="w-4 h-4"></i> White-Label
      </div>
-     <div class="sidebar-item flex items-center gap-3 px-4 py-2.5 text-sm cursor-pointer text-gray-400" data-page="flow" onclick="switchPage('flow')">
-      <i data-lucide="git-branch" class="w-4 h-4"></i> Workflow
+     <div class="sidebar-item flex items-center gap-3 px-4 py-2.5 text-sm cursor-pointer text-gray-400" data-page="flow" onclick="switchPage('flow')"><i data-lucide="git-branch" class="w-4 h-4"></i> Workflow
      </div>
      <div class="px-3 mt-4 mb-2 text-[10px] uppercase tracking-wider text-gray-600 font-semibold">
       System
      </div>
-     <div class="sidebar-item flex items-center gap-3 px-4 py-2.5 text-sm cursor-pointer text-gray-400" data-page="settings" onclick="switchPage('settings')">
-      <i data-lucide="settings" class="w-4 h-4"></i> Settings
+     <div class="sidebar-item flex items-center gap-3 px-4 py-2.5 text-sm cursor-pointer text-gray-400" data-page="settings" onclick="switchPage('settings')"><i data-lucide="settings" class="w-4 h-4"></i> Settings
      </div>
     </nav>
     <div class="p-4 border-t border-gray-800">
-     <div class="flex items-center gap-3 mb-3">
+     <div class="flex items-center gap-3">
       <div class="w-8 h-8 rounded-full bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center text-xs font-bold">
        SA
       </div>
       <div>
-       <div class="text-xs font-medium" id="user-display">
+       <div class="text-xs font-medium">
         SuperAdmin
        </div>
        <div class="text-[10px] text-gray-500">
@@ -147,25 +147,20 @@ body { box-sizing: border-box; }
      </div>
     </div>
    </aside><!-- Main Content -->
-   <main class="flex-1 overflow-y-auto h-full">
-    <!-- Top Bar -->
+   <main class="flex-1 overflow-y-auto h-full"><!-- Top Bar -->
     <header class="sticky top-0 z-10 bg-[#0a0e1a]/80 backdrop-blur-xl border-b border-gray-800 px-6 py-3 flex items-center justify-between">
      <div class="flex items-center gap-4">
       <h2 id="page-title" class="text-lg font-semibold">Dashboard</h2><span class="text-xs bg-indigo-500/20 text-indigo-300 px-2 py-0.5 rounded-full">Live</span>
      </div>
      <div class="flex items-center gap-3">
-      <div class="relative">
-       <i data-lucide="bell" class="w-5 h-5 text-gray-400 cursor-pointer hover:text-white transition"></i> <span class="absolute -top-1 -right-1 w-2 h-2 bg-red-500 rounded-full"></span>
+      <div class="relative"><i data-lucide="bell" class="w-5 h-5 text-gray-400 cursor-pointer hover:text-white transition"></i> <span class="absolute -top-1 -right-1 w-2 h-2 bg-red-500 rounded-full"></span>
       </div>
-      <div class="text-xs bg-emerald-500/20 text-emerald-300 px-2 py-1 rounded-full flex items-center gap-1">
-       <span class="w-1.5 h-1.5 rounded-full status-online"></span> 12 Routers Online
+      <div class="text-xs bg-emerald-500/20 text-emerald-300 px-2 py-1 rounded-full flex items-center gap-1"><span class="w-1.5 h-1.5 rounded-full status-online"></span> 12 Routers Online
       </div><button class="text-xs bg-gray-800 hover:bg-gray-700 px-3 py-1.5 rounded-lg transition flex items-center gap-1"> <i data-lucide="shield" class="w-3 h-3"></i> 2FA Active </button> <button onclick="toggleTheme()" id="theme-btn" class="text-xs bg-gray-800 hover:bg-gray-700 px-3 py-1.5 rounded-lg transition flex items-center gap-1"> <i data-lucide="moon" class="w-3 h-3"></i> </button>
      </div>
     </header><!-- Page Content -->
-    <div id="page-content" class="p-6 fade-in">
-     <!-- Dashboard Page (default) -->
-     <div id="page-dashboard">
-      <!-- Stats Cards -->
+    <div id="page-content" class="p-6 fade-in"><!-- Dashboard Page (default) -->
+     <div id="page-dashboard"><!-- Stats Cards -->
       <div class="grid grid-cols-4 gap-4 mb-6">
        <div class="card-hover gradient-border">
         <div class="p-4">
@@ -175,7 +170,8 @@ body { box-sizing: border-box; }
            <p class="text-2xl font-bold mt-1 text-white">Rp 847.2M</p>
            <p class="text-xs text-emerald-400 mt-1">↑ 12.5% vs last month</p>
           </div>
-          <div class="w-10 h-10 rounded-lg bg-indigo-500/20 flex items-center justify-center"><i data-lucide="trending-up" class="w-5 h-5 text-indigo-400"></i>
+          <div class="w-10 h-10 rounded-lg bg-indigo-500/20 flex items-center justify-center">
+           <i data-lucide="trending-up" class="w-5 h-5 text-indigo-400"></i>
           </div>
          </div>
         </div>
@@ -188,7 +184,8 @@ body { box-sizing: border-box; }
            <p class="text-2xl font-bold mt-1 text-white">2,847</p>
            <p class="text-xs text-emerald-400 mt-1">↑ 48 new this week</p>
           </div>
-          <div class="w-10 h-10 rounded-lg bg-cyan-500/20 flex items-center justify-center"><i data-lucide="users" class="w-5 h-5 text-cyan-400"></i>
+          <div class="w-10 h-10 rounded-lg bg-cyan-500/20 flex items-center justify-center">
+           <i data-lucide="users" class="w-5 h-5 text-cyan-400"></i>
           </div>
          </div>
         </div>
@@ -201,7 +198,8 @@ body { box-sizing: border-box; }
            <p class="text-2xl font-bold mt-1 text-white">156</p>
            <p class="text-xs text-amber-400 mt-1">Rp 89.3M pending</p>
           </div>
-          <div class="w-10 h-10 rounded-lg bg-amber-500/20 flex items-center justify-center"><i data-lucide="alert-circle" class="w-5 h-5 text-amber-400"></i>
+          <div class="w-10 h-10 rounded-lg bg-amber-500/20 flex items-center justify-center">
+           <i data-lucide="alert-circle" class="w-5 h-5 text-amber-400"></i>
           </div>
          </div>
         </div>
@@ -214,19 +212,18 @@ body { box-sizing: border-box; }
            <p class="text-2xl font-bold mt-1 text-white">34</p>
            <p class="text-xs text-red-400 mt-1">Auto-isolir active</p>
           </div>
-          <div class="w-10 h-10 rounded-lg bg-red-500/20 flex items-center justify-center"><i data-lucide="shield-off" class="w-5 h-5 text-red-400"></i>
+          <div class="w-10 h-10 rounded-lg bg-red-500/20 flex items-center justify-center">
+           <i data-lucide="shield-off" class="w-5 h-5 text-red-400"></i>
           </div>
          </div>
         </div>
        </div>
       </div><!-- Charts Row -->
-      <div class="grid grid-cols-3 gap-4 mb-6">
-       <!-- Revenue Chart -->
+      <div class="grid grid-cols-3 gap-4 mb-6"><!-- Revenue Chart -->
        <div class="col-span-2 bg-[#0f1629] rounded-xl border border-gray-800 p-5">
         <div class="flex justify-between items-center mb-4">
          <h3 class="text-sm font-semibold">Revenue Trend (6 Months)</h3>
-         <div class="flex gap-2">
-          <span class="text-[10px] bg-indigo-500/20 text-indigo-300 px-2 py-0.5 rounded">Revenue</span> <span class="text-[10px] bg-cyan-500/20 text-cyan-300 px-2 py-0.5 rounded">Collected</span>
+         <div class="flex gap-2"><span class="text-[10px] bg-indigo-500/20 text-indigo-300 px-2 py-0.5 rounded">Revenue</span> <span class="text-[10px] bg-cyan-500/20 text-cyan-300 px-2 py-0.5 rounded">Collected</span>
          </div>
         </div>
         <div class="flex items-end gap-3 h-40">
@@ -272,28 +269,32 @@ body { box-sizing: border-box; }
         <h3 class="text-sm font-semibold mb-4">Churn Analysis</h3>
         <div class="space-y-3">
          <div>
-          <div class="flex justify-between text-xs mb-1"><span class="text-gray-400">Retention Rate</span><span class="text-emerald-400">94.2%</span>
+          <div class="flex justify-between text-xs mb-1">
+           <span class="text-gray-400">Retention Rate</span><span class="text-emerald-400">94.2%</span>
           </div>
           <div class="h-2 bg-gray-800 rounded-full">
            <div class="h-2 bg-emerald-500 rounded-full" style="width:94%"></div>
           </div>
          </div>
          <div>
-          <div class="flex justify-between text-xs mb-1"><span class="text-gray-400">Churn Rate</span><span class="text-red-400">5.8%</span>
+          <div class="flex justify-between text-xs mb-1">
+           <span class="text-gray-400">Churn Rate</span><span class="text-red-400">5.8%</span>
           </div>
           <div class="h-2 bg-gray-800 rounded-full">
            <div class="h-2 bg-red-500 rounded-full" style="width:5.8%"></div>
           </div>
          </div>
          <div>
-          <div class="flex justify-between text-xs mb-1"><span class="text-gray-400">Payment Success</span><span class="text-indigo-400">87.3%</span>
+          <div class="flex justify-between text-xs mb-1">
+           <span class="text-gray-400">Payment Success</span><span class="text-indigo-400">87.3%</span>
           </div>
           <div class="h-2 bg-gray-800 rounded-full">
            <div class="h-2 bg-indigo-500 rounded-full" style="width:87%"></div>
           </div>
          </div>
          <div>
-          <div class="flex justify-between text-xs mb-1"><span class="text-gray-400">SLA Compliance</span><span class="text-cyan-400">99.1%</span>
+          <div class="flex justify-between text-xs mb-1">
+           <span class="text-gray-400">SLA Compliance</span><span class="text-cyan-400">99.1%</span>
           </div>
           <div class="h-2 bg-gray-800 rounded-full">
            <div class="h-2 bg-cyan-500 rounded-full" style="width:99%"></div>
@@ -312,35 +313,40 @@ body { box-sizing: border-box; }
         </div>
         <div class="space-y-2" id="mikrotik-routers">
          <div class="flex items-center justify-between p-2.5 bg-gray-800/50 rounded-lg">
-          <div class="flex items-center gap-2"><span class="w-2 h-2 rounded-full status-online"></span><span class="text-xs">RB4011 - Main Gateway</span>
+          <div class="flex items-center gap-2">
+           <span class="w-2 h-2 rounded-full status-online"></span><span class="text-xs">RB4011 - Main Gateway</span>
           </div>
           <div class="text-[10px] text-gray-400">
            CPU: 23% | RAM: 45%
           </div>
          </div>
          <div class="flex items-center justify-between p-2.5 bg-gray-800/50 rounded-lg">
-          <div class="flex items-center gap-2"><span class="w-2 h-2 rounded-full status-online"></span><span class="text-xs">CCR1036 - Core</span>
+          <div class="flex items-center gap-2">
+           <span class="w-2 h-2 rounded-full status-online"></span><span class="text-xs">CCR1036 - Core</span>
           </div>
           <div class="text-[10px] text-gray-400">
            CPU: 18% | RAM: 62%
           </div>
          </div>
          <div class="flex items-center justify-between p-2.5 bg-gray-800/50 rounded-lg">
-          <div class="flex items-center gap-2"><span class="w-2 h-2 rounded-full status-warning"></span><span class="text-xs">hEX S - Branch A</span>
+          <div class="flex items-center gap-2">
+           <span class="w-2 h-2 rounded-full status-warning"></span><span class="text-xs">hEX S - Branch A</span>
           </div>
           <div class="text-[10px] text-amber-400">
            CPU: 78% | RAM: 81%
           </div>
          </div>
          <div class="flex items-center justify-between p-2.5 bg-gray-800/50 rounded-lg">
-          <div class="flex items-center gap-2"><span class="w-2 h-2 rounded-full status-online"></span><span class="text-xs">RB750Gr3 - Branch B</span>
+          <div class="flex items-center gap-2">
+           <span class="w-2 h-2 rounded-full status-online"></span><span class="text-xs">RB750Gr3 - Branch B</span>
           </div>
           <div class="text-[10px] text-gray-400">
            CPU: 12% | RAM: 34%
           </div>
          </div>
          <div class="flex items-center justify-between p-2.5 bg-gray-800/50 rounded-lg">
-          <div class="flex items-center gap-2"><span class="w-2 h-2 rounded-full status-offline"></span><span class="text-xs">RB951 - Remote Site</span>
+          <div class="flex items-center gap-2">
+           <span class="w-2 h-2 rounded-full status-offline"></span><span class="text-xs">RB951 - Remote Site</span>
           </div>
           <div class="text-[10px] text-red-400">
            OFFLINE - Last seen 2m ago
@@ -352,14 +358,16 @@ body { box-sizing: border-box; }
         <h3 class="text-sm font-semibold mb-4">Bandwidth Usage (Live)</h3>
         <div class="space-y-3" id="bandwidth-container">
          <div>
-          <div class="flex justify-between text-xs mb-1"><span>Upload</span><span class="text-cyan-400" id="upload-stat">2.4 Gbps / 5 Gbps</span>
+          <div class="flex justify-between text-xs mb-1">
+           <span>Upload</span><span class="text-cyan-400" id="upload-stat">2.4 Gbps / 5 Gbps</span>
           </div>
           <div class="h-3 bg-gray-800 rounded-full overflow-hidden">
            <div class="h-3 bg-gradient-to-r from-cyan-600 to-cyan-400 rounded-full transition-all" id="upload-bar" style="width:48%"></div>
           </div>
          </div>
          <div>
-          <div class="flex justify-between text-xs mb-1"><span>Download</span><span class="text-indigo-400" id="download-stat">4.1 Gbps / 5 Gbps</span>
+          <div class="flex justify-between text-xs mb-1">
+           <span>Download</span><span class="text-indigo-400" id="download-stat">4.1 Gbps / 5 Gbps</span>
           </div>
           <div class="h-3 bg-gray-800 rounded-full overflow-hidden">
            <div class="h-3 bg-gradient-to-r from-indigo-600 to-indigo-400 rounded-full transition-all" id="download-bar" style="width:82%"></div>
@@ -386,7 +394,8 @@ body { box-sizing: border-box; }
        <h3 class="text-sm font-semibold mb-4">Recent Activity</h3>
        <div class="grid grid-cols-2 gap-3">
         <div class="flex items-center gap-3 p-2 rounded-lg bg-emerald-500/5 border border-emerald-500/20">
-         <div class="w-8 h-8 rounded-full bg-emerald-500/20 flex items-center justify-center"><i data-lucide="check-circle" class="w-4 h-4 text-emerald-400"></i>
+         <div class="w-8 h-8 rounded-full bg-emerald-500/20 flex items-center justify-center">
+          <i data-lucide="check-circle" class="w-4 h-4 text-emerald-400"></i>
          </div>
          <div>
           <p class="text-xs">Payment received - Ahmad Rizki</p>
@@ -394,7 +403,8 @@ body { box-sizing: border-box; }
          </div>
         </div>
         <div class="flex items-center gap-3 p-2 rounded-lg bg-red-500/5 border border-red-500/20">
-         <div class="w-8 h-8 rounded-full bg-red-500/20 flex items-center justify-center"><i data-lucide="shield-off" class="w-4 h-4 text-red-400"></i>
+         <div class="w-8 h-8 rounded-full bg-red-500/20 flex items-center justify-center">
+          <i data-lucide="shield-off" class="w-4 h-4 text-red-400"></i>
          </div>
          <div>
           <p class="text-xs">Auto-isolir triggered - Budi Santoso</p>
@@ -402,7 +412,8 @@ body { box-sizing: border-box; }
          </div>
         </div>
         <div class="flex items-center gap-3 p-2 rounded-lg bg-indigo-500/5 border border-indigo-500/20">
-         <div class="w-8 h-8 rounded-full bg-indigo-500/20 flex items-center justify-center"><i data-lucide="user-plus" class="w-4 h-4 text-indigo-400"></i>
+         <div class="w-8 h-8 rounded-full bg-indigo-500/20 flex items-center justify-center">
+          <i data-lucide="user-plus" class="w-4 h-4 text-indigo-400"></i>
          </div>
          <div>
           <p class="text-xs">New customer registered</p>
@@ -410,7 +421,8 @@ body { box-sizing: border-box; }
          </div>
         </div>
         <div class="flex items-center gap-3 p-2 rounded-lg bg-cyan-500/5 border border-cyan-500/20">
-         <div class="w-8 h-8 rounded-full bg-cyan-500/20 flex items-center justify-center"><i data-lucide="unlock" class="w-4 h-4 text-cyan-400"></i>
+         <div class="w-8 h-8 rounded-full bg-cyan-500/20 flex items-center justify-center">
+          <i data-lucide="unlock" class="w-4 h-4 text-cyan-400"></i>
          </div>
          <div>
           <p class="text-xs">Auto-unisolir - Dewi Anggraini</p>
@@ -424,7 +436,8 @@ body { box-sizing: border-box; }
       <div class="grid grid-cols-3 gap-4 mb-6">
        <div class="card-hover bg-[#0f1629] rounded-xl border border-gray-800 p-5">
         <div class="flex items-center gap-3 mb-3">
-         <div class="w-10 h-10 rounded-lg bg-indigo-500/20 flex items-center justify-center"><i data-lucide="zap" class="w-5 h-5 text-indigo-400"></i>
+         <div class="w-10 h-10 rounded-lg bg-indigo-500/20 flex items-center justify-center">
+          <i data-lucide="zap" class="w-5 h-5 text-indigo-400"></i>
          </div>
          <div>
           <p class="text-sm font-semibold">Auto Invoice</p>
@@ -438,20 +451,21 @@ body { box-sizing: border-box; }
        </div>
        <div class="card-hover bg-[#0f1629] rounded-xl border border-gray-800 p-5">
         <div class="flex items-center gap-3 mb-3">
-         <div class="w-10 h-10 rounded-lg bg-emerald-500/20 flex items-center justify-center"><i data-lucide="credit-card" class="w-5 h-5 text-emerald-400"></i>
+         <div class="w-10 h-10 rounded-lg bg-emerald-500/20 flex items-center justify-center">
+          <i data-lucide="credit-card" class="w-5 h-5 text-emerald-400"></i>
          </div>
          <div>
           <p class="text-sm font-semibold">Payment Gateway</p>
           <p class="text-[10px] text-gray-500">Midtrans &amp; Xendit active</p>
          </div>
         </div>
-        <div class="flex gap-2 mt-2">
-         <span class="text-[10px] bg-blue-500/20 text-blue-300 px-2 py-1 rounded">Midtrans ✓</span> <span class="text-[10px] bg-purple-500/20 text-purple-300 px-2 py-1 rounded">Xendit ✓</span>
+        <div class="flex gap-2 mt-2"><span class="text-[10px] bg-blue-500/20 text-blue-300 px-2 py-1 rounded">Midtrans ✓</span> <span class="text-[10px] bg-purple-500/20 text-purple-300 px-2 py-1 rounded">Xendit ✓</span>
         </div>
        </div>
        <div class="card-hover bg-[#0f1629] rounded-xl border border-gray-800 p-5">
         <div class="flex items-center gap-3 mb-3">
-         <div class="w-10 h-10 rounded-lg bg-amber-500/20 flex items-center justify-center"><i data-lucide="percent" class="w-5 h-5 text-amber-400"></i>
+         <div class="w-10 h-10 rounded-lg bg-amber-500/20 flex items-center justify-center">
+          <i data-lucide="percent" class="w-5 h-5 text-amber-400"></i>
          </div>
          <div>
           <p class="text-sm font-semibold">Prorate Engine</p>
@@ -467,8 +481,7 @@ body { box-sizing: border-box; }
       <div class="bg-[#0f1629] rounded-xl border border-gray-800 p-5">
        <div class="flex justify-between items-center mb-4">
         <h3 class="text-sm font-semibold">Recent Invoices</h3>
-        <div class="flex gap-2">
-         <button class="text-[10px] bg-indigo-500/20 text-indigo-300 px-3 py-1.5 rounded-lg hover:bg-indigo-500/30 transition">Generate All</button> <button class="text-[10px] bg-gray-700 text-gray-300 px-3 py-1.5 rounded-lg hover:bg-gray-600 transition">Export PDF</button>
+        <div class="flex gap-2"><button class="text-[10px] bg-indigo-500/20 text-indigo-300 px-3 py-1.5 rounded-lg hover:bg-indigo-500/30 transition">Generate All</button> <button class="text-[10px] bg-gray-700 text-gray-300 px-3 py-1.5 rounded-lg hover:bg-gray-600 transition">Export PDF</button>
         </div>
        </div>
        <table class="w-full text-xs">
@@ -515,12 +528,10 @@ body { box-sizing: border-box; }
       </div>
      </div><!-- Network Page -->
      <div id="page-network" class="hidden">
-      <div class="grid grid-cols-2 gap-4 mb-6">
-       <!-- Topology -->
+      <div class="grid grid-cols-2 gap-4 mb-6"><!-- Topology -->
        <div class="bg-[#0f1629] rounded-xl border border-gray-800 p-5">
         <h3 class="text-sm font-semibold mb-4">Network Topology</h3>
-        <svg class="w-full h-48" viewbox="0 0 400 180">
-         <line x1="200" y1="20" x2="100" y2="80" class="flow-line" stroke="#6366f1" stroke-width="2" /> <line x1="200" y1="20" x2="300" y2="80" class="flow-line" stroke="#6366f1" stroke-width="2" /> <line x1="100" y1="80" x2="60" y2="140" class="flow-line" stroke="#06b6d4" stroke-width="1.5" /> <line x1="100" y1="80" x2="140" y2="140" class="flow-line" stroke="#06b6d4" stroke-width="1.5" /> <line x1="300" y1="80" x2="260" y2="140" class="flow-line" stroke="#06b6d4" stroke-width="1.5" /> <line x1="300" y1="80" x2="340" y2="140" class="flow-line" stroke="#06b6d4" stroke-width="1.5" /> <circle cx="200" cy="20" r="12" fill="#4f46e5" /><text x="200" y="24" text-anchor="middle" fill="white" font-size="8">
+        <svg class="w-full h-48" viewbox="0 0 400 180"><line x1="200" y1="20" x2="100" y2="80" class="flow-line" stroke="#6366f1" stroke-width="2" /> <line x1="200" y1="20" x2="300" y2="80" class="flow-line" stroke="#6366f1" stroke-width="2" /> <line x1="100" y1="80" x2="60" y2="140" class="flow-line" stroke="#06b6d4" stroke-width="1.5" /> <line x1="100" y1="80" x2="140" y2="140" class="flow-line" stroke="#06b6d4" stroke-width="1.5" /> <line x1="300" y1="80" x2="260" y2="140" class="flow-line" stroke="#06b6d4" stroke-width="1.5" /> <line x1="300" y1="80" x2="340" y2="140" class="flow-line" stroke="#06b6d4" stroke-width="1.5" /> <circle cx="200" cy="20" r="12" fill="#4f46e5" /><text x="200" y="24" text-anchor="middle" fill="white" font-size="8">
           ISP
          </text> <circle cx="100" cy="80" r="10" fill="#0891b2" /><text x="100" y="84" text-anchor="middle" fill="white" font-size="7">
           OLT1
@@ -575,8 +586,7 @@ body { box-sizing: border-box; }
        <h3 class="text-sm font-semibold mb-4">Coverage Area Map</h3>
        <div class="h-40 bg-gray-800/50 rounded-lg flex items-center justify-center relative overflow-hidden">
         <div class="absolute inset-0 opacity-20" style="background: radial-gradient(circle at 30% 40%, #6366f1 0%, transparent 40%), radial-gradient(circle at 70% 60%, #06b6d4 0%, transparent 35%), radial-gradient(circle at 50% 30%, #8b5cf6 0%, transparent 30%)"></div>
-        <div class="text-center z-10">
-         <i data-lucide="map-pin" class="w-8 h-8 text-indigo-400 mx-auto mb-2"></i>
+        <div class="text-center z-10"><i data-lucide="map-pin" class="w-8 h-8 text-indigo-400 mx-auto mb-2"></i>
          <p class="text-xs text-gray-400">3 Coverage Zones Active</p>
          <p class="text-[10px] text-gray-500">Jakarta Selatan • Depok • Tangerang</p>
         </div>
@@ -635,15 +645,18 @@ body { box-sizing: border-box; }
         <h3 class="text-sm font-semibold mb-3">Auto Isolir/Unisolir</h3>
         <div class="space-y-2">
          <div class="p-3 bg-red-500/10 rounded-lg border border-red-500/20 flex items-center justify-between cursor-pointer hover:bg-red-500/20 transition">
-          <div class="flex items-center gap-2"><i data-lucide="shield-off" class="w-4 h-4 text-red-400"></i><span class="text-xs">Overdue → Auto Block</span>
+          <div class="flex items-center gap-2">
+           <i data-lucide="shield-off" class="w-4 h-4 text-red-400"></i><span class="text-xs">Overdue → Auto Block</span>
           </div><span class="text-[10px] bg-red-500/30 text-red-300 px-2 py-0.5 rounded">Active</span>
          </div>
          <div class="p-3 bg-emerald-500/10 rounded-lg border border-emerald-500/20 flex items-center justify-between cursor-pointer hover:bg-emerald-500/20 transition">
-          <div class="flex items-center gap-2"><i data-lucide="unlock" class="w-4 h-4 text-emerald-400"></i><span class="text-xs">Payment OK → Auto Unblock</span>
+          <div class="flex items-center gap-2">
+           <i data-lucide="unlock" class="w-4 h-4 text-emerald-400"></i><span class="text-xs">Payment OK → Auto Unblock</span>
           </div><span class="text-[10px] bg-emerald-500/30 text-emerald-300 px-2 py-0.5 rounded">Active</span>
          </div>
          <div class="p-3 bg-indigo-500/10 rounded-lg border border-indigo-500/20 flex items-center justify-between cursor-pointer hover:bg-indigo-500/20 transition">
-          <div class="flex items-center gap-2"><i data-lucide="bell" class="w-4 h-4 text-indigo-400"></i><span class="text-xs">Push Notif → Firebase FCM</span>
+          <div class="flex items-center gap-2">
+           <i data-lucide="bell" class="w-4 h-4 text-indigo-400"></i><span class="text-xs">Push Notif → Firebase FCM</span>
           </div><span class="text-[10px] bg-indigo-500/30 text-indigo-300 px-2 py-0.5 rounded">Active</span>
          </div>
         </div>
@@ -654,8 +667,7 @@ body { box-sizing: border-box; }
       <div class="bg-[#0f1629] rounded-xl border border-gray-800 p-5 mb-4">
        <div class="flex justify-between items-center mb-4">
         <h3 class="text-sm font-semibold">Customer Management</h3>
-        <div class="flex gap-2">
-         <button class="text-[10px] bg-indigo-500 text-white px-3 py-1.5 rounded-lg">+ Add Customer</button> <button class="text-[10px] bg-gray-700 text-gray-300 px-3 py-1.5 rounded-lg">Export Excel</button>
+        <div class="flex gap-2"><button class="text-[10px] bg-indigo-500 text-white px-3 py-1.5 rounded-lg">+ Add Customer</button> <button class="text-[10px] bg-gray-700 text-gray-300 px-3 py-1.5 rounded-lg">Export Excel</button>
         </div>
        </div>
        <div class="grid grid-cols-4 gap-3 mb-4">
@@ -734,27 +746,23 @@ body { box-sizing: border-box; }
        <h3 class="text-sm font-semibold mb-3">Tickets Queue</h3>
        <div class="space-y-2">
         <div class="p-3 bg-gray-800/50 rounded-lg flex items-center justify-between card-hover">
-         <div class="flex items-center gap-3">
-          <span class="w-2 h-2 rounded-full bg-red-500"></span>
+         <div class="flex items-center gap-3"><span class="w-2 h-2 rounded-full bg-red-500"></span>
           <div>
            <p class="text-xs font-medium">#T-089 Internet mati total</p>
            <p class="text-[10px] text-gray-500">Ahmad Rizki • 30 min ago</p>
           </div>
          </div>
-         <div class="flex items-center gap-2">
-          <span class="text-[10px] bg-red-500/20 text-red-300 px-2 py-0.5 rounded">Urgent</span> <span class="text-[10px] text-gray-500">Tech: Roni</span>
+         <div class="flex items-center gap-2"><span class="text-[10px] bg-red-500/20 text-red-300 px-2 py-0.5 rounded">Urgent</span> <span class="text-[10px] text-gray-500">Tech: Roni</span>
          </div>
         </div>
         <div class="p-3 bg-gray-800/50 rounded-lg flex items-center justify-between card-hover">
-         <div class="flex items-center gap-3">
-          <span class="w-2 h-2 rounded-full bg-amber-500"></span>
+         <div class="flex items-center gap-3"><span class="w-2 h-2 rounded-full bg-amber-500"></span>
           <div>
            <p class="text-xs font-medium">#T-090 Speed lambat</p>
            <p class="text-[10px] text-gray-500">Dewi Anggraini • 1h ago</p>
           </div>
          </div>
-         <div class="flex items-center gap-2">
-          <span class="text-[10px] bg-amber-500/20 text-amber-300 px-2 py-0.5 rounded">Medium</span> <span class="text-[10px] text-gray-500">Tech: Andi</span>
+         <div class="flex items-center gap-2"><span class="text-[10px] bg-amber-500/20 text-amber-300 px-2 py-0.5 rounded">Medium</span> <span class="text-[10px] text-gray-500">Tech: Andi</span>
          </div>
         </div>
        </div>
@@ -764,16 +772,13 @@ body { box-sizing: border-box; }
       <div class="bg-[#0f1629] rounded-xl border border-gray-800 p-5 mb-4">
        <div class="flex justify-between items-center mb-4">
         <h3 class="text-sm font-semibold">Voucher Editor &amp; Print</h3>
-        <div class="flex gap-2">
-         <button onclick="printVouchers()" class="text-[10px] bg-indigo-500 text-white px-3 py-1.5 rounded-lg hover:bg-indigo-600 transition">🖨 Print Unlimited</button>
+        <div class="flex gap-2"><button onclick="printVouchers()" class="text-[10px] bg-indigo-500 text-white px-3 py-1.5 rounded-lg hover:bg-indigo-600 transition">🖨 Print Unlimited</button>
         </div>
        </div>
        <div class="grid grid-cols-2 gap-4 mb-4">
-        <div>
-         <label class="text-[10px] text-gray-500 block mb-1">Profile/Plan</label> <select class="w-full bg-gray-800 border border-gray-700 rounded-lg px-3 py-2 text-xs text-white"><option>Hotspot 3 Jam - Rp 5,000</option><option>Hotspot 6 Jam - Rp 10,000</option><option>Hotspot 24 Jam - Rp 20,000</option></select>
+        <div><label class="text-[10px] text-gray-500 block mb-1">Profile/Plan</label> <select class="w-full bg-gray-800 border border-gray-700 rounded-lg px-3 py-2 text-xs text-white"><option>Hotspot 3 Jam - Rp 5,000</option><option>Hotspot 6 Jam - Rp 10,000</option><option>Hotspot 24 Jam - Rp 20,000</option></select>
         </div>
-        <div>
-         <label class="text-[10px] text-gray-500 block mb-1">Qty</label> <input type="number" value="30" class="w-full bg-gray-800 border border-gray-700 rounded-lg px-3 py-2 text-xs text-white">
+        <div><label class="text-[10px] text-gray-500 block mb-1">Qty</label> <input type="number" value="30" class="w-full bg-gray-800 border border-gray-700 rounded-lg px-3 py-2 text-xs text-white">
         </div>
        </div>
        <div id="voucher-grid" class="grid grid-cols-5 gap-2">
@@ -806,11 +811,14 @@ body { box-sizing: border-box; }
       </div>
      </div><!-- Inventory Page -->
      <div id="page-inventory" class="hidden">
-      <div class="flex gap-4 mb-6"><!-- Tabs -->
-       <div class="flex gap-2"><button onclick="switchInventoryTab('inventory')" class="inv-tab-btn active px-4 py-2 rounded-lg bg-indigo-500/20 text-indigo-300 text-sm font-medium transition" data-tab="inventory">📦 Inventory</button> <button onclick="switchInventoryTab('pos')" class="inv-tab-btn px-4 py-2 rounded-lg bg-gray-700 text-gray-300 text-sm font-medium hover:bg-gray-600 transition" data-tab="pos">🛒 POS</button>
+      <div class="flex gap-4 mb-6">
+       <!-- Tabs -->
+       <div class="flex gap-2">
+        <button onclick="switchInventoryTab('inventory')" class="inv-tab-btn active px-4 py-2 rounded-lg bg-indigo-500/20 text-indigo-300 text-sm font-medium transition" data-tab="inventory">📦 Inventory</button> <button onclick="switchInventoryTab('pos')" class="inv-tab-btn px-4 py-2 rounded-lg bg-gray-700 text-gray-300 text-sm font-medium hover:bg-gray-600 transition" data-tab="pos">🛒 POS</button>
        </div>
       </div><!-- Inventory Management Tab -->
-      <div id="inv-inventory-tab" class="space-y-4"><!-- Stats -->
+      <div id="inv-inventory-tab" class="space-y-4">
+       <!-- Stats -->
        <div class="grid grid-cols-4 gap-4 mb-6">
         <div class="card-hover bg-[#0f1629] rounded-xl border border-gray-800 p-4">
          <p class="text-[10px] text-gray-500">Total Items</p>
@@ -835,15 +843,18 @@ body { box-sizing: border-box; }
        </div><!-- Add Item Form -->
        <div class="bg-[#0f1629] rounded-xl border border-gray-800 p-5 mb-6">
         <h3 class="text-sm font-semibold mb-4">Add New Item</h3>
-        <div class="grid grid-cols-5 gap-3 mb-4"><input type="text" id="inv-item-name" placeholder="Item Name" class="bg-gray-800 border border-gray-700 rounded-lg px-3 py-2 text-xs text-white placeholder-gray-500 focus:border-indigo-500 outline-none transition"> <input type="text" id="inv-sku" placeholder="SKU" class="bg-gray-800 border border-gray-700 rounded-lg px-3 py-2 text-xs text-white placeholder-gray-500 focus:border-indigo-500 outline-none transition"> <select id="inv-category" class="bg-gray-800 border border-gray-700 rounded-lg px-3 py-2 text-xs text-white focus:border-indigo-500 outline-none transition"> <option value="Hardware">Hardware</option> <option value="Cable">Cable</option> <option value="Accessories">Accessories</option> <option value="Services">Services</option> </select> <input type="number" id="inv-unit-price" placeholder="Unit Price" class="bg-gray-800 border border-gray-700 rounded-lg px-3 py-2 text-xs text-white placeholder-gray-500 focus:border-indigo-500 outline-none transition" min="0" step="1000">
-         <div class="flex gap-2"><input type="number" id="inv-quantity" placeholder="Qty" class="flex-1 bg-gray-800 border border-gray-700 rounded-lg px-3 py-2 text-xs text-white placeholder-gray-500 focus:border-indigo-500 outline-none transition" min="0"> <button onclick="addInventoryItem()" class="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg text-xs font-medium transition active:scale-95">+ Add</button>
+        <div class="grid grid-cols-5 gap-3 mb-4">
+         <input type="text" id="inv-item-name" placeholder="Item Name" class="bg-gray-800 border border-gray-700 rounded-lg px-3 py-2 text-xs text-white placeholder-gray-500 focus:border-indigo-500 outline-none transition"> <input type="text" id="inv-sku" placeholder="SKU" class="bg-gray-800 border border-gray-700 rounded-lg px-3 py-2 text-xs text-white placeholder-gray-500 focus:border-indigo-500 outline-none transition"> <select id="inv-category" class="bg-gray-800 border border-gray-700 rounded-lg px-3 py-2 text-xs text-white focus:border-indigo-500 outline-none transition"> <option value="Hardware">Hardware</option> <option value="Cable">Cable</option> <option value="Accessories">Accessories</option> <option value="Services">Services</option> </select> <input type="number" id="inv-unit-price" placeholder="Unit Price" class="bg-gray-800 border border-gray-700 rounded-lg px-3 py-2 text-xs text-white placeholder-gray-500 focus:border-indigo-500 outline-none transition" min="0" step="1000">
+         <div class="flex gap-2">
+          <input type="number" id="inv-quantity" placeholder="Qty" class="flex-1 bg-gray-800 border border-gray-700 rounded-lg px-3 py-2 text-xs text-white placeholder-gray-500 focus:border-indigo-500 outline-none transition" min="0"> <button onclick="addInventoryItem()" class="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg text-xs font-medium transition active:scale-95">+ Add</button>
          </div>
         </div>
        </div><!-- Items Table -->
        <div class="bg-[#0f1629] rounded-xl border border-gray-800 p-5">
         <div class="flex justify-between items-center mb-4">
          <h3 class="text-sm font-semibold">Inventory Items</h3>
-         <div class="flex gap-2"><button class="text-[10px] bg-gray-700 hover:bg-gray-600 px-3 py-1.5 rounded-lg transition">📥 Import</button> <button class="text-[10px] bg-gray-700 hover:bg-gray-600 px-3 py-1.5 rounded-lg transition">📤 Export</button>
+         <div class="flex gap-2">
+          <input type="file" id="import-inventory-file" accept=".csv" class="hidden"> <button onclick="document.getElementById('import-inventory-file').click()" class="text-[10px] bg-gray-700 hover:bg-gray-600 px-3 py-1.5 rounded-lg transition">📥 Import CSV</button> <button onclick="exportInventoryCSV()" class="text-[10px] bg-gray-700 hover:bg-gray-600 px-3 py-1.5 rounded-lg transition">📤 Export CSV</button>
          </div>
         </div>
         <div class="overflow-x-auto">
@@ -860,7 +871,8 @@ body { box-sizing: border-box; }
             <th class="text-center py-2 px-2">Action</th>
            </tr>
           </thead>
-          <tbody id="inv-items-tbody"><!-- Items will be rendered here -->
+          <tbody id="inv-items-tbody">
+           <!-- Items will be rendered here -->
           </tbody>
          </table>
         </div>
@@ -870,40 +882,54 @@ body { box-sizing: border-box; }
        </div>
       </div><!-- POS Tab -->
       <div id="inv-pos-tab" class="hidden space-y-4">
-       <div class="grid grid-cols-4 gap-4"><!-- POS Left: Product Selection -->
+       <div class="grid grid-cols-4 gap-4">
+        <!-- POS Left: Product Selection -->
         <div class="col-span-2 bg-[#0f1629] rounded-xl border border-gray-800 p-5">
          <h3 class="text-sm font-semibold mb-4">Products</h3>
-         <div class="mb-3"><input type="text" id="pos-search" placeholder="Search product..." class="w-full bg-gray-800 border border-gray-700 rounded-lg px-3 py-2 text-xs text-white placeholder-gray-500 focus:border-indigo-500 outline-none transition">
+         <div class="mb-3">
+          <input type="text" id="pos-search" placeholder="Search product..." class="w-full bg-gray-800 border border-gray-700 rounded-lg px-3 py-2 text-xs text-white placeholder-gray-500 focus:border-indigo-500 outline-none transition">
          </div>
-         <div class="space-y-2 max-h-96 overflow-y-auto" id="pos-products-list"><!-- Products will be rendered here -->
+         <div class="space-y-2 max-h-96 overflow-y-auto" id="pos-products-list">
+          <!-- Products will be rendered here -->
          </div>
         </div><!-- POS Right: Cart -->
-        <div class="col-span-2 space-y-4"><!-- Cart Items -->
+        <div class="col-span-2 space-y-4">
+         <!-- Cart Items -->
          <div class="bg-[#0f1629] rounded-xl border border-gray-800 p-5">
           <h3 class="text-sm font-semibold mb-4">Shopping Cart</h3>
           <div class="space-y-2 max-h-64 overflow-y-auto mb-4" id="pos-cart-items">
            <p class="text-xs text-gray-500 text-center py-4">Cart is empty</p>
           </div><!-- Cart Summary -->
           <div class="space-y-2 p-3 bg-gray-800/50 rounded-lg border border-gray-700">
-           <div class="flex justify-between text-xs"><span class="text-gray-400">Subtotal:</span> <span id="pos-subtotal" class="text-white font-medium">Rp 0</span>
+           <div class="flex justify-between text-xs">
+            <span class="text-gray-400">Subtotal:</span> <span id="pos-subtotal" class="text-white font-medium">Rp 0</span>
            </div>
-           <div class="flex justify-between text-xs"><span class="text-gray-400">Discount:</span> <input type="number" id="pos-discount" placeholder="Rp 0" class="w-24 bg-gray-700 border border-gray-600 rounded px-2 py-1 text-xs text-white placeholder-gray-500 focus:border-indigo-500 outline-none transition" min="0" step="1000" onchange="calculatePOSTotal()">
+           <div class="flex justify-between text-xs">
+            <span class="text-gray-400">Discount:</span> <input type="number" id="pos-discount" placeholder="Rp 0" class="w-24 bg-gray-700 border border-gray-600 rounded px-2 py-1 text-xs text-white placeholder-gray-500 focus:border-indigo-500 outline-none transition" min="0" step="1000" onchange="calculatePOSTotal()">
            </div>
-           <div class="border-t border-gray-700 pt-2 flex justify-between text-sm font-bold"><span>Total:</span> <span id="pos-total" class="text-emerald-400">Rp 0</span>
+           <div class="border-t border-gray-700 pt-2 flex justify-between text-sm font-bold">
+            <span>Total:</span> <span id="pos-total" class="text-emerald-400">Rp 0</span>
            </div>
           </div>
          </div><!-- Payment Method -->
          <div class="bg-[#0f1629] rounded-xl border border-gray-800 p-5">
           <h3 class="text-xs font-semibold mb-3 uppercase text-gray-500">Payment Method</h3>
-          <div class="space-y-2 mb-4"><label class="flex items-center gap-2 cursor-pointer"> <input type="radio" name="payment-method" value="cash" checked class="w-4 h-4"> <span class="text-xs">💵 Cash</span> </label> <label class="flex items-center gap-2 cursor-pointer"> <input type="radio" name="payment-method" value="card" class="w-4 h-4"> <span class="text-xs">💳 Debit/Credit Card</span> </label> <label class="flex items-center gap-2 cursor-pointer"> <input type="radio" name="payment-method" value="transfer" class="w-4 h-4"> <span class="text-xs">🏦 Bank Transfer</span> </label> <label class="flex items-center gap-2 cursor-pointer"> <input type="radio" name="payment-method" value="ewallet" class="w-4 h-4"> <span class="text-xs">📱 E-Wallet</span> </label>
+          <div class="space-y-2 mb-4">
+           <label class="flex items-center gap-2 cursor-pointer"> <input type="radio" name="payment-method" value="cash" checked class="w-4 h-4"> <span class="text-xs">💵 Cash</span> </label> <label class="flex items-center gap-2 cursor-pointer"> <input type="radio" name="payment-method" value="card" class="w-4 h-4"> <span class="text-xs">💳 Debit/Credit Card</span> </label> <label class="flex items-center gap-2 cursor-pointer"> <input type="radio" name="payment-method" value="transfer" class="w-4 h-4"> <span class="text-xs">🏦 Bank Transfer</span> </label> <label class="flex items-center gap-2 cursor-pointer"> <input type="radio" name="payment-method" value="ewallet" class="w-4 h-4"> <span class="text-xs">📱 E-Wallet</span> </label>
           </div>
          </div><!-- Action Buttons -->
-         <div class="flex gap-2"><button onclick="clearPOSCart()" class="flex-1 px-4 py-2 bg-red-600/20 hover:bg-red-600/30 text-red-300 rounded-lg text-xs font-medium transition">🗑️ Clear</button> <button onclick="completePOSSale()" class="flex-1 px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg text-xs font-medium transition active:scale-95">✓ Complete Sale</button>
+         <div class="flex gap-2">
+          <button onclick="clearPOSCart()" class="flex-1 px-4 py-2 bg-red-600/20 hover:bg-red-600/30 text-red-300 rounded-lg text-xs font-medium transition">🗑️ Clear</button> <button onclick="completePOSSale()" class="flex-1 px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg text-xs font-medium transition active:scale-95">✓ Complete Sale</button>
          </div>
         </div>
        </div><!-- Sales History -->
        <div class="bg-[#0f1629] rounded-xl border border-gray-800 p-5">
-        <h3 class="text-sm font-semibold mb-4">Today's Sales</h3>
+        <div class="flex justify-between items-center mb-4">
+         <h3 class="text-sm font-semibold">Today's Sales</h3>
+         <div class="flex gap-2">
+          <button onclick="exportSalesCSV()" class="text-[10px] bg-gray-700 hover:bg-gray-600 px-3 py-1.5 rounded-lg transition">📤 Export CSV</button>
+         </div>
+        </div>
         <div class="overflow-x-auto">
          <table class="w-full text-xs">
           <thead>
@@ -916,7 +942,8 @@ body { box-sizing: border-box; }
             <th class="text-center py-2 px-2">Receipt</th>
            </tr>
           </thead>
-          <tbody id="pos-sales-tbody"><!-- Sales will be rendered here -->
+          <tbody id="pos-sales-tbody">
+           <!-- Sales will be rendered here -->
           </tbody>
          </table>
         </div>
@@ -928,11 +955,14 @@ body { box-sizing: border-box; }
        <h3 class="text-sm font-semibold mb-4">White-Label Configuration</h3>
        <div class="grid grid-cols-2 gap-6">
         <div class="space-y-3">
-         <div><label class="text-[10px] text-gray-500 block mb-1">Custom Domain</label><input type="text" value="billing.myisp.co.id" class="w-full bg-gray-800 border border-gray-700 rounded-lg px-3 py-2 text-xs text-white">
+         <div>
+          <label class="text-[10px] text-gray-500 block mb-1">Custom Domain</label><input type="text" value="billing.myisp.co.id" class="w-full bg-gray-800 border border-gray-700 rounded-lg px-3 py-2 text-xs text-white">
          </div>
-         <div><label class="text-[10px] text-gray-500 block mb-1">ISP Name</label><input type="text" value="MyISP Network" class="w-full bg-gray-800 border border-gray-700 rounded-lg px-3 py-2 text-xs text-white">
+         <div>
+          <label class="text-[10px] text-gray-500 block mb-1">ISP Name</label><input type="text" value="MyISP Network" class="w-full bg-gray-800 border border-gray-700 rounded-lg px-3 py-2 text-xs text-white">
          </div>
-         <div><label class="text-[10px] text-gray-500 block mb-1">Primary Color</label><input type="color" value="#6366f1" class="w-10 h-8 rounded cursor-pointer">
+         <div>
+          <label class="text-[10px] text-gray-500 block mb-1">Primary Color</label><input type="color" value="#6366f1" class="w-10 h-8 rounded cursor-pointer">
          </div>
         </div>
         <div class="space-y-3">
@@ -945,8 +975,7 @@ body { box-sizing: border-box; }
            <p class="text-[10px] text-gray-500 mt-1">Custom invoice, email, mobile app</p>
           </div>
          </div>
-         <div class="flex gap-2">
-          <span class="text-[10px] bg-emerald-500/20 text-emerald-300 px-2 py-1 rounded">✓ Custom Domain</span> <span class="text-[10px] bg-emerald-500/20 text-emerald-300 px-2 py-1 rounded">✓ Logo Branding</span> <span class="text-[10px] bg-emerald-500/20 text-emerald-300 px-2 py-1 rounded">✓ Email Templates</span>
+         <div class="flex gap-2"><span class="text-[10px] bg-emerald-500/20 text-emerald-300 px-2 py-1 rounded">✓ Custom Domain</span> <span class="text-[10px] bg-emerald-500/20 text-emerald-300 px-2 py-1 rounded">✓ Logo Branding</span> <span class="text-[10px] bg-emerald-500/20 text-emerald-300 px-2 py-1 rounded">✓ Email Templates</span>
          </div>
         </div>
        </div>
@@ -957,47 +986,58 @@ body { box-sizing: border-box; }
        <h3 class="text-sm font-semibold mb-4">ISP Onboarding Workflow</h3>
        <div class="flex items-center justify-center gap-0 flex-wrap py-4">
         <div class="flex flex-col items-center">
-         <div class="w-14 h-14 rounded-xl bg-indigo-500/20 border border-indigo-500/40 flex items-center justify-center card-hover cursor-pointer"><i data-lucide="user-plus" class="w-6 h-6 text-indigo-400"></i>
+         <div class="w-14 h-14 rounded-xl bg-indigo-500/20 border border-indigo-500/40 flex items-center justify-center card-hover cursor-pointer">
+          <i data-lucide="user-plus" class="w-6 h-6 text-indigo-400"></i>
          </div>
          <p class="text-[9px] text-gray-400 mt-1.5 text-center w-16">Tenant<br>
            Register</p>
         </div>
-        <svg class="w-8 h-4"><line x1="0" y1="8" x2="32" y2="8" class="flow-line" stroke="#6366f1" stroke-width="2" />
+        <svg class="w-8 h-4">
+         <line x1="0" y1="8" x2="32" y2="8" class="flow-line" stroke="#6366f1" stroke-width="2" />
         </svg>
         <div class="flex flex-col items-center">
-         <div class="w-14 h-14 rounded-xl bg-purple-500/20 border border-purple-500/40 flex items-center justify-center card-hover cursor-pointer"><i data-lucide="settings" class="w-6 h-6 text-purple-400"></i>
+         <div class="w-14 h-14 rounded-xl bg-purple-500/20 border border-purple-500/40 flex items-center justify-center card-hover cursor-pointer">
+          <i data-lucide="settings" class="w-6 h-6 text-purple-400"></i>
          </div>
          <p class="text-[9px] text-gray-400 mt-1.5 text-center w-16">ISP<br>
            Onboarding</p>
         </div>
-        <svg class="w-8 h-4"><line x1="0" y1="8" x2="32" y2="8" class="flow-line" stroke="#8b5cf6" stroke-width="2" />
+        <svg class="w-8 h-4">
+         <line x1="0" y1="8" x2="32" y2="8" class="flow-line" stroke="#8b5cf6" stroke-width="2" />
         </svg>
         <div class="flex flex-col items-center">
-         <div class="w-14 h-14 rounded-xl bg-cyan-500/20 border border-cyan-500/40 flex items-center justify-center card-hover cursor-pointer"><i data-lucide="server" class="w-6 h-6 text-cyan-400"></i>
+         <div class="w-14 h-14 rounded-xl bg-cyan-500/20 border border-cyan-500/40 flex items-center justify-center card-hover cursor-pointer">
+          <i data-lucide="server" class="w-6 h-6 text-cyan-400"></i>
          </div>
          <p class="text-[9px] text-gray-400 mt-1.5 text-center w-16">Setup<br>
            Router</p>
         </div>
-        <svg class="w-8 h-4"><line x1="0" y1="8" x2="32" y2="8" class="flow-line" stroke="#06b6d4" stroke-width="2" />
+        <svg class="w-8 h-4">
+         <line x1="0" y1="8" x2="32" y2="8" class="flow-line" stroke="#06b6d4" stroke-width="2" />
         </svg>
         <div class="flex flex-col items-center">
-         <div class="w-14 h-14 rounded-xl bg-teal-500/20 border border-teal-500/40 flex items-center justify-center card-hover cursor-pointer"><i data-lucide="wifi" class="w-6 h-6 text-teal-400"></i>
+         <div class="w-14 h-14 rounded-xl bg-teal-500/20 border border-teal-500/40 flex items-center justify-center card-hover cursor-pointer">
+          <i data-lucide="wifi" class="w-6 h-6 text-teal-400"></i>
          </div>
          <p class="text-[9px] text-gray-400 mt-1.5 text-center w-16">MikroTik<br>
            Connect</p>
         </div>
-        <svg class="w-8 h-4"><line x1="0" y1="8" x2="32" y2="8" class="flow-line" stroke="#14b8a6" stroke-width="2" />
+        <svg class="w-8 h-4">
+         <line x1="0" y1="8" x2="32" y2="8" class="flow-line" stroke="#14b8a6" stroke-width="2" />
         </svg>
         <div class="flex flex-col items-center">
-         <div class="w-14 h-14 rounded-xl bg-emerald-500/20 border border-emerald-500/40 flex items-center justify-center card-hover cursor-pointer"><i data-lucide="receipt" class="w-6 h-6 text-emerald-400"></i>
+         <div class="w-14 h-14 rounded-xl bg-emerald-500/20 border border-emerald-500/40 flex items-center justify-center card-hover cursor-pointer">
+          <i data-lucide="receipt" class="w-6 h-6 text-emerald-400"></i>
          </div>
          <p class="text-[9px] text-gray-400 mt-1.5 text-center w-16">Auto<br>
            Billing</p>
         </div>
-        <svg class="w-8 h-4"><line x1="0" y1="8" x2="32" y2="8" class="flow-line" stroke="#10b981" stroke-width="2" />
+        <svg class="w-8 h-4">
+         <line x1="0" y1="8" x2="32" y2="8" class="flow-line" stroke="#10b981" stroke-width="2" />
         </svg>
         <div class="flex flex-col items-center">
-         <div class="w-14 h-14 rounded-xl bg-green-500/20 border border-green-500/40 flex items-center justify-center card-hover cursor-pointer"><i data-lucide="credit-card" class="w-6 h-6 text-green-400"></i>
+         <div class="w-14 h-14 rounded-xl bg-green-500/20 border border-green-500/40 flex items-center justify-center card-hover cursor-pointer">
+          <i data-lucide="credit-card" class="w-6 h-6 text-green-400"></i>
          </div>
          <p class="text-[9px] text-gray-400 mt-1.5 text-center w-16">Invoice +<br>
            Payment</p>
@@ -1007,39 +1047,48 @@ body { box-sizing: border-box; }
         <h3 class="text-xs font-semibold mb-4 text-gray-400">Automation Flow</h3>
         <div class="flex items-center justify-center gap-0 flex-wrap">
          <div class="flex flex-col items-center">
-          <div class="w-14 h-14 rounded-xl bg-amber-500/20 border border-amber-500/40 flex items-center justify-center card-hover cursor-pointer"><i data-lucide="bell" class="w-6 h-6 text-amber-400"></i>
+          <div class="w-14 h-14 rounded-xl bg-amber-500/20 border border-amber-500/40 flex items-center justify-center card-hover cursor-pointer">
+           <i data-lucide="bell" class="w-6 h-6 text-amber-400"></i>
           </div>
           <p class="text-[9px] text-gray-400 mt-1.5 text-center w-16">Push Notif<br>
             FCM</p>
          </div>
-         <svg class="w-8 h-4"><line x1="0" y1="8" x2="32" y2="8" class="flow-line" stroke="#f59e0b" stroke-width="2" />
+         <svg class="w-8 h-4">
+          <line x1="0" y1="8" x2="32" y2="8" class="flow-line" stroke="#f59e0b" stroke-width="2" />
          </svg>
          <div class="flex flex-col items-center">
-          <div class="w-14 h-14 rounded-xl bg-red-500/20 border border-red-500/40 flex items-center justify-center card-hover cursor-pointer"><i data-lucide="shield-off" class="w-6 h-6 text-red-400"></i>
+          <div class="w-14 h-14 rounded-xl bg-red-500/20 border border-red-500/40 flex items-center justify-center card-hover cursor-pointer">
+           <i data-lucide="shield-off" class="w-6 h-6 text-red-400"></i>
           </div>
           <p class="text-[9px] text-gray-400 mt-1.5 text-center w-16">Auto<br>
             Isolir</p>
          </div>
-         <svg class="w-8 h-4"><line x1="0" y1="8" x2="32" y2="8" class="flow-line" stroke="#ef4444" stroke-width="2" />
+         <svg class="w-8 h-4">
+          <line x1="0" y1="8" x2="32" y2="8" class="flow-line" stroke="#ef4444" stroke-width="2" />
          </svg>
          <div class="flex flex-col items-center">
-          <div class="w-14 h-14 rounded-xl bg-orange-500/20 border border-orange-500/40 flex items-center justify-center card-hover cursor-pointer"><i data-lucide="x-circle" class="w-6 h-6 text-orange-400"></i>
+          <div class="w-14 h-14 rounded-xl bg-orange-500/20 border border-orange-500/40 flex items-center justify-center card-hover cursor-pointer">
+           <i data-lucide="x-circle" class="w-6 h-6 text-orange-400"></i>
           </div>
           <p class="text-[9px] text-gray-400 mt-1.5 text-center w-16">Overdue<br>
             = Block</p>
          </div>
-         <svg class="w-8 h-4"><line x1="0" y1="8" x2="32" y2="8" class="flow-line" stroke="#f97316" stroke-width="2" />
+         <svg class="w-8 h-4">
+          <line x1="0" y1="8" x2="32" y2="8" class="flow-line" stroke="#f97316" stroke-width="2" />
          </svg>
          <div class="flex flex-col items-center">
-          <div class="w-14 h-14 rounded-xl bg-emerald-500/20 border border-emerald-500/40 flex items-center justify-center card-hover cursor-pointer"><i data-lucide="check-circle" class="w-6 h-6 text-emerald-400"></i>
+          <div class="w-14 h-14 rounded-xl bg-emerald-500/20 border border-emerald-500/40 flex items-center justify-center card-hover cursor-pointer">
+           <i data-lucide="check-circle" class="w-6 h-6 text-emerald-400"></i>
           </div>
           <p class="text-[9px] text-gray-400 mt-1.5 text-center w-16">Payment<br>
             OK</p>
          </div>
-         <svg class="w-8 h-4"><line x1="0" y1="8" x2="32" y2="8" class="flow-line" stroke="#10b981" stroke-width="2" />
+         <svg class="w-8 h-4">
+          <line x1="0" y1="8" x2="32" y2="8" class="flow-line" stroke="#10b981" stroke-width="2" />
          </svg>
          <div class="flex flex-col items-center">
-          <div class="w-14 h-14 rounded-xl bg-green-500/20 border border-green-500/40 flex items-center justify-center card-hover cursor-pointer"><i data-lucide="unlock" class="w-6 h-6 text-green-400"></i>
+          <div class="w-14 h-14 rounded-xl bg-green-500/20 border border-green-500/40 flex items-center justify-center card-hover cursor-pointer">
+           <i data-lucide="unlock" class="w-6 h-6 text-green-400"></i>
           </div>
           <p class="text-[9px] text-gray-400 mt-1.5 text-center w-16">Auto<br>
             Unisolir</p>
@@ -1049,16 +1098,20 @@ body { box-sizing: border-box; }
        <div class="mt-6 pt-6 border-t border-gray-800">
         <h3 class="text-xs font-semibold mb-3 text-gray-400">Infrastructure</h3>
         <div class="grid grid-cols-4 gap-2">
-         <div class="p-3 bg-blue-500/10 rounded-lg border border-blue-500/20 text-center card-hover cursor-pointer"><i data-lucide="box" class="w-5 h-5 text-blue-400 mx-auto mb-1"></i>
+         <div class="p-3 bg-blue-500/10 rounded-lg border border-blue-500/20 text-center card-hover cursor-pointer">
+          <i data-lucide="box" class="w-5 h-5 text-blue-400 mx-auto mb-1"></i>
           <p class="text-[10px] text-blue-300">Docker</p>
          </div>
-         <div class="p-3 bg-purple-500/10 rounded-lg border border-purple-500/20 text-center card-hover cursor-pointer"><i data-lucide="git-branch" class="w-5 h-5 text-purple-400 mx-auto mb-1"></i>
+         <div class="p-3 bg-purple-500/10 rounded-lg border border-purple-500/20 text-center card-hover cursor-pointer">
+          <i data-lucide="git-branch" class="w-5 h-5 text-purple-400 mx-auto mb-1"></i>
           <p class="text-[10px] text-purple-300">CI/CD</p>
          </div>
-         <div class="p-3 bg-amber-500/10 rounded-lg border border-amber-500/20 text-center card-hover cursor-pointer"><i data-lucide="flame" class="w-5 h-5 text-amber-400 mx-auto mb-1"></i>
+         <div class="p-3 bg-amber-500/10 rounded-lg border border-amber-500/20 text-center card-hover cursor-pointer">
+          <i data-lucide="flame" class="w-5 h-5 text-amber-400 mx-auto mb-1"></i>
           <p class="text-[10px] text-amber-300">Firebase</p>
          </div>
-         <div class="p-3 bg-cyan-500/10 rounded-lg border border-cyan-500/20 text-center card-hover cursor-pointer"><i data-lucide="shield" class="w-5 h-5 text-cyan-400 mx-auto mb-1"></i>
+         <div class="p-3 bg-cyan-500/10 rounded-lg border border-cyan-500/20 text-center card-hover cursor-pointer">
+          <i data-lucide="shield" class="w-5 h-5 text-cyan-400 mx-auto mb-1"></i>
           <p class="text-[10px] text-cyan-300">Encrypted</p>
          </div>
         </div>
@@ -1066,26 +1119,34 @@ body { box-sizing: border-box; }
       </div>
      </div><!-- Settings Page -->
      <div id="page-settings" class="hidden">
-      <div class="grid grid-cols-3 gap-6"><!-- Left Sidebar -->
+      <div class="grid grid-cols-3 gap-6">
+       <!-- Left Sidebar -->
        <div class="col-span-1">
         <div class="bg-[#0f1629] rounded-xl border border-gray-800 p-4">
-         <div class="space-y-1"><button onclick="switchSettings('general')" class="settings-tab w-full text-left px-4 py-2.5 rounded-lg text-sm flex items-center gap-2 bg-indigo-500/20 text-indigo-300" data-tab="general"> <i data-lucide="sliders-horizontal" class="w-4 h-4"></i> General </button> <button onclick="switchSettings('billing')" class="settings-tab w-full text-left px-4 py-2.5 rounded-lg text-sm flex items-center gap-2 text-gray-400 hover:bg-gray-800/50" data-tab="billing"> <i data-lucide="credit-card" class="w-4 h-4"></i> Billing Settings </button> <button onclick="switchSettings('security')" class="settings-tab w-full text-left px-4 py-2.5 rounded-lg text-sm flex items-center gap-2 text-gray-400 hover:bg-gray-800/50" data-tab="security"> <i data-lucide="shield" class="w-4 h-4"></i> Security </button> <button onclick="switchSettings('email')" class="settings-tab w-full text-left px-4 py-2.5 rounded-lg text-sm flex items-center gap-2 text-gray-400 hover:bg-gray-800/50" data-tab="email"> <i data-lucide="mail" class="w-4 h-4"></i> Email Templates </button> <button onclick="switchSettings('api')" class="settings-tab w-full text-left px-4 py-2.5 rounded-lg text-sm flex items-center gap-2 text-gray-400 hover:bg-gray-800/50" data-tab="api"> <i data-lucide="code" class="w-4 h-4"></i> API Keys </button> <button onclick="switchSettings('backup')" class="settings-tab w-full text-left px-4 py-2.5 rounded-lg text-sm flex items-center gap-2 text-gray-400 hover:bg-gray-800/50" data-tab="backup"> <i data-lucide="hard-drive" class="w-4 h-4"></i> Backup </button>
+         <div class="space-y-1">
+          <button onclick="switchSettings('general')" class="settings-tab w-full text-left px-4 py-2.5 rounded-lg text-sm flex items-center gap-2 bg-indigo-500/20 text-indigo-300" data-tab="general"> <i data-lucide="sliders-horizontal" class="w-4 h-4"></i> General </button> <button onclick="switchSettings('billing')" class="settings-tab w-full text-left px-4 py-2.5 rounded-lg text-sm flex items-center gap-2 text-gray-400 hover:bg-gray-800/50" data-tab="billing"> <i data-lucide="credit-card" class="w-4 h-4"></i> Billing Settings </button> <button onclick="switchSettings('security')" class="settings-tab w-full text-left px-4 py-2.5 rounded-lg text-sm flex items-center gap-2 text-gray-400 hover:bg-gray-800/50" data-tab="security"> <i data-lucide="shield" class="w-4 h-4"></i> Security </button> <button onclick="switchSettings('email')" class="settings-tab w-full text-left px-4 py-2.5 rounded-lg text-sm flex items-center gap-2 text-gray-400 hover:bg-gray-800/50" data-tab="email"> <i data-lucide="mail" class="w-4 h-4"></i> Email Templates </button> <button onclick="switchSettings('api')" class="settings-tab w-full text-left px-4 py-2.5 rounded-lg text-sm flex items-center gap-2 text-gray-400 hover:bg-gray-800/50" data-tab="api"> <i data-lucide="code" class="w-4 h-4"></i> API Keys </button> <button onclick="switchSettings('backup')" class="settings-tab w-full text-left px-4 py-2.5 rounded-lg text-sm flex items-center gap-2 text-gray-400 hover:bg-gray-800/50" data-tab="backup"> <i data-lucide="hard-drive" class="w-4 h-4"></i> Backup </button>
          </div>
         </div>
        </div><!-- Right Content -->
-       <div class="col-span-2"><!-- General Settings -->
+       <div class="col-span-2">
+        <!-- General Settings -->
         <div id="settings-general" class="bg-[#0f1629] rounded-xl border border-gray-800 p-6">
          <h3 class="text-lg font-bold mb-6">General Settings</h3>
          <div class="space-y-5">
-          <div><label class="text-sm text-gray-300 block mb-2">Platform Name</label> <input type="text" value="NetBill Pro" class="w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-2 text-white focus:border-indigo-500 outline-none transition">
+          <div>
+           <label class="text-sm text-gray-300 block mb-2">Platform Name</label> <input type="text" value="NetBill Pro" class="w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-2 text-white focus:border-indigo-500 outline-none transition">
           </div>
-          <div><label class="text-sm text-gray-300 block mb-2">Support Email</label> <input type="email" value="support@netbill.co.id" class="w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-2 text-white focus:border-indigo-500 outline-none transition">
+          <div>
+           <label class="text-sm text-gray-300 block mb-2">Support Email</label> <input type="email" value="support@netbill.co.id" class="w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-2 text-white focus:border-indigo-500 outline-none transition">
           </div>
-          <div><label class="text-sm text-gray-300 block mb-2">Support Phone</label> <input type="tel" value="+62 274 XXXX XXXX" class="w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-2 text-white focus:border-indigo-500 outline-none transition">
+          <div>
+           <label class="text-sm text-gray-300 block mb-2">Support Phone</label> <input type="tel" value="+62 274 XXXX XXXX" class="w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-2 text-white focus:border-indigo-500 outline-none transition">
           </div>
-          <div><label class="text-sm text-gray-300 block mb-2">Company Address</label> <textarea class="w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-2 text-white focus:border-indigo-500 outline-none transition h-24">Jl. Teknologi No. 123, Jakarta Selatan 12345</textarea>
+          <div>
+           <label class="text-sm text-gray-300 block mb-2">Company Address</label> <textarea class="w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-2 text-white focus:border-indigo-500 outline-none transition h-24">Jl. Teknologi No. 123, Jakarta Selatan 12345</textarea>
           </div>
-          <div class="flex gap-3 pt-4"><button type="button" class="px-6 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg text-sm font-medium transition active:scale-95">Save Changes</button> <button type="button" class="px-6 py-2 bg-gray-700 hover:bg-gray-600 text-white rounded-lg text-sm font-medium transition active:scale-95">Cancel</button>
+          <div class="flex gap-3 pt-4">
+           <button type="button" class="px-6 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg text-sm font-medium transition active:scale-95">Save Changes</button> <button type="button" class="px-6 py-2 bg-gray-700 hover:bg-gray-600 text-white rounded-lg text-sm font-medium transition active:scale-95">Cancel</button>
           </div>
          </div>
         </div><!-- Billing Settings -->
@@ -1093,21 +1154,26 @@ body { box-sizing: border-box; }
          <h3 class="text-lg font-bold mb-6">Billing Settings</h3>
          <div class="space-y-5">
           <div class="grid grid-cols-2 gap-4">
-           <div><label class="text-sm text-gray-300 block mb-2">Invoice Due Days</label> <input type="number" value="14" class="w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-2 text-white focus:border-indigo-500 outline-none transition">
+           <div>
+            <label class="text-sm text-gray-300 block mb-2">Invoice Due Days</label> <input type="number" value="14" class="w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-2 text-white focus:border-indigo-500 outline-none transition">
            </div>
-           <div><label class="text-sm text-gray-300 block mb-2">Late Fee (%)</label> <input type="number" value="5" step="0.1" class="w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-2 text-white focus:border-indigo-500 outline-none transition">
+           <div>
+            <label class="text-sm text-gray-300 block mb-2">Late Fee (%)</label> <input type="number" value="5" step="0.1" class="w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-2 text-white focus:border-indigo-500 outline-none transition">
            </div>
           </div>
           <div class="grid grid-cols-2 gap-4">
-           <div><label class="text-sm text-gray-300 block mb-2">Early Payment Discount (%)</label> <input type="number" value="2" step="0.1" class="w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-2 text-white focus:border-indigo-500 outline-none transition">
+           <div>
+            <label class="text-sm text-gray-300 block mb-2">Early Payment Discount (%)</label> <input type="number" value="2" step="0.1" class="w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-2 text-white focus:border-indigo-500 outline-none transition">
            </div>
-           <div><label class="text-sm text-gray-300 block mb-2">Auto-Isolir Days</label> <input type="number" value="7" class="w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-2 text-white focus:border-indigo-500 outline-none transition">
+           <div>
+            <label class="text-sm text-gray-300 block mb-2">Auto-Isolir Days</label> <input type="number" value="7" class="w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-2 text-white focus:border-indigo-500 outline-none transition">
            </div>
           </div>
           <div class="p-4 bg-indigo-500/10 border border-indigo-500/20 rounded-lg">
            <p class="text-xs text-indigo-300"><strong>Active Gateways:</strong> Midtrans ✓ | Xendit ✓ | Manual Transfer ✓</p>
           </div>
-          <div class="flex gap-3 pt-4"><button type="button" class="px-6 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg text-sm font-medium transition active:scale-95">Save Changes</button> <button type="button" class="px-6 py-2 bg-gray-700 hover:bg-gray-600 text-white rounded-lg text-sm font-medium transition active:scale-95">Cancel</button>
+          <div class="flex gap-3 pt-4">
+           <button type="button" class="px-6 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg text-sm font-medium transition active:scale-95">Save Changes</button> <button type="button" class="px-6 py-2 bg-gray-700 hover:bg-gray-600 text-white rounded-lg text-sm font-medium transition active:scale-95">Cancel</button>
           </div>
          </div>
         </div><!-- Security Settings -->
@@ -1132,15 +1198,18 @@ body { box-sizing: border-box; }
             <p class="text-xs text-gray-500">Enable API rate limiting per tenant</p>
            </div><label class="toggle-switch"> <input type="checkbox" checked> <span class="toggle-slider"></span> </label>
           </div>
-          <div><label class="text-sm text-gray-300 block mb-2">Session Timeout (minutes)</label> <input type="number" value="30" class="w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-2 text-white focus:border-indigo-500 outline-none transition">
+          <div>
+           <label class="text-sm text-gray-300 block mb-2">Session Timeout (minutes)</label> <input type="number" value="30" class="w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-2 text-white focus:border-indigo-500 outline-none transition">
           </div>
-          <div class="flex gap-3 pt-4"><button type="button" class="px-6 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg text-sm font-medium transition active:scale-95">Save Changes</button> <button type="button" class="px-6 py-2 bg-gray-700 hover:bg-gray-600 text-white rounded-lg text-sm font-medium transition active:scale-95">Cancel</button>
+          <div class="flex gap-3 pt-4">
+           <button type="button" class="px-6 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg text-sm font-medium transition active:scale-95">Save Changes</button> <button type="button" class="px-6 py-2 bg-gray-700 hover:bg-gray-600 text-white rounded-lg text-sm font-medium transition active:scale-95">Cancel</button>
           </div>
          </div>
         </div><!-- Email Templates -->
         <div id="settings-email" class="hidden bg-[#0f1629] rounded-xl border border-gray-800 p-6">
          <h3 class="text-lg font-bold mb-6">Email Templates</h3>
-         <div class="space-y-3 mb-6"><button class="w-full text-left p-4 bg-gray-800/50 rounded-lg hover:bg-gray-800 transition flex items-center justify-between">
+         <div class="space-y-3 mb-6">
+          <button class="w-full text-left p-4 bg-gray-800/50 rounded-lg hover:bg-gray-800 transition flex items-center justify-between">
            <div>
             <p class="text-sm font-medium">Invoice Notification</p>
             <p class="text-[10px] text-gray-500">Sent when invoice is generated</p>
@@ -1170,7 +1239,8 @@ body { box-sizing: border-box; }
              <p class="text-[10px] text-gray-500">Server Key</p>
             </div><span class="text-[10px] bg-emerald-500/20 text-emerald-300 px-2 py-0.5 rounded">Connected</span>
            </div>
-           <div class="flex items-center gap-2"><input type="password" value="sk_live_xxxxxxxxxxxxx" class="flex-1 bg-gray-700 border border-gray-600 rounded px-3 py-1.5 text-xs text-white"> <button class="px-3 py-1.5 bg-gray-700 hover:bg-gray-600 rounded text-xs">Copy</button>
+           <div class="flex items-center gap-2">
+            <input type="password" value="sk_live_xxxxxxxxxxxxx" class="flex-1 bg-gray-700 border border-gray-600 rounded px-3 py-1.5 text-xs text-white"> <button class="px-3 py-1.5 bg-gray-700 hover:bg-gray-600 rounded text-xs">Copy</button>
            </div>
           </div>
           <div class="p-4 bg-gray-800/50 rounded-lg">
@@ -1180,7 +1250,8 @@ body { box-sizing: border-box; }
              <p class="text-[10px] text-gray-500">Secret Key</p>
             </div><span class="text-[10px] bg-emerald-500/20 text-emerald-300 px-2 py-0.5 rounded">Connected</span>
            </div>
-           <div class="flex items-center gap-2"><input type="password" value="xnd_live_xxxxxxxxxxxxx" class="flex-1 bg-gray-700 border border-gray-600 rounded px-3 py-1.5 text-xs text-white"> <button class="px-3 py-1.5 bg-gray-700 hover:bg-gray-600 rounded text-xs">Copy</button>
+           <div class="flex items-center gap-2">
+            <input type="password" value="xnd_live_xxxxxxxxxxxxx" class="flex-1 bg-gray-700 border border-gray-600 rounded px-3 py-1.5 text-xs text-white"> <button class="px-3 py-1.5 bg-gray-700 hover:bg-gray-600 rounded text-xs">Copy</button>
            </div>
           </div>
           <div class="p-4 bg-gray-800/50 rounded-lg">
@@ -1190,7 +1261,8 @@ body { box-sizing: border-box; }
              <p class="text-[10px] text-gray-500">Server Key</p>
             </div><span class="text-[10px] bg-emerald-500/20 text-emerald-300 px-2 py-0.5 rounded">Connected</span>
            </div>
-           <div class="flex items-center gap-2"><input type="password" value="AAAXXXXXX:APAXXXXXXXXXXXXXXXXXXXXXX" class="flex-1 bg-gray-700 border border-gray-600 rounded px-3 py-1.5 text-xs text-white"> <button class="px-3 py-1.5 bg-gray-700 hover:bg-gray-600 rounded text-xs">Copy</button>
+           <div class="flex items-center gap-2">
+            <input type="password" value="AAAXXXXXX:APAXXXXXXXXXXXXXXXXXXXXXX" class="flex-1 bg-gray-700 border border-gray-600 rounded px-3 py-1.5 text-xs text-white"> <button class="px-3 py-1.5 bg-gray-700 hover:bg-gray-600 rounded text-xs">Copy</button>
            </div>
           </div>
          </div>
@@ -1202,16 +1274,20 @@ body { box-sizing: border-box; }
            <p class="text-sm text-emerald-300"><strong>Last Backup:</strong> Today, 02:15 AM</p>
            <p class="text-[10px] text-emerald-200 mt-1">Automatic daily backup enabled</p>
           </div>
-          <div class="grid grid-cols-2 gap-3"><button class="p-4 bg-indigo-500/20 border border-indigo-500/30 rounded-lg hover:bg-indigo-500/30 transition text-center"> <i data-lucide="download" class="w-5 h-5 text-indigo-400 mx-auto mb-2"></i> <p class="text-sm text-indigo-300">Backup Now</p></button> <button class="p-4 bg-purple-500/20 border border-purple-500/30 rounded-lg hover:bg-purple-500/30 transition text-center"> <i data-lucide="upload" class="w-5 h-5 text-purple-400 mx-auto mb-2"></i> <p class="text-sm text-purple-300">Restore</p></button>
+          <div class="grid grid-cols-2 gap-3">
+           <button class="p-4 bg-indigo-500/20 border border-indigo-500/30 rounded-lg hover:bg-indigo-500/30 transition text-center" onclick="exportAllData()"> <i data-lucide="download" class="w-5 h-5 text-indigo-400 mx-auto mb-2"></i> <p class="text-sm text-indigo-300">Export All Data</p></button> <button class="p-4 bg-purple-500/20 border border-purple-500/30 rounded-lg hover:bg-purple-500/30 transition text-center" onclick="document.getElementById('import-backup-file').click()"> <input type="file" id="import-backup-file" accept=".json" class="hidden"> <i data-lucide="upload" class="w-5 h-5 text-purple-400 mx-auto mb-2"></i> <p class="text-sm text-purple-300">Import Backup</p></button>
           </div>
           <div class="p-4 bg-gray-800/50 rounded-lg">
            <p class="text-sm font-medium mb-3">Backup History</p>
            <div class="space-y-2 text-xs">
-            <div class="flex justify-between"><span class="text-gray-400">backup_2024_01_15.zip</span> <span class="text-gray-500">256 MB</span>
+            <div class="flex justify-between">
+             <span class="text-gray-400">backup_2024_01_15.zip</span> <span class="text-gray-500">256 MB</span>
             </div>
-            <div class="flex justify-between"><span class="text-gray-400">backup_2024_01_14.zip</span> <span class="text-gray-500">243 MB</span>
+            <div class="flex justify-between">
+             <span class="text-gray-400">backup_2024_01_14.zip</span> <span class="text-gray-500">243 MB</span>
             </div>
-            <div class="flex justify-between"><span class="text-gray-400">backup_2024_01_13.zip</span> <span class="text-gray-500">251 MB</span>
+            <div class="flex justify-between">
+             <span class="text-gray-400">backup_2024_01_13.zip</span> <span class="text-gray-500">251 MB</span>
             </div>
            </div>
           </div>
@@ -1222,6 +1298,55 @@ body { box-sizing: border-box; }
      </div>
     </div>
    </main>
+  </div><!-- Modals -->
+  <div id="add-plan-modal" class="hidden fixed inset-0 bg-black/50 flex items-center justify-center z-50">
+   <div class="bg-[#0f1629] rounded-xl border border-gray-800 p-6 w-96 max-h-96 overflow-y-auto">
+    <h3 class="text-lg font-bold mb-4">Add Bandwidth Plan</h3>
+    <div class="space-y-3 mb-5">
+     <div>
+      <label class="text-xs text-gray-400 block mb-1">Plan Name</label> <input type="text" id="plan-name" placeholder="e.g., Premium 75 Mbps" class="w-full bg-gray-800 border border-gray-700 rounded-lg px-3 py-2 text-xs text-white placeholder-gray-500 focus:border-indigo-500 outline-none transition">
+     </div>
+     <div class="grid grid-cols-2 gap-3">
+      <div>
+       <label class="text-xs text-gray-400 block mb-1">Download (Mbps)</label> <input type="number" id="plan-download" placeholder="75" class="w-full bg-gray-800 border border-gray-700 rounded-lg px-3 py-2 text-xs text-white placeholder-gray-500 focus:border-indigo-500 outline-none transition" min="1">
+      </div>
+      <div>
+       <label class="text-xs text-gray-400 block mb-1">Upload (Mbps)</label> <input type="number" id="plan-upload" placeholder="30" class="w-full bg-gray-800 border border-gray-700 rounded-lg px-3 py-2 text-xs text-white placeholder-gray-500 focus:border-indigo-500 outline-none transition" min="1">
+      </div>
+     </div>
+     <div>
+      <label class="text-xs text-gray-400 block mb-1">Price (Rp)</label> <input type="number" id="plan-price" placeholder="400000" class="w-full bg-gray-800 border border-gray-700 rounded-lg px-3 py-2 text-xs text-white placeholder-gray-500 focus:border-indigo-500 outline-none transition" min="0" step="1000">
+     </div>
+    </div>
+    <div class="flex gap-2">
+     <button onclick="saveBandwidthPlan()" class="flex-1 px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg text-xs font-medium transition active:scale-95">Save Plan</button> <button onclick="closeAddPlanModal()" class="flex-1 px-4 py-2 bg-gray-700 hover:bg-gray-600 text-white rounded-lg text-xs font-medium transition">Cancel</button>
+    </div>
+   </div>
+  </div>
+  <div id="add-customer-modal" class="hidden fixed inset-0 bg-black/50 flex items-center justify-center z-50">
+   <div class="bg-[#0f1629] rounded-xl border border-gray-800 p-6 w-96 max-h-96 overflow-y-auto">
+    <h3 class="text-lg font-bold mb-4">Add New Customer</h3>
+    <div class="space-y-3 mb-5">
+     <div>
+      <label class="text-xs text-gray-400 block mb-1">Full Name</label> <input type="text" id="customer-name" placeholder="e.g., John Doe" class="w-full bg-gray-800 border border-gray-700 rounded-lg px-3 py-2 text-xs text-white placeholder-gray-500 focus:border-indigo-500 outline-none transition">
+     </div>
+     <div>
+      <label class="text-xs text-gray-400 block mb-1">Phone Number</label> <input type="tel" id="customer-phone" placeholder="+62 XXX XXXX XXXX" class="w-full bg-gray-800 border border-gray-700 rounded-lg px-3 py-2 text-xs text-white placeholder-gray-500 focus:border-indigo-500 outline-none transition">
+     </div>
+     <div>
+      <label class="text-xs text-gray-400 block mb-1">Email</label> <input type="email" id="customer-email" placeholder="email@example.com" class="w-full bg-gray-800 border border-gray-700 rounded-lg px-3 py-2 text-xs text-white placeholder-gray-500 focus:border-indigo-500 outline-none transition">
+     </div>
+     <div>
+      <label class="text-xs text-gray-400 block mb-1">Select Plan</label> <select id="customer-plan" class="w-full bg-gray-800 border border-gray-700 rounded-lg px-3 py-2 text-xs text-white focus:border-indigo-500 outline-none transition"> <option>Basic 10 Mbps - Rp 150,000</option> <option>Standard 30 Mbps - Rp 250,000</option> <option>Premium 50 Mbps - Rp 350,000</option> <option>Business 100 Mbps - Rp 550,000</option> </select>
+     </div>
+     <div>
+      <label class="text-xs text-gray-400 block mb-1">Address</label> <textarea id="customer-address" placeholder="Customer address" class="w-full bg-gray-800 border border-gray-700 rounded-lg px-3 py-2 text-xs text-white placeholder-gray-500 focus:border-indigo-500 outline-none transition h-16"></textarea>
+     </div>
+    </div>
+    <div class="flex gap-2">
+     <button onclick="saveNewCustomer()" class="flex-1 px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg text-xs font-medium transition active:scale-95">Add Customer</button> <button onclick="closeAddCustomerModal()" class="flex-1 px-4 py-2 bg-gray-700 hover:bg-gray-600 text-white rounded-lg text-xs font-medium transition">Cancel</button>
+    </div>
+   </div>
   </div>
   <script>
 const defaultConfig = {
@@ -1260,10 +1385,12 @@ function toggleTheme() {
     body.classList.remove('light-mode');
     icon.setAttribute('data-lucide', 'moon');
     currentSettings.theme = 'dark';
+    localStorage.setItem('app-theme', 'dark');
   } else {
     body.classList.add('light-mode');
     icon.setAttribute('data-lucide', 'sun');
     currentSettings.theme = 'light';
+    localStorage.setItem('app-theme', 'light');
   }
   
   if (window.dataSdk) {
@@ -1477,38 +1604,70 @@ function updateSettingsUI(config) {
 // Data SDK handler
 const dataHandler = {
   onDataChanged(data) {
-    if (data && data.length > 0) {
-      const settings = data.find(s => s.id === 'settings-main');
-      if (settings) {
-        currentSettings = { ...defaultConfig, ...settings };
-        applyConfig(currentSettings);
-        updateSettingsUI(currentSettings);
-      }
+    if (!data || !Array.isArray(data)) return;
+    
+    // Handle settings
+    const settings = data.find(s => s.id === 'settings-main');
+    if (settings) {
+      currentSettings = { ...defaultConfig, ...settings };
+      applyConfig(currentSettings);
+      updateSettingsUI(currentSettings);
+    }
+    
+    // Handle inventory items
+    const items = data.filter(d => d.id && d.id.startsWith('item-'));
+    if (items.length > 0) {
+      inventoryItems = items.map(item => ({
+        id: item.id,
+        __backendId: item.__backendId,
+        item_name: item.item_name || '',
+        sku: item.sku || '',
+        category: item.category || 'Hardware',
+        quantity: parseInt(item.quantity) || 0,
+        unit_price: parseFloat(item.unit_price) || 0,
+        reorder_level: item.reorder_level || 10,
+        status: (parseInt(item.quantity) || 0) <= (item.reorder_level || 10) ? 'low' : 'ok'
+      }));
+      renderInventoryTable();
+      updateInventoryStats();
+      renderPOSProducts();
+    }
+    
+    // Handle sales
+    const sales = data.filter(d => d.id && d.id.startsWith('sale-'));
+    if (sales.length > 0) {
+      todaysSales = sales.map(sale => ({
+        id: sale.id,
+        __backendId: sale.__backendId,
+        sale_id: sale.sale_id || '',
+        sale_date: sale.sale_date || new Date().toISOString(),
+        sale_total: parseFloat(sale.sale_total) || 0,
+        payment_method: sale.payment_method || 'cash',
+        discount: parseFloat(sale.discount) || 0,
+        items: sale.items || []
+      }));
+      renderSalesHistory();
+      updateInventoryStats();
     }
   }
 };
 
 // Initialize Data SDK
 async function initializeData() {
-  // Update user display
-  const loggedInUser = localStorage.getItem('logged-in-user');
-  if (loggedInUser) {
-    const userDisplay = document.getElementById('user-display');
-    if (userDisplay) {
-      const displayName = loggedInUser.charAt(0).toUpperCase() + loggedInUser.slice(1) + ' User';
-      userDisplay.textContent = displayName;
-    }
-  }
-  
   if (!window.dataSdk) {
-    console.error('Data SDK not available');
+    console.warn('Data SDK not available - using local storage');
     applyConfig(currentSettings);
     return;
   }
   
-  const result = await window.dataSdk.init(dataHandler);
-  if (result.isError) {
-    console.error('Data SDK init failed:', result.error);
+  try {
+    const result = await window.dataSdk.init(dataHandler);
+    if (result.isError) {
+      console.warn('Data SDK init failed:', result.error);
+      applyConfig(currentSettings);
+    }
+  } catch (err) {
+    console.warn('Data SDK init error:', err);
     applyConfig(currentSettings);
   }
 }
@@ -1549,9 +1708,16 @@ const savedTheme = localStorage.getItem('app-theme');
 if (savedTheme === 'light') {
   isDarkMode = false;
   document.body.classList.add('light-mode');
+  const themeBtn = document.getElementById('theme-btn');
+  if (themeBtn) {
+    const icon = themeBtn.querySelector('i');
+    if (icon) icon.setAttribute('data-lucide', 'sun');
+  }
+  currentSettings.theme = 'light';
 } else {
   isDarkMode = true;
   document.body.classList.remove('light-mode');
+  currentSettings.theme = 'dark';
 }
 
 // Event delegation for safe form handling
@@ -1617,10 +1783,376 @@ setInterval(() => {
   updateBandwidthStats(currentSettings);
 }, 2000);
 
-// ============ INVENTORY & POS SYSTEM ============
+// ============ WORKFLOW MANAGEMENT ============
+
+// Workflow state
+let workflowState = {
+  onboarding: {
+    currentStep: 1,
+    steps: [
+      { id: 1, name: 'Tenant Register', status: 'active' },
+      { id: 2, name: 'ISP Onboarding', status: 'pending' },
+      { id: 3, name: 'Setup Router', status: 'pending' },
+      { id: 4, name: 'MikroTik Connect', status: 'pending' },
+      { id: 5, name: 'Auto Billing', status: 'pending' },
+      { id: 6, name: 'Invoice + Payment', status: 'pending' }
+    ]
+  },
+  automation: {
+    notification: true,
+    overdue: true,
+    isolir: true,
+    isolirDays: 7,
+    payment: true,
+    unisolir: true
+  },
+  executions: [
+    { name: 'PT Cloud Asia', step: 2, duration: 0, status: 'in-progress', started: 'Today 10:45 AM' },
+    { name: 'PT Fiber Net', duration: 64*60+15, status: 'completed', started: 'Yesterday 2:30 PM' },
+    { name: 'PT Broadband Indonesia', duration: 71*60+48, status: 'completed', started: 'Yesterday 9:15 AM' },
+    { name: 'PT Connected Networks', duration: 62*60+30, status: 'completed', started: '2 days ago' }
+  ]
+};
+
+// Switch workflow tab
+function switchWorkflowTab(tab) {
+  document.getElementById('flow-onboarding-tab').classList.toggle('hidden', tab !== 'onboarding');
+  document.getElementById('flow-automation-tab').classList.toggle('hidden', tab !== 'automation');
+  document.getElementById('flow-monitoring-tab').classList.toggle('hidden', tab !== 'monitoring');
+  
+  document.querySelectorAll('.flow-tab-btn').forEach(btn => {
+    btn.classList.remove('bg-indigo-500/20', 'text-indigo-300');
+    btn.classList.add('bg-gray-700', 'text-gray-300', 'hover:bg-gray-600');
+    if (btn.dataset.tab === tab) {
+      btn.classList.add('bg-indigo-500/20', 'text-indigo-300');
+      btn.classList.remove('bg-gray-700', 'text-gray-300', 'hover:bg-gray-600');
+    }
+  });
+  
+  if (tab === 'monitoring') {
+    updateMonitoringStats();
+  }
+}
+
+// Simulate onboarding step
+function simulateOnboardingStep() {
+  const maxSteps = workflowState.onboarding.steps.length;
+  if (workflowState.onboarding.currentStep >= maxSteps) {
+    showNotification('Onboarding workflow completed!', 'success');
+    workflowState.onboarding.currentStep = 1;
+    workflowState.onboarding.steps.forEach(s => s.status = 'pending');
+    workflowState.onboarding.steps[0].status = 'active';
+    updateOnboardingDisplay();
+    return;
+  }
+  
+  // Mark current step as completed
+  workflowState.onboarding.steps[workflowState.onboarding.currentStep - 1].status = 'completed';
+  
+  // Move to next step
+  workflowState.onboarding.currentStep++;
+  workflowState.onboarding.steps[workflowState.onboarding.currentStep - 1].status = 'active';
+  
+  updateOnboardingDisplay();
+  showNotification(`Step ${workflowState.onboarding.currentStep - 1} completed → Moving to Step ${workflowState.onboarding.currentStep}`, 'success');
+}
+
+// Update onboarding display
+function updateOnboardingDisplay() {
+  const progressPercent = (workflowState.onboarding.currentStep / workflowState.onboarding.steps.length) * 100;
+  
+  const progressEl = document.getElementById('onboarding-progress');
+  if (progressEl) progressEl.textContent = progressPercent.toFixed(1) + '%';
+  
+  const progressBar = document.getElementById('onboarding-progress-bar');
+  if (progressBar) progressBar.style.width = progressPercent + '%';
+}
+
+// Save automation settings
+function saveAutomationSettings() {
+  const toggles = document.querySelectorAll('.automation-toggle');
+  toggles.forEach(toggle => {
+    const automation = toggle.dataset.automation;
+    workflowState.automation[automation] = toggle.checked;
+  });
+  
+  const isolirDaysInput = document.querySelector('.automation-toggle[data-automation="isolir"]').closest('.p-4').querySelector('input[type="number"]');
+  if (isolirDaysInput) {
+    workflowState.automation.isolirDays = parseInt(isolirDaysInput.value) || 7;
+  }
+  
+  showNotification('Automation settings saved successfully!', 'success');
+  console.log('Workflow Automation Settings:', workflowState.automation);
+}
+
+// Update monitoring stats
+function updateMonitoringStats() {
+  const completed = workflowState.executions.filter(e => e.status === 'completed').length;
+  const inProgress = workflowState.executions.filter(e => e.status === 'in-progress').length;
+  
+  const avgDuration = workflowState.executions
+    .filter(e => e.status === 'completed')
+    .reduce((sum, e) => sum + e.duration, 0) / 
+    (workflowState.executions.filter(e => e.status === 'completed').length || 1);
+  
+  const avgMinutes = Math.floor(avgDuration / 60);
+  const avgSeconds = avgDuration % 60;
+  
+  document.getElementById('flow-completed-today').textContent = completed;
+  document.getElementById('flow-in-progress').textContent = inProgress;
+  document.getElementById('flow-avg-duration').textContent = avgMinutes + 'm ' + Math.round(avgSeconds) + 's';
+  
+  // Update execution table
+  renderExecutionTable();
+}
+
+// Render execution table
+function renderExecutionTable() {
+  const tbody = document.getElementById('flow-executions-tbody');
+  tbody.innerHTML = '';
+  
+  workflowState.executions.forEach((exec, idx) => {
+    let duration = '';
+    if (exec.status === 'in-progress') {
+      duration = exec.duration + 'm ' + Math.round(Math.random() * 60) + 's';
+    } else {
+      const minutes = Math.floor(exec.duration / 60);
+      const seconds = exec.duration % 60;
+      duration = minutes + 'm ' + Math.round(seconds) + 's';
+    }
+    
+    const statusBadge = exec.status === 'in-progress'
+      ? `<span class="bg-amber-500/20 text-amber-300 px-2 py-0.5 rounded text-[10px]">In Progress (Step ${exec.step})</span>`
+      : `<span class="bg-emerald-500/20 text-emerald-300 px-2 py-0.5 rounded text-[10px]">✓ Completed</span>`;
+    
+    const row = document.createElement('tr');
+    row.className = 'border-b border-gray-800/50 hover:bg-gray-800/30 transition';
+    row.innerHTML = `
+      <td class="py-2.5 px-2">ISP Onboarding - ${exec.name}</td>
+      <td>${statusBadge}</td>
+      <td class="text-gray-400">${duration}</td>
+      <td class="text-gray-400">${exec.started}</td>
+      <td class="text-center">
+        <button onclick="viewExecutionDetails('${idx}')" class="text-indigo-400 hover:text-indigo-300 text-[10px] transition">View</button>
+      </td>
+    `;
+    tbody.appendChild(row);
+  });
+}
+
+// View execution details
+function viewExecutionDetails(idx) {
+  const exec = workflowState.executions[idx];
+  showNotification(`Viewing workflow execution for ${exec.name}. Status: ${exec.status}`, 'info');
+}
+
 let inventoryItems = [];
 let posCart = [];
 let todaysSales = [];
+let bandwidthPlans = [];
+let customersData = [];
+
+// ============ BANDWIDTH PLANS MANAGEMENT ============
+
+// Show add plan modal
+function showAddPlanModal() {
+  document.getElementById('add-plan-modal').classList.remove('hidden');
+  document.getElementById('plan-name').focus();
+}
+
+// Close add plan modal
+function closeAddPlanModal() {
+  document.getElementById('add-plan-modal').classList.add('hidden');
+  document.getElementById('plan-name').value = '';
+  document.getElementById('plan-download').value = '';
+  document.getElementById('plan-upload').value = '';
+  document.getElementById('plan-price').value = '';
+}
+
+// Save bandwidth plan
+async function saveBandwidthPlan() {
+  const name = document.getElementById('plan-name').value.trim();
+  const download = parseInt(document.getElementById('plan-download').value) || 0;
+  const upload = parseInt(document.getElementById('plan-upload').value) || 0;
+  const price = parseFloat(document.getElementById('plan-price').value) || 0;
+  
+  if (!name || download <= 0 || upload <= 0 || price <= 0) {
+    showNotification('Please fill all fields with valid values', 'error');
+    return;
+  }
+  
+  const plan = {
+    id: 'plan-' + Date.now(),
+    name: name,
+    download: download,
+    upload: upload,
+    price: price,
+    users: Math.floor(Math.random() * 500) + 100
+  };
+  
+  bandwidthPlans.push(plan);
+  renderBandwidthPlans();
+  closeAddPlanModal();
+  showNotification('Plan added successfully!', 'success');
+}
+
+// Render bandwidth plans
+function renderBandwidthPlans() {
+  const container = document.getElementById('plans-list');
+  if (!container) return;
+  
+  container.innerHTML = '';
+  
+  const defaultPlans = [
+    { name: 'Basic 10 Mbps', download: 10, upload: 5, price: 150000, users: 423 },
+    { name: 'Standard 30 Mbps', download: 30, upload: 15, price: 250000, users: 891 },
+    { name: 'Premium 50 Mbps', download: 50, upload: 25, price: 350000, users: 1024 },
+    { name: 'Business 100 Mbps', download: 100, upload: 50, price: 550000, users: 509 }
+  ];
+  
+  const allPlans = [...defaultPlans, ...bandwidthPlans];
+  
+  allPlans.forEach(plan => {
+    const div = document.createElement('div');
+    div.className = 'flex items-center justify-between p-3 bg-gray-800/50 rounded-lg card-hover';
+    div.innerHTML = `
+      <div>
+        <p class="text-xs font-medium">${plan.name}</p>
+        <p class="text-[10px] text-gray-500">${plan.download}M/${plan.upload}M • ${plan.users} users</p>
+      </div>
+      <div class="flex items-center gap-2">
+        <span class="text-xs text-emerald-400">Rp ${plan.price.toLocaleString('id-ID')}</span>
+        ${bandwidthPlans.includes(plan) ? `<button onclick="deleteBandwidthPlan('${plan.id}')" class="text-red-400 hover:text-red-300 text-xs">✕</button>` : ''}
+      </div>
+    `;
+    container.appendChild(div);
+  });
+}
+
+// Delete bandwidth plan
+function deleteBandwidthPlan(planId) {
+  bandwidthPlans = bandwidthPlans.filter(p => p.id !== planId);
+  renderBandwidthPlans();
+  showNotification('Plan deleted', 'success');
+}
+
+// ============ CUSTOMERS MANAGEMENT ============
+
+// Show add customer modal
+function showAddCustomerModal() {
+  document.getElementById('add-customer-modal').classList.remove('hidden');
+  document.getElementById('customer-name').focus();
+}
+
+// Close add customer modal
+function closeAddCustomerModal() {
+  document.getElementById('add-customer-modal').classList.add('hidden');
+  document.getElementById('customer-name').value = '';
+  document.getElementById('customer-phone').value = '';
+  document.getElementById('customer-email').value = '';
+  document.getElementById('customer-address').value = '';
+}
+
+// Save new customer
+async function saveNewCustomer() {
+  const name = document.getElementById('customer-name').value.trim();
+  const phone = document.getElementById('customer-phone').value.trim();
+  const email = document.getElementById('customer-email').value.trim();
+  const plan = document.getElementById('customer-plan').value;
+  const address = document.getElementById('customer-address').value.trim();
+  
+  if (!name || !phone || !email || !address) {
+    showNotification('Please fill all fields', 'error');
+    return;
+  }
+  
+  const customer = {
+    id: 'customer-' + Date.now() + '-' + Math.random().toString(36).substr(2, 9),
+    name: name,
+    phone: phone,
+    email: email,
+    plan: plan.split(' - ')[0],
+    address: address,
+    pppoe: `pppoe-${name.toLowerCase().replace(/\s+/g, '')}`,
+    status: 'active',
+    created_at: new Date().toISOString()
+  };
+  
+  if (window.dataSdk) {
+    try {
+      const result = await window.dataSdk.create(customer);
+      if (result.isError) {
+        showNotification('Failed to add customer: ' + (result.error?.message || 'Unknown error'), 'error');
+        return;
+      }
+    } catch (err) {
+      console.error('Add customer error:', err);
+    }
+  }
+  
+  customersData.push(customer);
+  renderCustomersTable();
+  closeAddCustomerModal();
+  showNotification('Customer added successfully!', 'success');
+}
+
+// Render customers table
+function renderCustomersTable() {
+  const tbody = document.querySelector('#page-customers tbody');
+  if (!tbody) return;
+  
+  tbody.innerHTML = '';
+  
+  customersData.forEach(customer => {
+    const statusBadge = customer.status === 'active' 
+      ? '<span class="bg-emerald-500/20 text-emerald-300 px-2 py-0.5 rounded text-[10px]">Active</span>'
+      : '<span class="bg-red-500/20 text-red-300 px-2 py-0.5 rounded text-[10px]">Isolated</span>';
+    
+    const row = document.createElement('tr');
+    row.className = 'border-b border-gray-800/50 hover:bg-gray-800/30 transition';
+    row.innerHTML = `
+      <td class="py-2.5">${customer.name}</td>
+      <td>${customer.plan}</td>
+      <td>${customer.pppoe}</td>
+      <td>${statusBadge}</td>
+      <td class="text-right">
+        <button onclick="deleteCustomer('${customer.id}')" class="text-red-400 hover:text-red-300 text-xs">Remove</button>
+      </td>
+    `;
+    tbody.appendChild(row);
+  });
+}
+
+// Delete customer
+function deleteCustomer(customerId) {
+  if (window.dataSdk) {
+    const customer = customersData.find(c => c.id === customerId);
+    if (customer && customer.__backendId) {
+      window.dataSdk.delete(customer).catch(err => console.error('Delete error:', err));
+    }
+  }
+  
+  customersData = customersData.filter(c => c.id !== customerId);
+  renderCustomersTable();
+  showNotification('Customer removed', 'success');
+}
+
+// Export customers to CSV
+function exportCustomersCSV() {
+  if (customersData.length === 0) {
+    showNotification('No customers to export', 'error');
+    return;
+  }
+  
+  let csv = 'Name,Phone,Email,Plan,PPPoE,Status,Address\n';
+  
+  customersData.forEach(customer => {
+    csv += `"${customer.name}","${customer.phone}","${customer.email}","${customer.plan}","${customer.pppoe}","${customer.status}","${customer.address}"\n`;
+  });
+  
+  downloadFile(csv, `customers_${new Date().toISOString().split('T')[0]}.csv`, 'text/csv');
+  showNotification('Customers exported successfully!', 'success');
+}
 
 // Switch inventory tab
 function switchInventoryTab(tab) {
@@ -1650,17 +2182,17 @@ async function addInventoryItem() {
   const qty = parseInt(document.getElementById('inv-quantity').value) || 0;
   
   if (!name || !sku || price <= 0 || qty <= 0) {
-    alert('Please fill all fields with valid values');
+    showNotification('Please fill all fields with valid values', 'error');
     return;
   }
   
   const item = {
-    id: 'item-' + Date.now(),
+    id: 'item-' + Date.now() + '-' + Math.random().toString(36).substr(2, 9),
     item_name: name,
     sku: sku,
     category: category,
-    unit_price: price,
     quantity: qty,
+    unit_price: price,
     reorder_level: 10,
     status: qty <= 10 ? 'low' : 'ok'
   };
@@ -1669,13 +2201,16 @@ async function addInventoryItem() {
     try {
       const result = await window.dataSdk.create(item);
       if (result.isOk) {
-        inventoryItems.push(item);
-        renderInventoryTable();
-        updateInventoryStats();
+        showNotification('Item added successfully!', 'success');
         document.getElementById('inv-item-name').value = '';
         document.getElementById('inv-sku').value = '';
         document.getElementById('inv-unit-price').value = '';
         document.getElementById('inv-quantity').value = '';
+      } else {
+        showNotification('Failed to add item: ' + (result.error?.message || 'Unknown error'), 'error');
+        inventoryItems.push(item);
+        renderInventoryTable();
+        updateInventoryStats();
       }
     } catch (err) {
       console.error('Add item error:', err);
@@ -1688,6 +2223,19 @@ async function addInventoryItem() {
     renderInventoryTable();
     updateInventoryStats();
   }
+}
+
+// Show notification
+function showNotification(message, type = 'info') {
+  const notif = document.createElement('div');
+  notif.className = `fixed top-4 right-4 px-4 py-2 rounded-lg text-sm font-medium z-50 animate-pulse ${
+    type === 'success' ? 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/40' :
+    type === 'error' ? 'bg-red-500/20 text-red-300 border border-red-500/40' :
+    'bg-indigo-500/20 text-indigo-300 border border-indigo-500/40'
+  }`;
+  notif.textContent = message;
+  document.body.appendChild(notif);
+  setTimeout(() => notif.remove(), 3000);
 }
 
 // Render inventory table
@@ -1736,15 +2284,22 @@ async function deleteInventoryItem(itemId) {
   
   if (window.dataSdk && item.__backendId) {
     try {
-      await window.dataSdk.delete(item);
+      const result = await window.dataSdk.delete(item);
+      if (result.isError) {
+        showNotification('Failed to delete item', 'error');
+        return;
+      }
     } catch (err) {
       console.error('Delete error:', err);
+      showNotification('Error deleting item', 'error');
+      return;
     }
   }
   
   inventoryItems = inventoryItems.filter(i => i.id !== itemId);
   renderInventoryTable();
   updateInventoryStats();
+  showNotification('Item deleted', 'success');
 }
 
 // Update inventory stats
@@ -1876,7 +2431,7 @@ function clearPOSCart() {
 // Complete POS sale
 async function completePOSSale() {
   if (posCart.length === 0) {
-    alert('Cart is empty');
+    showNotification('Cart is empty', 'error');
     return;
   }
   
@@ -1886,43 +2441,65 @@ async function completePOSSale() {
   const paymentMethod = document.querySelector('input[name="payment-method"]:checked').value;
   
   const sale = {
-    id: 'sale-' + Date.now(),
+    id: 'sale-' + Date.now() + '-' + Math.random().toString(36).substr(2, 9),
     sale_id: 'SALE-' + Date.now().toString().slice(-8),
     sale_date: new Date().toISOString(),
     sale_total: total,
-    sale_status: 'completed',
+    payment_method: paymentMethod,
+    discount: discount,
     items: posCart.map(item => ({
       name: item.item_name,
       quantity: item.cart_quantity,
       price: item.unit_price
-    })),
-    method: paymentMethod,
-    discount: discount
+    }))
   };
   
-  // Update inventory quantities
+  // Update inventory quantities and prepare updates
+  const itemUpdates = [];
   posCart.forEach(cartItem => {
     const invItem = inventoryItems.find(i => i.id === cartItem.id);
-    if (invItem) {
+    if (invItem && invItem.__backendId) {
       invItem.quantity -= cartItem.cart_quantity;
       invItem.status = invItem.quantity <= invItem.reorder_level ? 'low' : 'ok';
+      itemUpdates.push(invItem);
     }
   });
   
   if (window.dataSdk) {
     try {
-      await window.dataSdk.create(sale);
+      // Create sale record
+      const saleResult = await window.dataSdk.create(sale);
+      if (saleResult.isError) {
+        showNotification('Failed to save sale', 'error');
+        return;
+      }
+      
+      // Update inventory items
+      for (const item of itemUpdates) {
+        try {
+          await window.dataSdk.update(item);
+        } catch (err) {
+          console.error('Update item error:', err);
+        }
+      }
+      
+      showNotification('Sale completed successfully!', 'success');
+      todaysSales.push(sale);
+      clearPOSCart();
+      renderPOSProducts();
+      updateInventoryStats();
+      renderInventoryTable();
     } catch (err) {
-      console.error('Sale save error:', err);
+      console.error('Sale error:', err);
+      showNotification('Error completing sale', 'error');
     }
+  } else {
+    todaysSales.push(sale);
+    clearPOSCart();
+    renderPOSProducts();
+    updateInventoryStats();
+    renderInventoryTable();
   }
-  
-  todaysSales.push(sale);
-  renderSalesHistory();
-  clearPOSCart();
-  renderPOSProducts();
-  updateInventoryStats();
-  renderInventoryTable();
 }
 
 // Render sales history
@@ -2041,347 +2618,235 @@ function printReceipt(saleId) {
   }
 }
 
+// ============ IMPORT/EXPORT FUNCTIONS ============
+
+// Export inventory to CSV
+function exportInventoryCSV() {
+  if (inventoryItems.length === 0) {
+    showNotification('No inventory items to export', 'error');
+    return;
+  }
+  
+  let csv = 'Item Name,SKU,Category,Quantity,Unit Price,Total Value,Status\n';
+  
+  inventoryItems.forEach(item => {
+    const totalValue = item.quantity * item.unit_price;
+    csv += `"${item.item_name}","${item.sku}","${item.category}",${item.quantity},${item.unit_price},${totalValue},"${item.status}"\n`;
+  });
+  
+  downloadFile(csv, `inventory_${new Date().toISOString().split('T')[0]}.csv`, 'text/csv');
+  showNotification('Inventory exported successfully!', 'success');
+}
+
+// Import inventory from CSV
+function importInventoryCSV(file) {
+  const reader = new FileReader();
+  reader.onload = async (e) => {
+    try {
+      const csv = e.target.result;
+      const lines = csv.trim().split('\n');
+      const headers = lines[0].split(',').map(h => h.trim().toLowerCase());
+      
+      let imported = 0;
+      for (let i = 1; i < lines.length; i++) {
+        if (!lines[i].trim()) continue;
+        
+        const values = parseCSVLine(lines[i]);
+        const item = {
+          id: 'item-' + Date.now() + '-' + Math.random().toString(36).substr(2, 9),
+          item_name: values[0]?.replace(/"/g, '') || '',
+          sku: values[1]?.replace(/"/g, '') || '',
+          category: values[2]?.replace(/"/g, '') || 'Hardware',
+          quantity: parseInt(values[3]) || 0,
+          unit_price: parseFloat(values[4]) || 0,
+          reorder_level: 10,
+          status: (parseInt(values[3]) || 0) <= 10 ? 'low' : 'ok'
+        };
+        
+        if (item.item_name && item.sku && item.unit_price > 0) {
+          if (window.dataSdk) {
+            const result = await window.dataSdk.create(item);
+            if (result.isOk) imported++;
+          } else {
+            inventoryItems.push(item);
+            imported++;
+          }
+        }
+      }
+      
+      showNotification(`${imported} items imported successfully!`, 'success');
+      renderInventoryTable();
+      updateInventoryStats();
+    } catch (err) {
+      console.error('Import error:', err);
+      showNotification('Error importing file: ' + err.message, 'error');
+    }
+  };
+  reader.readAsText(file);
+}
+
+// Export sales to CSV
+function exportSalesCSV() {
+  if (todaysSales.length === 0) {
+    showNotification('No sales to export', 'error');
+    return;
+  }
+  
+  let csv = 'Sale ID,Date,Time,Amount,Discount,Total,Payment Method,Items\n';
+  
+  todaysSales.forEach(sale => {
+    const date = new Date(sale.sale_date);
+    const itemsStr = sale.items?.map(i => `${i.name}(${i.quantity}x)`).join(';') || '';
+    csv += `"${sale.sale_id}","${date.toLocaleDateString('id-ID')}","${date.toLocaleTimeString('id-ID')}",${sale.sale_total},${sale.discount},${sale.sale_total},"${sale.payment_method}","${itemsStr}"\n`;
+  });
+  
+  downloadFile(csv, `sales_${new Date().toISOString().split('T')[0]}.csv`, 'text/csv');
+  showNotification('Sales exported successfully!', 'success');
+}
+
+// Export all data to JSON
+function exportAllData() {
+  const allData = {
+    exported_at: new Date().toISOString(),
+    platform: currentSettings.platform_name,
+    inventory: inventoryItems,
+    sales: todaysSales,
+    settings: currentSettings
+  };
+  
+  const json = JSON.stringify(allData, null, 2);
+  downloadFile(json, `netbill_backup_${new Date().toISOString().split('T')[0]}.json`, 'application/json');
+  showNotification('Full backup exported successfully!', 'success');
+}
+
+// Import all data from JSON
+function importAllData(file) {
+  const reader = new FileReader();
+  reader.onload = async (e) => {
+    try {
+      const data = JSON.parse(e.target.result);
+      
+      if (!data.inventory && !data.sales) {
+        showNotification('Invalid backup file format', 'error');
+        return;
+      }
+      
+      let imported = 0;
+      
+      // Import inventory items
+      if (data.inventory && Array.isArray(data.inventory)) {
+        for (const item of data.inventory) {
+          const newItem = {
+            id: 'item-' + Date.now() + '-' + Math.random().toString(36).substr(2, 9),
+            item_name: item.item_name,
+            sku: item.sku,
+            category: item.category,
+            quantity: item.quantity,
+            unit_price: item.unit_price,
+            reorder_level: item.reorder_level || 10,
+            status: item.status
+          };
+          
+          if (window.dataSdk) {
+            const result = await window.dataSdk.create(newItem);
+            if (result.isOk) imported++;
+          } else {
+            inventoryItems.push(newItem);
+            imported++;
+          }
+        }
+      }
+      
+      // Import sales
+      if (data.sales && Array.isArray(data.sales)) {
+        for (const sale of data.sales) {
+          const newSale = {
+            id: 'sale-' + Date.now() + '-' + Math.random().toString(36).substr(2, 9),
+            sale_id: sale.sale_id,
+            sale_date: sale.sale_date,
+            sale_total: sale.sale_total,
+            payment_method: sale.payment_method,
+            discount: sale.discount,
+            items: sale.items
+          };
+          
+          if (window.dataSdk) {
+            const result = await window.dataSdk.create(newSale);
+            if (result.isOk) imported++;
+          } else {
+            todaysSales.push(newSale);
+            imported++;
+          }
+        }
+      }
+      
+      showNotification(`${imported} records imported from backup!`, 'success');
+      renderInventoryTable();
+      renderSalesHistory();
+      updateInventoryStats();
+    } catch (err) {
+      console.error('Import error:', err);
+      showNotification('Error importing backup: ' + err.message, 'error');
+    }
+  };
+  reader.readAsText(file);
+}
+
+// Helper: Download file
+function downloadFile(content, filename, type) {
+  const blob = new Blob([content], { type });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = filename;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+}
+
+// Helper: Parse CSV line (handles quoted values)
+function parseCSVLine(line) {
+  const result = [];
+  let current = '';
+  let inQuotes = false;
+  
+  for (let i = 0; i < line.length; i++) {
+    const char = line[i];
+    
+    if (char === '"') {
+      inQuotes = !inQuotes;
+    } else if (char === ',' && !inQuotes) {
+      result.push(current);
+      current = '';
+    } else {
+      current += char;
+    }
+  }
+  
+  result.push(current);
+  return result;
+}
+
+// Handle file input for imports
+document.addEventListener('change', (e) => {
+  if (e.target.id === 'import-inventory-file') {
+    if (e.target.files[0]) {
+      importInventoryCSV(e.target.files[0]);
+      e.target.value = '';
+    }
+  } else if (e.target.id === 'import-backup-file') {
+    if (e.target.files[0]) {
+      importAllData(e.target.files[0]);
+      e.target.value = '';
+    }
+  }
+});
+
 // Initialize icons
 if (window.lucide) {
   lucide.createIcons();
 }
 </script>
- <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9f7875d3a6aa5cdc',t:'MTc3ODA3NTQ5My4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
-</html>
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ISP Billing Login - NetBill Pro</title>
-    <script src="https://cdn.tailwindcss.com/3.4.17"></script>
-    <script src="https://cdn.jsdelivr.net/npm/lucide@0.263.0/dist/umd/lucide.min.js"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    fontFamily: { jakarta: ['Plus Jakarta Sans', 'sans-serif'] }
-                }
-            }
-        }
-    </script>
-    <style>
-        * { font-family: 'Plus Jakarta Sans', sans-serif; }
-        body { background: linear-gradient(135deg, #0f1629 0%, #0a0e1a 100%); }
-        .login-container {
-            background: linear-gradient(135deg, #1a202c 0%, #0f1629 100%);
-            border: 1px solid rgba(99, 102, 241, 0.2);
-            backdrop-filter: blur(10px);
-        }
-        .input-field {
-            background: rgba(31, 41, 55, 0.8);
-            border: 1px solid rgba(75, 85, 99, 0.4);
-            transition: all 0.3s;
-        }
-        .input-field:focus {
-            outline: none;
-            border-color: #6366f1;
-            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
-            background: rgba(31, 41, 55, 0.95);
-        }
-        .login-btn {
-            background: linear-gradient(135deg, #6366f1, #8b5cf6);
-            transition: all 0.3s;
-        }
-        .login-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 25px rgba(99, 102, 241, 0.4);
-        }
-        .login-btn:active {
-            transform: translateY(0);
-        }
-        .login-btn:disabled {
-            opacity: 0.6;
-            cursor: not-allowed;
-        }
-        .error-message {
-            background: rgba(239, 68, 68, 0.1);
-            border: 1px solid rgba(239, 68, 68, 0.3);
-            color: #fca5a5;
-            display: none;
-        }
-        .error-message.show {
-            display: block;
-        }
-        .success-message {
-            background: rgba(16, 185, 129, 0.1);
-            border: 1px solid rgba(16, 185, 129, 0.3);
-            color: #a7f3d0;
-            display: none;
-        }
-        .success-message.show {
-            display: block;
-        }
-        .remember-checkbox {
-            width: 18px;
-            height: 18px;
-            accent-color: #6366f1;
-        }
-        .form-divider {
-            background: linear-gradient(to right, transparent, rgba(99, 102, 241, 0.2), transparent);
-        }
-    </style>
-</head>
-<body class="min-h-screen flex items-center justify-center p-4">
-    <div class="w-full max-w-md">
-        <!-- Logo & Header -->
-        <div class="text-center mb-8">
-            <div class="flex items-center justify-center mb-4">
-                <div class="w-16 h-16 rounded-xl bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center">
-                    <i data-lucide="wifi" class="w-8 h-8 text-white"></i>
-                </div>
-            </div>
-            <h1 class="text-3xl font-bold text-white mb-2">NetBill Pro</h1>
-            <p class="text-gray-400 text-sm">ISP Billing Management System</p>
-        </div>
-
-        <!-- Login Form Container -->
-        <div class="login-container rounded-2xl p-8 shadow-2xl">
-            <!-- Error Message -->
-            <div id="errorMessage" class="error-message rounded-lg p-4 mb-6 flex items-center gap-3">
-                <i data-lucide="alert-circle" class="w-5 h-5"></i>
-                <span id="errorText"></span>
-            </div>
-
-            <!-- Success Message -->
-            <div id="successMessage" class="success-message rounded-lg p-4 mb-6 flex items-center gap-3">
-                <i data-lucide="check-circle" class="w-5 h-5"></i>
-                <span id="successText">Login berhasil! Redirecting...</span>
-            </div>
-
-            <form id="loginForm" onsubmit="handleLogin(event)">
-                <!-- Email / Username Field -->
-                <div class="mb-5">
-                    <label for="email" class="block text-sm font-medium text-gray-300 mb-2">Email atau Username</label>
-                    <div class="relative">
-                        <i data-lucide="mail" class="absolute left-3 top-3 w-5 h-5 text-gray-500"></i>
-                        <input 
-                            type="text" 
-                            id="email" 
-                            name="email" 
-                            placeholder="admin@isp.net atau username" 
-                            class="input-field w-full pl-10 pr-4 py-3 rounded-lg text-white placeholder-gray-600"
-                            required
-                            autocomplete="email"
-                        >
-                    </div>
-                    <span id="emailError" class="text-red-400 text-xs mt-1 block hidden"></span>
-                </div>
-
-                <!-- Password Field -->
-                <div class="mb-6">
-                    <label for="password" class="block text-sm font-medium text-gray-300 mb-2">Password</label>
-                    <div class="relative">
-                        <i data-lucide="lock" class="absolute left-3 top-3 w-5 h-5 text-gray-500"></i>
-                        <input 
-                            type="password" 
-                            id="password" 
-                            name="password" 
-                            placeholder="Masukkan password Anda" 
-                            class="input-field w-full pl-10 pr-12 py-3 rounded-lg text-white placeholder-gray-600"
-                            required
-                            autocomplete="current-password"
-                        >
-                        <button 
-                            type="button" 
-                            onclick="togglePasswordVisibility()" 
-                            class="absolute right-3 top-3 text-gray-500 hover:text-gray-300 transition"
-                        >
-                            <i data-lucide="eye" class="w-5 h-5" id="eyeIcon"></i>
-                        </button>
-                    </div>
-                    <span id="passwordError" class="text-red-400 text-xs mt-1 block hidden"></span>
-                </div>
-
-                <!-- Remember & Forgot Password -->
-                <div class="flex items-center justify-between mb-6">
-                    <label class="flex items-center gap-2 cursor-pointer">
-                        <input 
-                            type="checkbox" 
-                            id="rememberMe" 
-                            name="remember_me" 
-                            class="remember-checkbox rounded"
-                        >
-                        <span class="text-sm text-gray-400">Ingat saya</span>
-                    </label>
-                    <a href="#" class="text-xs text-indigo-400 hover:text-indigo-300 transition">Lupa password?</a>
-                </div>
-
-                <!-- Login Button -->
-                <button 
-                    type="submit" 
-                    id="loginBtn" 
-                    class="login-btn w-full py-3 bg-gradient-to-r from-indigo-600 to-purple-600 text-white font-semibold rounded-lg flex items-center justify-center gap-2"
-                >
-                    <i data-lucide="log-in" class="w-5 h-5"></i>
-                    <span id="btnText">Masuk</span>
-                </button>
-            </form>
-
-            <!-- Divider -->
-            <div class="form-divider h-px my-6"></div>
-
-            <!-- Additional Links -->
-            <div class="space-y-2">
-                <button type="button" class="w-full py-2.5 border border-gray-700 hover:border-gray-600 rounded-lg text-gray-300 text-sm transition flex items-center justify-center gap-2">
-                    <i data-lucide="shield" class="w-4 h-4"></i>
-                    Daftar Akun Baru
-                </button>
-                <button type="button" class="w-full py-2.5 border border-gray-700 hover:border-gray-600 rounded-lg text-gray-300 text-sm transition flex items-center justify-center gap-2">
-                    <i data-lucide="headphones" class="w-4 h-4"></i>
-                    Hubungi Support
-                </button>
-            </div>
-        </div>
-
-        <!-- Footer -->
-        <div class="text-center mt-8">
-            <p class="text-gray-500 text-xs mb-3">Informasi Keamanan</p>
-            <div class="flex items-center justify-center gap-3 text-xs text-gray-600">
-                <span class="flex items-center gap-1">
-                    <i data-lucide="shield-check" class="w-4 h-4 text-green-500"></i>
-                    SSL Encrypted
-                </span>
-                <span class="text-gray-700">•</span>
-                <span class="flex items-center gap-1">
-                    <i data-lucide="lock" class="w-4 h-4 text-blue-500"></i>
-                    Password Protected
-                </span>
-                <span class="text-gray-700">•</span>
-                <span class="flex items-center gap-1">
-                    <i data-lucide="eye-off" class="w-4 h-4 text-purple-500"></i>
-                    Private
-                </span>
-            </div>
-        </div>
-    </div>
-
-    <script>
-        // Initialize Lucide icons
-        lucide.createIcons();
-
-        // Toggle password visibility
-        function togglePasswordVisibility() {
-            const passwordField = document.getElementById('password');
-            const eyeIcon = document.getElementById('eyeIcon');
-            
-            if (passwordField.type === 'password') {
-                passwordField.type = 'text';
-                eyeIcon.setAttribute('data-lucide', 'eye-off');
-            } else {
-                passwordField.type = 'password';
-                eyeIcon.setAttribute('data-lucide', 'eye');
-            }
-            lucide.createIcons();
-        }
-
-        // Handle login
-        async function handleLogin(event) {
-            event.preventDefault();
-            
-            const email = document.getElementById('email').value.trim();
-            const password = document.getElementById('password').value;
-            const rememberMe = document.getElementById('rememberMe').checked;
-            const loginBtn = document.getElementById('loginBtn');
-            const errorMessage = document.getElementById('errorMessage');
-            const successMessage = document.getElementById('successMessage');
-            const btnText = document.getElementById('btnText');
-            
-            // Clear previous messages
-            errorMessage.classList.remove('show');
-            successMessage.classList.remove('show');
-            
-            // Validation
-            if (!email || !password) {
-                showError('Email dan password tidak boleh kosong');
-                return;
-            }
-            
-            if (password.length < 6) {
-                showError('Password minimal 6 karakter');
-                return;
-            }
-            
-            // Disable button during login
-            loginBtn.disabled = true;
-            btnText.textContent = 'Sedang masuk...';
-            
-            try {
-                // Replace this with your actual Laravel API endpoint
-                const response = await fetch('/api/login', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Accept': 'application/json',
-                        'X-Requested-With': 'XMLHttpRequest'
-                    },
-                    credentials: 'include',
-                    body: JSON.stringify({
-                        email: email,
-                        password: password,
-                        remember: rememberMe
-                    })
-                });
-                
-                const data = await response.json();
-                
-                if (response.ok) {
-                    // Login successful
-                    successMessage.classList.add('show');
-                    
-                    // Save token if provided
-                    if (data.token) {
-                        localStorage.setItem('auth_token', data.token);
-                        localStorage.setItem('user', JSON.stringify(data.user));
-                    }
-                    
-                    // Redirect after 1.5 seconds
-                    setTimeout(() => {
-                        window.location.href = data.redirect || '/dashboard';
-                    }, 1500);
-                } else {
-                    // Login failed
-                    showError(data.message || 'Login gagal. Periksa email dan password Anda.');
-                    loginBtn.disabled = false;
-                    btnText.textContent = 'Masuk';
-                }
-            } catch (error) {
-                console.error('Login error:', error);
-                showError('Terjadi kesalahan. Silakan coba lagi.');
-                loginBtn.disabled = false;
-                btnText.textContent = 'Masuk';
-            }
-        }
-        
-        // Show error message
-        function showError(message) {
-            const errorMessage = document.getElementById('errorMessage');
-            const errorText = document.getElementById('errorText');
-            errorText.textContent = message;
-            errorMessage.classList.add('show');
-            
-            // Auto-hide after 5 seconds
-            setTimeout(() => {
-                errorMessage.classList.remove('show');
-            }, 5000);
-        }
-        
-        // Check if user is already logged in
-        window.addEventListener('DOMContentLoaded', () => {
-            const token = localStorage.getItem('auth_token');
-            if (token) {
-                // User is already logged in, redirect to dashboard
-                window.location.href = '/dashboard';
-            }
-            lucide.createIcons();
-        });
-    </script>
-</body>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9f78b6b0858b5cdc',t:'MTc3ODA3ODE0OS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>

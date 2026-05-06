@@ -41,30 +41,32 @@ tailwind.config = {
 .status-warning { background: #f59e0b; box-shadow: 0 0 8px #f59e0b; }
 .status-offline { background: #ef4444; box-shadow: 0 0 8px #ef4444; }
 /* Light Mode */
-body.light-mode { @apply bg-gray-50 text-gray-900; }
-body.light-mode #app { @apply bg-gray-50; }
-body.light-mode #app aside { @apply bg-white border-gray-200 shadow-sm; }
-body.light-mode #app aside .sidebar-item { @apply text-gray-700; }
-body.light-mode #app aside .sidebar-item:hover { @apply bg-indigo-50; }
-body.light-mode #app aside .sidebar-item.active { @apply bg-indigo-50 text-indigo-600 border-r-indigo-600; }
-body.light-mode #app header { @apply bg-white border-gray-200 shadow-sm; }
-body.light-mode .gradient-border > div { @apply bg-white; }
-body.light-mode .bg-\[\#0f1629\] { @apply bg-white border-gray-200; }
-body.light-mode .bg-\[\#0a0e1a\] { @apply bg-gray-50; }
-body.light-mode .border-gray-800 { @apply border-gray-200; }
-body.light-mode .text-gray-400 { @apply text-gray-600; }
-body.light-mode .text-gray-500 { @apply text-gray-700; }
-body.light-mode .text-gray-300 { @apply text-gray-800; }
-body.light-mode .bg-gray-800 { @apply bg-gray-100 border-gray-300; }
-body.light-mode .bg-gray-800\/50 { @apply bg-gray-100/50; }
-body.light-mode button { @apply transition-all duration-200; }
-body.light-mode .card-hover { @apply shadow-sm; }
-body.light-mode .card-hover:hover { @apply shadow-md; }
-body.light-mode input, body.light-mode textarea, body.light-mode select { @apply bg-white border-gray-300 text-gray-900; }
-body.light-mode input:focus, body.light-mode textarea:focus, body.light-mode select:focus { @apply border-indigo-500 ring-1 ring-indigo-500; }
-body.light-mode button:not(.settings-tab) { @apply text-white; }
-body.light-mode .toggle-slider { @apply bg-gray-300; }
-body.light-mode .toggle-slider:before { @apply bg-white; }
+body.light-mode { background-color: #f8fafc; color: #111827; }
+body.light-mode #app { background-color: #f8fafc; }
+body.light-mode #app aside { background-color: #ffffff; border-color: #e5e7eb; box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05); }
+body.light-mode #app aside .sidebar-item { color: #374151; }
+body.light-mode #app aside .sidebar-item:hover { background-color: #eef2ff; }
+body.light-mode #app aside .sidebar-item.active { background-color: #eef2ff; color: #4f46e5; border-right-color: #4f46e5; }
+body.light-mode #app header { background-color: #ffffff; border-color: #e5e7eb; box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05); }
+body.light-mode .gradient-border > div { background-color: #ffffff; }
+body.light-mode .bg-\[\#0f1629\] { background-color: #ffffff; border-color: #e5e7eb; }
+body.light-mode .bg-\[\#0a0e1a\] { background-color: #f8fafc; }
+body.light-mode .border-gray-800 { border-color: #e5e7eb; }
+body.light-mode .text-gray-400 { color: #4b5563; }
+body.light-mode .text-gray-500 { color: #374151; }
+body.light-mode .text-gray-300 { color: #1f2937; }
+body.light-mode .bg-gray-800 { background-color: #f3f4f6; border-color: #d1d5db; }
+body.light-mode .bg-gray-800\/50 { background-color: rgba(243, 244, 246, 0.5); }
+body.light-mode button { transition: all; transition-duration: 200ms; }
+body.light-mode .card-hover { box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05); }
+body.light-mode .card-hover:hover { box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); }
+body.light-mode input, body.light-mode textarea, body.light-mode select { background-color: #ffffff; border-color: #d1d5db; color: #111827; }
+body.light-mode input:focus, body.light-mode textarea:focus, body.light-mode select:focus { border-color: #6366f1; box-shadow: 0 0 0 1px #6366f1; }
+body.light-mode button:not(.settings-tab) { color: #111827; }
+body.light-mode button i { color: #111827; }
+body.light-mode .toggle-slider { background-color: #d1d5db; }
+body.light-mode .toggle-slider:before { background-color: #ffffff; }
+body.light-mode #theme-btn i { color: #374151; }
 .toggle-switch { position: relative; display: inline-block; width: 40px; height: 20px; }
 .toggle-switch input { opacity: 0; width: 0; height: 0; }
 .toggle-slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #cbd5e1; transition: 0.3s; border-radius: 10px; }
@@ -72,10 +74,55 @@ body.light-mode .toggle-slider:before { @apply bg-white; }
 input:checked + .toggle-slider { background-color: #6366f1; }
 input:checked + .toggle-slider:before { transform: translateX(20px); }
   </style>
-  <style>body { box-sizing: border-box; }</style>
+  <style>
+body { box-sizing: border-box; }
+#login-form { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: linear-gradient(135deg, #0f1629 0%, #0a0e1a 100%); display: flex; align-items: center; justify-content: center; z-index: 9999; }
+.login-container { background: linear-gradient(135deg, #1a202c 0%, #0f1629 100%); border: 1px solid rgba(99, 102, 241, 0.2); border-radius: 16px; padding: 40px; width: 100%; max-width: 400px; box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6), 0 0 40px rgba(99, 102, 241, 0.1); }
+.login-header { text-align: center; margin-bottom: 30px; }
+.login-header h1 { font-size: 28px; font-weight: bold; background: linear-gradient(135deg, #6366f1, #06b6d4); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; margin: 0; }
+.login-header p { color: #9ca3af; font-size: 14px; margin: 8px 0 0 0; }
+.form-group { margin-bottom: 20px; }
+.form-group label { display: block; color: #e5e7eb; font-size: 14px; font-weight: 500; margin-bottom: 8px; }
+.form-group input { width: 100%; padding: 12px 14px; background: rgba(31, 41, 55, 0.8); border: 1px solid rgba(75, 85, 99, 0.4); border-radius: 8px; color: white; font-size: 14px; transition: all 0.3s; box-sizing: border-box; }
+.form-group input:focus { outline: none; border-color: #6366f1; box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1); background: rgba(31, 41, 55, 0.95); }
+.form-group input::placeholder { color: #6b7280; }
+.login-btn { width: 100%; padding: 12px; background: linear-gradient(135deg, #6366f1, #8b5cf6); color: white; border: none; border-radius: 8px; font-size: 15px; font-weight: 600; cursor: pointer; transition: all 0.3s; margin-top: 10px; }
+.login-btn:hover { transform: translateY(-2px); box-shadow: 0 10px 25px rgba(99, 102, 241, 0.4); }
+.login-btn:active { transform: translateY(0); }
+.login-btn:disabled { opacity: 0.6; cursor: not-allowed; }
+.login-error { background: rgba(239, 68, 68, 0.1); border: 1px solid rgba(239, 68, 68, 0.3); color: #fca5a5; padding: 10px 12px; border-radius: 6px; font-size: 13px; margin-bottom: 15px; display: none; }
+.login-error.show { display: block; }
+.login-footer { text-align: center; margin-top: 20px; font-size: 12px; color: #6b7280; }
+#app { display: none; }
+#app.authenticated { display: flex; }
+  </style>
   <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
  </head>
  <body class="h-full bg-[#0a0e1a] text-gray-200 overflow-hidden">
+  <!-- Login Form -->
+  <div id="login-form">
+    <div class="login-container">
+      <div class="login-header">
+        <h1>NetBill Pro</h1>
+        <p>ISP Management Platform</p>
+      </div>
+      <div id="login-error" class="login-error"></div>
+      <form id="login-form-element" onsubmit="handleLogin(event)">
+        <div class="form-group">
+          <label for="username">Username</label>
+          <input type="text" id="username" name="username" placeholder="Enter your username" required autocomplete="username">
+        </div>
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input type="password" id="password" name="password" placeholder="Enter your password" required autocomplete="current-password">
+        </div>
+        <button type="submit" class="login-btn" id="login-btn">Sign In</button>
+      </form>
+      <div class="login-footer">
+        <p>Demo credentials: admin / password123</p>
+      </div>
+    </div>
+  </div>
   <div id="app" class="h-full w-full flex">
    <!-- Sidebar -->
    <aside class="w-64 bg-[#0f1629] border-r border-gray-800 flex flex-col h-full shrink-0">
@@ -128,12 +175,12 @@ input:checked + .toggle-slider:before { transform: translateX(20px); }
      </div>
     </nav>
     <div class="p-4 border-t border-gray-800">
-     <div class="flex items-center gap-3">
+     <div class="flex items-center gap-3 mb-3">
       <div class="w-8 h-8 rounded-full bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center text-xs font-bold">
        SA
       </div>
       <div>
-       <div class="text-xs font-medium">
+       <div class="text-xs font-medium" id="user-display">
         SuperAdmin
        </div>
        <div class="text-[10px] text-gray-500">
@@ -141,6 +188,9 @@ input:checked + .toggle-slider:before { transform: translateX(20px); }
        </div>
       </div>
      </div>
+     <button onclick="logout()" class="w-full text-xs bg-red-500/20 hover:bg-red-500/30 text-red-300 px-3 py-1.5 rounded-lg transition flex items-center justify-center gap-1">
+      <i data-lucide="log-out" class="w-3 h-3"></i> Logout
+     </button>
     </div>
    </aside><!-- Main Content -->
    <main class="flex-1 overflow-y-auto h-full">
@@ -1245,6 +1295,82 @@ const defaultConfig = {
 let currentSettings = { ...defaultConfig };
 let isDarkMode = true;
 
+// Login handler
+function handleLogin(event) {
+  event.preventDefault();
+  
+  const username = document.getElementById('username').value;
+  const password = document.getElementById('password').value;
+  const loginBtn = document.getElementById('login-btn');
+  const loginError = document.getElementById('login-error');
+  
+  // Demo credentials
+  const validCredentials = [
+    { username: 'admin', password: 'password123' },
+    { username: 'super', password: 'superadmin123' },
+    { username: 'tech', password: 'tech123' }
+  ];
+  
+  loginError.classList.remove('show');
+  loginBtn.disabled = true;
+  loginBtn.textContent = 'Signing in...';
+  
+  // Simulate authentication delay
+  setTimeout(() => {
+    const isValid = validCredentials.some(cred => 
+      cred.username === username && cred.password === password
+    );
+    
+    if (isValid) {
+      // Save auth token
+      localStorage.setItem('auth-token', btoa(`${username}:${Date.now()}`));
+      localStorage.setItem('logged-in-user', username);
+      
+      // Hide login form and show app
+      document.getElementById('login-form').style.display = 'none';
+      document.getElementById('app').classList.add('authenticated');
+      
+      loginBtn.textContent = 'Sign In';
+      loginBtn.disabled = false;
+      
+      // Initialize app
+      initializeData();
+    } else {
+      loginError.textContent = 'Invalid username or password';
+      loginError.classList.add('show');
+      loginBtn.textContent = 'Sign In';
+      loginBtn.disabled = false;
+    }
+  }, 800);
+}
+
+// Check if user is already logged in
+function checkAuthStatus() {
+  const authToken = localStorage.getItem('auth-token');
+  const loggedInUser = localStorage.getItem('logged-in-user');
+  
+  if (authToken && loggedInUser) {
+    // User is already logged in
+    document.getElementById('login-form').style.display = 'none';
+    document.getElementById('app').classList.add('authenticated');
+    initializeData();
+  } else {
+    // Show login form
+    document.getElementById('login-form').style.display = 'flex';
+    document.getElementById('app').classList.remove('authenticated');
+  }
+}
+
+// Logout function
+function logout() {
+  localStorage.removeItem('auth-token');
+  localStorage.removeItem('logged-in-user');
+  document.getElementById('login-form').style.display = 'flex';
+  document.getElementById('app').classList.remove('authenticated');
+  document.getElementById('username').value = '';
+  document.getElementById('password').value = '';
+}
+
 // Theme toggle
 function toggleTheme() {
   isDarkMode = !isDarkMode;
@@ -1486,6 +1612,16 @@ const dataHandler = {
 
 // Initialize Data SDK
 async function initializeData() {
+  // Update user display
+  const loggedInUser = localStorage.getItem('logged-in-user');
+  if (loggedInUser) {
+    const userDisplay = document.getElementById('user-display');
+    if (userDisplay) {
+      const displayName = loggedInUser.charAt(0).toUpperCase() + loggedInUser.slice(1) + ' User';
+      userDisplay.textContent = displayName;
+    }
+  }
+  
   if (!window.dataSdk) {
     console.error('Data SDK not available');
     applyConfig(currentSettings);
@@ -1528,7 +1664,7 @@ if (window.elementSdk) {
 }
 
 // Initialize on load
-initializeData();
+checkAuthStatus();
 
 // Apply theme from storage
 const savedTheme = localStorage.getItem('app-theme');

@@ -1,1 +1,10 @@
 
+Schema::create('hotspot_packages', function (Blueprint $table) {
+    $table->id();
+    $table->string('name'); // Contoh: Paket Hemat 2 Jam
+    $table->string('profile_name'); // Nama profile di Hotspot Mikrotik
+    $table->decimal('price', 10, 2);
+    $table->string('limit_uptime'); // Contoh: 2h
+    $table->string('limit_bytes')->nullable(); // Kuota dalam bytes
+    $table->timestamps();
+});
